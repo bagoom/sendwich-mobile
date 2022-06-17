@@ -21,6 +21,8 @@ target 'sendwich_mobile' do
 
 
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'sendwich_mobileTests' do
     inherit! :complete
     # Pods for testing

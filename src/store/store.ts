@@ -1,23 +1,25 @@
 import * as React from 'react';
-import {NavigationContainerRef, NavigationState} from '@react-navigation/native';
+import {
+  NavigationContainerRef,
+  NavigationState,
+} from '@react-navigation/native';
 
 import prepareNavigationService from '../lib/navigation-service';
 import prepareStorageService, {MobileStorage} from '../lib/storage-service';
 
 import {makeObservable, observable, reaction, runInAction} from 'mobx';
 
-
 type Route = {
-    key: string;
-    name: string;
-    index: number;
-    stack: any[];
-}
+  key: string;
+  name: string;
+  index: number;
+  stack: any[];
+};
 export class GlobalStore {
   /** Navigation related */
   currentRoute: Route = {
     key: '',
-    name: 'MainTabHome',
+    name: '메뉴1',
     index: -1,
     stack: [],
   };
@@ -32,20 +34,19 @@ export class GlobalStore {
   loggedIn = false;
   authChecked = false;
 
-
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
     this.storageService = prepareStorageService();
     makeObservable(this, {
-        currentRoute: observable,
-        history: observable,
+      currentRoute: observable,
+      history: observable,
       loggedIn: observable,
       authChecked: observable,
     });
 
     reaction(
       () => this.loggedIn,
-      (value) => {
+      value => {
         console.log('this.loggedIn: ', value);
       },
     );
@@ -56,7 +57,7 @@ export class GlobalStore {
       const route = this.navService.getCurrentRoute(state);
       const routeChanged = route.key !== this.currentRoute.key;
       if (routeChanged) {
-          console.log('routeName: ', route.name)
+        console.log('routeName: ', route.name);
         this.currentRoute = route;
         this.history.unshift(route);
         if (this.history.length > 10) {
@@ -65,12 +66,6 @@ export class GlobalStore {
       }
     });
   };
-
-
- 
-
-  
-
 }
 
 let globalStore: GlobalStore | null = null;

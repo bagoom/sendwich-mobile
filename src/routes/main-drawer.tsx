@@ -18,7 +18,7 @@ const DrawerNavigator = () => {
         name="Feed2"
         component={MainStack}
         options={{
-          headerShown: g.currentRoute.name === 'MainTabHome',
+          headerShown: g.currentRoute.name === '메뉴1',
           headerTitle: () => (
             <TouchableOpacity onPress={() => Alert.alert('This is a button!')}>
               <Text style={{color: '#222'}}>부산시 사하구 비봉로 93</Text>

@@ -24,7 +24,6 @@ class MainStack extends React.Component<MainStackProp> {
   }
 
   render() {
-    console.log(this.props.store.currentRoute.name);
     const {store} = this.props;
     return (
       <MainStackStackNav.Navigator
@@ -81,7 +80,7 @@ class MainStack extends React.Component<MainStackProp> {
         name="MainStack2"
         component={MainTab}
         options={({route}) => ({
-          headerShown: this.props.store.currentRoute.name !== 'MainTabHome',
+          headerShown: this.props.store.currentRoute.name !== '메뉴1',
           title: this.props.store.currentRoute.name,
         })}
       />
