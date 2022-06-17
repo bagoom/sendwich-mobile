@@ -17,7 +17,7 @@ export class GlobalStore {
   /** Navigation related */
   currentRoute: Route = {
     key: '',
-    name: '',
+    name: 'MainTabHome',
     index: -1,
     stack: [],
   };

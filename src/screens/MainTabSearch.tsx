@@ -8,7 +8,7 @@ const MainTabA1Screen = () => {
   return (
     <View style={{padding: 60}}>
       <View>
-        <Text>MainTabSearch</Text>
+        <Text>MainTabSearch11</Text>
       </View>
     </View>
   );

@@ -1,12 +1,18 @@
 import React from 'react';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {observer} from 'mobx-react';
-import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import MainTab from './main-tab';
 
 const MainStackStackNav = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 interface MainStackProp {
   store: GlobalStore;
@@ -18,15 +24,17 @@ class MainStack extends React.Component<MainStackProp> {
   }
 
   render() {
+    console.log(this.props.store.currentRoute.name);
     const {store} = this.props;
     return (
       <MainStackStackNav.Navigator
+        initialRouteName="MainStack"
         screenOptions={{
           cardStyle: {
             //   backgroundColor: this.props.theme.colors.defaultSurface,
           },
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          headerTitleAlign: store.currentRoute.name === 'MainTabHome'? 'left' : 'center',
+          headerTitleAlign: 'center',
           headerBackTitleVisible: false,
           headerTitleStyle: {
             // fontFamily: 'SpoqaHanSansNeo-Regular',
@@ -46,32 +54,37 @@ class MainStack extends React.Component<MainStackProp> {
           ? this.renderAfterAuthScreens()
           : this.renderBeforeAuthScreens()} */}
 
-          {this.renderAfterAuthScreens()}
+        {this.renderAfterAuthScreens()}
       </MainStackStackNav.Navigator>
     );
   }
 
-//   renderCheckAuthScreen = () => {
-//     return (
-//       <>
-//         <MainStackStackNav.Screen name="CheckAuth" component={CheckAuthScreen} />
-//       </>
-//     );
-//   };
+  //   renderCheckAuthScreen = () => {
+  //     return (
+  //       <>
+  //         <MainStackStackNav.Screen name="CheckAuth" component={CheckAuthScreen} />
+  //       </>
+  //     );
+  //   };
 
-//   renderBeforeAuthScreens = () => {
-//     return (
-//       <>
-//         <MainStackStackNav.Screen name="BeforeAuth" component={BeforeAuthScreen} />
-//         <MainStackStackNav.Screen name="Login" component={LoginScreen} />
-//       </>
-//     );
-//   };
+  //   renderBeforeAuthScreens = () => {
+  //     return (
+  //       <>
+  //         <MainStackStackNav.Screen name="BeforeAuth" component={BeforeAuthScreen} />
+  //         <MainStackStackNav.Screen name="Login" component={LoginScreen} />
+  //       </>
+  //     );
+  //   };
   renderAfterAuthScreens = () => {
     return (
-      <>
-        <MainStackStackNav.Screen name="MainStack" component={MainTab} options={({ route }) => ({ title: this.props.store.currentRoute.name })} />
-      </>
+      <MainStackStackNav.Screen
+        name="MainStack2"
+        component={MainTab}
+        options={({route}) => ({
+          headerShown: this.props.store.currentRoute.name !== 'MainTabHome',
+          title: this.props.store.currentRoute.name,
+        })}
+      />
     );
   };
 }
