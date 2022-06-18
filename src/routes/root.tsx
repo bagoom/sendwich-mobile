@@ -8,7 +8,6 @@ import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
 import {ThemeProvider} from 'styled-components';
 import Theme from '../Theme';
-import '../global.js';
 
 import MainStack from './main-stack';
 /* stacks */

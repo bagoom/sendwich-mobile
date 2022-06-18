@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {observer, inject} from 'mobx-react';
 import {
   StyleSheet,
@@ -12,7 +12,9 @@ import {
 
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
+import {ThemeContext} from 'styled-components';
 import {useGlobalStore} from '../store/util';
+import Icon from '../../Icon-font.js';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight =
@@ -40,7 +42,7 @@ const StyledSafeAreaView = styled.SafeAreaView`
 
 const DrawerNavigator = (props: any) => {
   const g = useGlobalStore();
-
+  const themeContext = useContext(ThemeContext);
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -48,8 +50,17 @@ const DrawerNavigator = (props: any) => {
   };
 
   return (
-    <View>
-      <Button title="Show modal" onPress={toggleModal} />
+    <View style={{paddingHorizontal: 14}}>
+      <Icon
+        name="menu"
+        onPress={toggleModal}
+        style={{
+          width: 20,
+          height: 20,
+          fontSize: 20,
+          color: '#222',
+        }}
+      />
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}

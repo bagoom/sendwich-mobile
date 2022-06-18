@@ -20,7 +20,7 @@ export class GlobalStore {
   /** Navigation related */
   currentRoute: Route = {
     key: '',
-    name: HOME_MENU,
+    name: '메뉴1',
     index: -1,
     stack: [],
   };

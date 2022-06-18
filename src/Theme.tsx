@@ -7,4 +7,7 @@ export default {
   fonts: {
     normal: '14px',
   },
+  padding: {
+    normal: '14x',
+  },
 };

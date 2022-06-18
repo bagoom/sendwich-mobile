@@ -7,16 +7,22 @@ import {
 } from '@react-navigation/stack';
 import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
+import {withTheme} from 'styled-components';
 
+import {HOME_MENU} from '@env';
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
 import Login from '../screens/Login';
+import Icon from '../../Icon-font.js';
+import HomeHeaderTitle from '../components/HomeHeaderTitle';
+import HomeHeaderRight from '../components/HomeHeaderRight';
 
 const MainStackStackNav = createStackNavigator();
 
 interface MainStackProp {
   store: GlobalStore;
   navigation: any;
+  theme: any;
 }
 
 class MainStack extends React.Component<MainStackProp> {
@@ -25,7 +31,7 @@ class MainStack extends React.Component<MainStackProp> {
   }
 
   render() {
-    const {store} = this.props;
+    const {store, theme} = this.props;
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
@@ -37,6 +43,7 @@ class MainStack extends React.Component<MainStackProp> {
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
           headerTitleStyle: {
+            padding: 10,
             // fontFamily: 'SpoqaHanSansNeo-Regular',
             //   fontSize: this.props.theme.dimensions.fs4,
             fontWeight: '400',
@@ -90,25 +97,17 @@ class MainStack extends React.Component<MainStackProp> {
         name="MainStack"
         component={MainTab}
         options={({route}) => ({
-          headerLeft: () => currentRouteName === HOME_MENU && <MainDrawer />,
-          headerTitle: () =>
-            currentRouteName === HOME_MENU ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('Login');
-                }}>
-                <Text style={{color: '#222', fontSize: 14, fontWeight: '500'}}>
-                  부산시 사하구 비봉로 93
-                </Text>
-              </TouchableOpacity>
-            ) : (
-              <Text style={{color: '#222', fontSize: 14, fontWeight: '500'}}>
-                {this.props.store.currentRoute.name}
-              </Text>
-            ),
+          headerLeft: () => currentRouteName === '메뉴1' && <MainDrawer />,
+          headerTitle: () => (
+            <HomeHeaderTitle
+              navigation={navigation}
+              currentRouteName={currentRouteName}
+            />
+          ),
+          headerRight: () => <HomeHeaderRight />,
         })}
       />
     );
   };
 }
-export default withGlobalStore(observer(MainStack));
+export default withTheme(withGlobalStore(observer(MainStack)));

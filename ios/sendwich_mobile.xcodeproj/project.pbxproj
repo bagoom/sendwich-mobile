@@ -12,7 +12,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		86AB19E2F71D119C40FCD52B /* libPods-sendwich_mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59567576A677F4EF83083B3 /* libPods-sendwich_mobile.a */; };
 		9F6BF782347006FD677039AC /* libPods-sendwich_mobile-sendwich_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3030D03C3C111826465BCD0 /* libPods-sendwich_mobile-sendwich_mobileTests.a */; };
-		E40B2D02285C759300168F95 /* sendwich.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E40B2D00285C743500168F95 /* sendwich.ttf */; };
+		E40B2D07285E0A7200168F95 /* sendwich.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E40B2D06285E0A7200168F95 /* sendwich.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,8 @@
 		BE205770D9E04F6BAFFFBA05 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		C7DFBA5D6E4D4D7384572BE3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		CBC68C5EAE894C64B21CE9EC /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		E40B2D00285C743500168F95 /* sendwich.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sendwich.ttf; path = "../../../Downloads/fontello-bc08bc34/font/sendwich.ttf"; sourceTree = "<group>"; };
+		E40B2D05285E0A3D00168F95 /* sendwich.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sendwich.ttf; path = "../../../Downloads/fontello-0e1062fe/font/sendwich.ttf"; sourceTree = "<group>"; };
+		E40B2D06285E0A7200168F95 /* sendwich.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sendwich.ttf; path = "../../../Downloads/fontello-0e1062fe/font/sendwich.ttf"; sourceTree = "<group>"; };
 		E5F29E79E23CEFDB72F76000 /* Pods-sendwich_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sendwich_mobile.debug.xcconfig"; path = "Target Support Files/Pods-sendwich_mobile/Pods-sendwich_mobile.debug.xcconfig"; sourceTree = "<group>"; };
 		E93FFBD65862432B8B3B5DC5 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -132,6 +133,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E40B2D06285E0A7200168F95 /* sendwich.ttf */,
 				13B07FAE1A68108700A75B9A /* sendwich_mobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* sendwich_mobileTests */,
@@ -157,7 +159,7 @@
 		9B02DA58C9B740A58321614F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E40B2D00285C743500168F95 /* sendwich.ttf */,
+				E40B2D05285E0A3D00168F95 /* sendwich.ttf */,
 				E93FFBD65862432B8B3B5DC5 /* AntDesign.ttf */,
 				F5BCA93349154901BF7C0832 /* Entypo.ttf */,
 				8CCFEF4245A24179B29A1605 /* EvilIcons.ttf */,
@@ -281,7 +283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E40B2D02285C759300168F95 /* sendwich.ttf in Resources */,
+				E40B2D07285E0A7200168F95 /* sendwich.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
