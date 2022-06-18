@@ -1,21 +1,19 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {observer} from 'mobx-react';
 import {Platform, Alert} from 'react-native';
 import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
-import styled from 'styled-components/native';
 import {ThemeProvider} from 'styled-components';
 import Theme from '../Theme';
+import '../global.js';
 
-import DrawerNavigator from './main-drawer';
+import MainStack from './main-stack';
 /* stacks */
 
 const RootStackNav = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 interface RootProps {
   store: GlobalStore;
@@ -33,6 +31,7 @@ class Root extends React.Component<RootProps> {
         <SafeAreaProvider>
           <NavigationContainer
             ref={store.navigationRef}
+            //@ts-ignore
             onStateChange={store.setCurrentRoute}>
             <RootStackNav.Navigator
               screenOptions={({route, navigation}) => ({
@@ -43,15 +42,13 @@ class Root extends React.Component<RootProps> {
                 headerStatusBarHeight:
                   navigation
                     .getState()
-                    .routes.findIndex(r => r.key === route.key) > 0
+                    .routes.findIndex((r: any) => r.key === route.key) > 0
                     ? 0
                     : undefined,
                 ...TransitionPresets.ModalPresentationIOS,
               })}>
-              <RootStackNav.Screen name="Home" component={DrawerNavigator} />
+              <RootStackNav.Screen name="Home" component={MainStack} />
             </RootStackNav.Navigator>
-
-            {/* <RootStack /> */}
           </NavigationContainer>
         </SafeAreaProvider>
       </ThemeProvider>

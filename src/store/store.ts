@@ -15,11 +15,12 @@ type Route = {
   index: number;
   stack: any[];
 };
+
 export class GlobalStore {
   /** Navigation related */
   currentRoute: Route = {
     key: '',
-    name: '메뉴1',
+    name: HOME_MENU,
     index: -1,
     stack: [],
   };

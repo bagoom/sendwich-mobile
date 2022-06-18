@@ -2,17 +2,24 @@ import React from 'react';
 import {withTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {observer, inject} from 'mobx-react';
-import {reaction, IReactionDisposer} from 'mobx';
-import {Image} from 'react-native';
 import {mainTabRoutes} from './main-tab-routes';
 import Icon from '../../Icon-font.js'; //import
 
 const MainTab = createBottomTabNavigator();
 
-const MainTabAfterAuth = context => {
-  console.log(context);
+const MainTabAfterAuth = () => {
   return (
-    <MainTab.Navigator screenOptions={{headerShown: false}}>
+    <MainTab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#FFBD2E',
+        tabBarStyle: {
+          paddingVertical: 3,
+          borderTopWidth: 1,
+          borderTopColor: '#eee',
+        },
+      }}>
       {mainTabRoutes.map(route => (
         <MainTab.Screen
           key={`screen--${route.name}`}

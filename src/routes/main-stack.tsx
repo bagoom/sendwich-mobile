@@ -7,15 +7,16 @@ import {
 } from '@react-navigation/stack';
 import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import MainTab from './main-tab';
+import MainDrawer from './main-drawer';
+import Login from '../screens/Login';
 
 const MainStackStackNav = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 interface MainStackProp {
   store: GlobalStore;
+  navigation: any;
 }
 
 class MainStack extends React.Component<MainStackProp> {
@@ -54,6 +55,12 @@ class MainStack extends React.Component<MainStackProp> {
           : this.renderBeforeAuthScreens()} */}
 
         {this.renderAfterAuthScreens()}
+
+        <MainStackStackNav.Screen
+          name="Login"
+          component={Login}
+          // options={{headerShown: false}}
+        />
       </MainStackStackNav.Navigator>
     );
   }
@@ -74,14 +81,31 @@ class MainStack extends React.Component<MainStackProp> {
   //       </>
   //     );
   //   };
+
   renderAfterAuthScreens = () => {
+    const {navigation} = this.props;
+    const currentRouteName = this.props.store.currentRoute.name;
     return (
       <MainStackStackNav.Screen
-        name="MainStack2"
+        name="MainStack"
         component={MainTab}
         options={({route}) => ({
-          headerShown: this.props.store.currentRoute.name !== '메뉴1',
-          title: this.props.store.currentRoute.name,
+          headerLeft: () => currentRouteName === HOME_MENU && <MainDrawer />,
+          headerTitle: () =>
+            currentRouteName === HOME_MENU ? (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Login');
+                }}>
+                <Text style={{color: '#222', fontSize: 14, fontWeight: '500'}}>
+                  부산시 사하구 비봉로 93
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={{color: '#222', fontSize: 14, fontWeight: '500'}}>
+                {this.props.store.currentRoute.name}
+              </Text>
+            ),
         })}
       />
     );

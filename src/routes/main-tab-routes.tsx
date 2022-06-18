@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import MainTabHomeScreen from '../screens/MainTabHome';
 import MainTabSearchScreen from '../screens/MainTabSearch';
 import MainTabLikesScreen from '../screens/MainTabLikes';
