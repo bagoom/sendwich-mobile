@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Profiler} from 'react';
 import {observer} from 'mobx-react';
 import {View, Text, Button, Image, StyleSheet} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -9,36 +9,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {
-  KakaoOAuthToken,
-  KakaoProfile,
-  getProfile as getKakaoProfile,
-  login,
-  logout,
-  unlink,
-} from '@react-native-seoul/kakao-login';
+
 const width = wp('100%');
 const SliderImg = styled.Image`
-  width: ${width};
-  height: ${width};
+  width: ${width}px;
+  height: ${width}px;
 `;
-
-const signInWithKakao = async (): Promise<void> => {
-  const token: KakaoOAuthToken = await login();
-  getProfile();
-  console.log(JSON.stringify(token));
-};
-
-const signOutWithKakao = async (): Promise<void> => {
-  const message = await logout();
-
-  console.log(message);
-};
-
-const getProfile = async (): Promise<void> => {
-  const profile: KakaoProfile = await getKakaoProfile();
-  // console.log(JSON.stringify(profile));
-};
 
 const styles = StyleSheet.create({
   wrapper: {},
@@ -93,9 +69,7 @@ const HomeSwiper = (props: any) => {
           />
         </View>
       </Swiper>
-
-      <Button title="카카오로 계속하기2" onPress={signInWithKakao} />
-      <Button title="카카오로 계속하기" onPress={signInWithKakao} />
+      <Button title="로그아웃" onPress={g.signOutWithKakao}></Button>
     </>
   );
 };

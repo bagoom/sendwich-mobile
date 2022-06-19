@@ -12,6 +12,7 @@ import {withTheme} from 'styled-components';
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
 import HomeScreen from '../screens/MainTabHome';
+import SplashScreen from '../screens/Splash';
 import Icon from '../../Icon-font.js';
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -54,39 +55,24 @@ class MainStack extends React.Component<MainStackProp> {
             shadowOpacity: 0,
           },
         }}>
-        {/* {!store.authChecked
-          ? this.renderCheckAuthScreen()
-          : store.loggedIn
-          ? this.renderAfterAuthScreens()
-          : this.renderBeforeAuthScreens()} */}
-
-        {this.renderAfterAuthScreens()}
-
-        <MainStackStackNav.Screen
-          name="Login"
-          component={HomeScreen}
-          // options={{headerShown: false}}
-        />
+        {!store.loggedIn
+          ? this.renderBeforeAuthScreens()
+          : this.renderAfterAuthScreens()}
       </MainStackStackNav.Navigator>
     );
   }
 
-  //   renderCheckAuthScreen = () => {
-  //     return (
-  //       <>
-  //         <MainStackStackNav.Screen name="CheckAuth" component={CheckAuthScreen} />
-  //       </>
-  //     );
-  //   };
-
-  //   renderBeforeAuthScreens = () => {
-  //     return (
-  //       <>
-  //         <MainStackStackNav.Screen name="BeforeAuth" component={BeforeAuthScreen} />
-  //         <MainStackStackNav.Screen name="Login" component={LoginScreen} />
-  //       </>
-  //     );
-  //   };
+  renderBeforeAuthScreens = () => {
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+  };
 
   renderAfterAuthScreens = () => {
     const {navigation} = this.props;

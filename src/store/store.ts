@@ -8,6 +8,15 @@ import prepareNavigationService from '../lib/navigation-service';
 import prepareStorageService, {MobileStorage} from '../lib/storage-service';
 
 import {makeObservable, observable, reaction, runInAction} from 'mobx';
+import {
+  KakaoOAuthToken,
+  KakaoProfile,
+  getProfile as getKakaoProfile,
+  login,
+  logout,
+  unlink,
+} from '@react-native-seoul/kakao-login';
+import AsyncStorage from '@react-native-community/async-storage';
 
 type Route = {
   key: string;
@@ -34,6 +43,7 @@ export class GlobalStore {
   /** Auth status */
   loggedIn = false;
   authChecked = false;
+  profile = [];
 
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
@@ -43,6 +53,7 @@ export class GlobalStore {
       history: observable,
       loggedIn: observable,
       authChecked: observable,
+      profile: observable,
     });
 
     reaction(
@@ -64,6 +75,48 @@ export class GlobalStore {
         if (this.history.length > 10) {
           this.history.pop();
         }
+      }
+    });
+  };
+
+  signInWithKakao = async (): Promise<void> => {
+    try {
+      const token: KakaoOAuthToken = await login();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.getProfile();
+    }
+  };
+
+  signOutWithKakao = async (): Promise<void> => {
+    let message = '';
+    try {
+      message = await logout();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      runInAction(() => {
+        this.loggedIn = false;
+        console.log(message);
+      });
+    }
+  };
+
+  getProfile = async (): Promise<void> => {
+    //@ts-ignore
+    const profile: KakaoProfile = await getKakaoProfile();
+    runInAction(() => {
+      //@ts-ignore
+      this.profile = profile;
+      if (this.profile) {
+        this.loggedIn = true;
+        console.log(this.profile.id);
+        AsyncStorage.setItem('user_id', this.profile.nickname, () => {});
+
+        AsyncStorage.getItem('user_id', (err, result) => {
+          console.log(result); // result에 담김 //불러온거 출력
+        });
       }
     });
   };
