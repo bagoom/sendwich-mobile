@@ -9,10 +9,9 @@ import {withGlobalStore} from '../store/util';
 import {GlobalStore} from '../store/store';
 import {withTheme} from 'styled-components';
 
-import {HOME_MENU} from '@env';
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
-import Login from '../screens/Login';
+import HomeScreen from '../screens/MainTabHome';
 import Icon from '../../Icon-font.js';
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -36,9 +35,9 @@ class MainStack extends React.Component<MainStackProp> {
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
         screenOptions={{
-          cardStyle: {
-            //   backgroundColor: this.props.theme.colors.defaultSurface,
-          },
+          // cardStyle: {
+          //   backgroundColor: 'red',
+          // },
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
@@ -65,7 +64,7 @@ class MainStack extends React.Component<MainStackProp> {
 
         <MainStackStackNav.Screen
           name="Login"
-          component={Login}
+          component={HomeScreen}
           // options={{headerShown: false}}
         />
       </MainStackStackNav.Navigator>
@@ -92,19 +91,27 @@ class MainStack extends React.Component<MainStackProp> {
   renderAfterAuthScreens = () => {
     const {navigation} = this.props;
     const currentRouteName = this.props.store.currentRoute.name;
+    const showRender =
+      currentRouteName === '추천' ||
+      currentRouteName === '외식비지원' ||
+      currentRouteName === '데이트코스';
     return (
       <MainStackStackNav.Screen
         name="MainStack"
         component={MainTab}
         options={({route}) => ({
-          headerLeft: () => currentRouteName === '메뉴1' && <MainDrawer />,
+          headerStyle: {
+            // borderBottomWidth: 0.1,
+          },
+          headerLeft: () => showRender && <MainDrawer />,
           headerTitle: () => (
             <HomeHeaderTitle
+              showRender={showRender}
               navigation={navigation}
               currentRouteName={currentRouteName}
             />
           ),
-          headerRight: () => <HomeHeaderRight />,
+          headerRight: () => showRender && <HomeHeaderRight />,
         })}
       />
     );

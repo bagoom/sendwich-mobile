@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {observer} from 'mobx-react';
@@ -18,6 +18,14 @@ interface RootProps {
   store: GlobalStore;
 }
 
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Theme.color.white,
+  },
+};
+
 class Root extends React.Component<RootProps> {
   constructor(props: RootProps) {
     super(props);
@@ -30,6 +38,7 @@ class Root extends React.Component<RootProps> {
         <SafeAreaProvider>
           <NavigationContainer
             ref={store.navigationRef}
+            theme={navTheme}
             //@ts-ignore
             onStateChange={store.setCurrentRoute}>
             <RootStackNav.Navigator

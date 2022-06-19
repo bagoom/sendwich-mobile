@@ -5,9 +5,9 @@ import {useGlobalStore} from '../store/util';
 import Icon from '../../Icon-font.js';
 
 const HomeHeaderTitle = (props: any) => {
-  const {navigation, currentRouteName} = props;
+  const {navigation, currentRouteName, showRender} = props;
   const g = useGlobalStore();
-  return currentRouteName === '메뉴1' ? (
+  return showRender ? (
     <TouchableOpacity
       style={{
         flexDirection: 'row',

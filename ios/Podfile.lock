@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.6.1)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.68.2)
@@ -11,6 +12,45 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.68.2)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - kakao-login (4.1.0):
+    - KakaoSDK (= 2.9.0)
+    - KakaoSDKAuth (= 2.9.0)
+    - KakaoSDKCommon (= 2.9.0)
+    - KakaoSDKTalk (= 2.9.0)
+    - KakaoSDKUser (= 2.9.0)
+    - React
+  - KakaoSDK (2.9.0):
+    - KakaoSDKAuth (= 2.9.0)
+    - KakaoSDKCommon (= 2.9.0)
+    - KakaoSDKLink (= 2.9.0)
+    - KakaoSDKNavi (= 2.9.0)
+    - KakaoSDKStory (= 2.9.0)
+    - KakaoSDKTalk (= 2.9.0)
+    - KakaoSDKTemplate (= 2.9.0)
+    - KakaoSDKUser (= 2.9.0)
+  - KakaoSDKAuth (2.9.0):
+    - KakaoSDKCommon (= 2.9.0)
+  - KakaoSDKCommon (2.9.0):
+    - KakaoSDKCommon/Common (= 2.9.0)
+    - KakaoSDKCommon/Network (= 2.9.0)
+  - KakaoSDKCommon/Common (2.9.0)
+  - KakaoSDKCommon/Network (2.9.0):
+    - Alamofire (~> 5.1)
+    - KakaoSDKCommon/Common (= 2.9.0)
+  - KakaoSDKLink (2.9.0):
+    - KakaoSDKCommon (= 2.9.0)
+    - KakaoSDKTemplate (= 2.9.0)
+  - KakaoSDKNavi (2.9.0):
+    - KakaoSDKCommon/Common (= 2.9.0)
+  - KakaoSDKStory (2.9.0):
+    - KakaoSDKUser (= 2.9.0)
+  - KakaoSDKTalk (2.9.0):
+    - KakaoSDKTemplate (= 2.9.0)
+    - KakaoSDKUser (= 2.9.0)
+  - KakaoSDKTemplate (2.9.0):
+    - KakaoSDKCommon/Common (= 2.9.0)
+  - KakaoSDKUser (2.9.0):
+    - KakaoSDKAuth (= 2.9.0)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -218,6 +258,8 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
+  - react-native-pager-view (5.4.24):
+    - React-Core
   - react-native-safe-area-context (4.2.5):
     - RCT-Folly
     - RCTRequired
@@ -333,6 +375,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - "kakao-login (from `../node_modules/@react-native-seoul/kakao-login`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -348,6 +391,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -370,7 +414,17 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - fmt
+    - KakaoSDK
+    - KakaoSDKAuth
+    - KakaoSDKCommon
+    - KakaoSDKLink
+    - KakaoSDKNavi
+    - KakaoSDKStory
+    - KakaoSDKTalk
+    - KakaoSDKTemplate
+    - KakaoSDKUser
 
 EXTERNAL SOURCES:
   boost:
@@ -383,6 +437,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  kakao-login:
+    :path: "../node_modules/@react-native-seoul/kakao-login"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -409,6 +465,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -449,12 +507,23 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
+  kakao-login: aa837051ea9ba368eff0a9d00132db22e6ee0647
+  KakaoSDK: d5a5a38ebf4da97beeecf100ac3dc9a020e19648
+  KakaoSDKAuth: 5d9eec3317320dc60015ba8d597b2ad32fc70b1a
+  KakaoSDKCommon: aaed06bb779b92cd6f5c35e94160d4ecfaaac511
+  KakaoSDKLink: 575d1119427a7b278eb49da656f8d648a0a94411
+  KakaoSDKNavi: 8b767610d59fc044f1f5df3f29c89688a446a1fc
+  KakaoSDKStory: a494a364a3539601289d01aadd117f165f39d7b2
+  KakaoSDKTalk: b0ac197fd7fce4afc9af3f012c1abee7f053c910
+  KakaoSDKTemplate: eaf03ad5e44d374cbfff85588552a5627cd0519c
+  KakaoSDKUser: 37e92bfc1d36b339420952080a8d31c217a38a63
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
   RCTTypeSafety: c43c072a4bd60feb49a9570b0517892b4305c45e
@@ -468,6 +537,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
+  react-native-pager-view: 95d0418c3c74279840abec6926653d32447bafb6
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
@@ -488,6 +558,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
 
-PODFILE CHECKSUM: 0219cddec9a4a82738e86d461161dcb4d4840d17
+PODFILE CHECKSUM: 25e5fa9e5cdf11e149659b2ea366addc4ef29962
 
 COCOAPODS: 1.11.3

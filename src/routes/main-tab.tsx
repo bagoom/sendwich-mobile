@@ -1,5 +1,4 @@
 import React from 'react';
-import {withTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {observer, inject} from 'mobx-react';
 import {mainTabRoutes} from './main-tab-routes';
