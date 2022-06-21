@@ -12,7 +12,7 @@ import {withTheme} from 'styled-components';
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
 import HomeScreen from '../screens/MainTabHome';
-import SplashScreen from '../screens/Splash';
+import SplashScreen from '../screens/Login';
 import Icon from '../../Icon-font.js';
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -55,7 +55,7 @@ class MainStack extends React.Component<MainStackProp> {
             shadowOpacity: 0,
           },
         }}>
-        {!store.loggedIn
+        {!store.loggedIn && !store.profile.nickname
           ? this.renderBeforeAuthScreens()
           : this.renderAfterAuthScreens()}
       </MainStackStackNav.Navigator>

@@ -25,6 +25,10 @@ type Route = {
   stack: any[];
 };
 
+type Profile = {
+  nickname: string;
+};
+
 export class GlobalStore {
   /** Navigation related */
   currentRoute: Route = {
@@ -43,7 +47,10 @@ export class GlobalStore {
   /** Auth status */
   loggedIn = false;
   authChecked = false;
-  profile = [];
+
+  profile: Profile = {
+    nickname: '',
+  };
 
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
@@ -99,6 +106,8 @@ export class GlobalStore {
       runInAction(() => {
         this.loggedIn = false;
         console.log(message);
+        AsyncStorage.clear();
+        this.profile.nickname = '';
       });
     }
   };
@@ -111,13 +120,17 @@ export class GlobalStore {
       this.profile = profile;
       if (this.profile) {
         this.loggedIn = true;
-        console.log(this.profile.id);
         AsyncStorage.setItem('user_id', this.profile.nickname, () => {});
-
-        AsyncStorage.getItem('user_id', (err, result) => {
-          console.log(result); // result에 담김 //불러온거 출력
-        });
       }
+    });
+  };
+
+  getUserAuth = () => {
+    AsyncStorage.getItem('user_id', (err, result: any) => {
+      runInAction(() => {
+        this.profile.nickname = result;
+        console.log(this.profile.nickname); // result에 담김 //불러온거 출력
+      });
     });
   };
 }

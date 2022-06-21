@@ -38,6 +38,7 @@ class Root extends React.Component<RootProps> {
 
   render() {
     const {store} = this.props;
+    store.getUserAuth();
     return (
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
