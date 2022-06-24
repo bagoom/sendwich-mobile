@@ -29,8 +29,8 @@ const ScreenHeader = styled.View`
 `;
 const Continer = styled.View`
   flex: 1;
-  padding-left: ${ph}px;
-  padding-right: ${ph}px;
+  padding-left: 40px;
+  padding-right: 40px;
   padding-top: 0;
 `;
 const Slide = styled.View`
@@ -89,8 +89,8 @@ const LoginScreen = () => {
           paginationStyle={{bottom: 0}}
           dotColor="#fff"
           activeDotColor="#FFBD2E">
-          {Images.map(img => (
-            <Slide>
+          {Images.map((img, key) => (
+            <Slide key={key}>
               <SliderImg source={{uri: img.uri}} />
               <SlideText>{img.text}</SlideText>
             </Slide>

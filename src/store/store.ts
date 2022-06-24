@@ -3,10 +3,12 @@ import {
   NavigationContainerRef,
   NavigationState,
 } from '@react-navigation/native';
+import {Alert} from 'react-native';
 
 import prepareNavigationService from '../lib/navigation-service';
+import {mobilevalidate} from '../lib/validation-service';
+// import prepareNavigationService, {navigate} from '../lib/navigation-service';
 import prepareStorageService, {MobileStorage} from '../lib/storage-service';
-
 import {makeObservable, observable, reaction, runInAction} from 'mobx';
 import {
   KakaoOAuthToken,
@@ -17,7 +19,7 @@ import {
   unlink,
 } from '@react-native-seoul/kakao-login';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import AuthRepository from '../repositories/AuthRepository';
 type Route = {
   key: string;
   name: string;
@@ -52,6 +54,12 @@ export class GlobalStore {
     nickname: '',
   };
 
+  gender = '';
+  phoneNumber = '';
+  verifyCode = '';
+  showPhoneAuthNumberInput = false;
+  activeNextStack = false;
+
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
     this.storageService = prepareStorageService();
@@ -61,6 +69,11 @@ export class GlobalStore {
       loggedIn: observable,
       authChecked: observable,
       profile: observable,
+      gender: observable,
+      phoneNumber: observable,
+      verifyCode: observable,
+      showPhoneAuthNumberInput: observable,
+      activeNextStack: observable,
     });
 
     reaction(
@@ -88,11 +101,22 @@ export class GlobalStore {
 
   signInWithKakao = async (): Promise<void> => {
     try {
-      const token: KakaoOAuthToken = await login();
+      const {accessToken} = await login();
+      //@ts-ignore
+      const {email}: KakaoProfile = await getKakaoProfile();
+      const {data} = await AuthRepository.checkEmailOverlap(email);
+      console.log(data.length);
+
+      if (!data.length) {
+        runInAction(() => {
+          this.loggedIn = true;
+          this.authChecked = false;
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      this.getProfile();
+      // this.getProfile();
     }
   };
 
@@ -112,25 +136,75 @@ export class GlobalStore {
     }
   };
 
-  getProfile = async (): Promise<void> => {
+  getProfile = async (token): Promise<void> => {
     //@ts-ignore
     const profile: KakaoProfile = await getKakaoProfile();
     runInAction(() => {
-      //@ts-ignore
       this.profile = profile;
       if (this.profile) {
         this.loggedIn = true;
         AsyncStorage.setItem('user_id', this.profile.nickname, () => {});
       }
+      // if (token) {
+      //   await AsyncStorage.setItem(`@${this.rootStore.PROJECT_NAME}_jwt`, jwt);
+      // }
     });
   };
 
   getUserAuth = () => {
-    AsyncStorage.getItem('user_id', (err, result: any) => {
-      runInAction(() => {
+    runInAction(() => {
+      AsyncStorage.getItem('user_id', (err, result: any) => {
         this.profile.nickname = result;
-        console.log(this.profile.nickname); // result에 담김 //불러온거 출력
       });
+    });
+  };
+
+  setGender = (gender: string) => {
+    runInAction(() => {
+      this.gender = gender;
+    });
+  };
+
+  AuthenticatePhoneNumber = async (): Promise<void> => {
+    const validate = mobilevalidate(this.phoneNumber);
+    if (!validate) {
+      return Alert.alert('휴대폰 번호의 형식에 맞게 숫자만 입력해 주세요.');
+    }
+    const {data} = await AuthRepository.checkPhoneNumberOverlap(
+      this.phoneNumber,
+    );
+    if (data.status == 200) {
+      runInAction(() => {
+        this.showPhoneAuthNumberInput = true;
+      });
+    }
+    Alert.alert(data.message);
+  };
+
+  confirmVerifyCode = async (): Promise<void> => {
+    const {data} = await AuthRepository.confirmVerifyCode(
+      this.phoneNumber,
+      this.verifyCode,
+    );
+    console.log(data);
+    if (data.status == 200) {
+      runInAction(() => {
+        this.activeNextStack = true;
+        this.showPhoneAuthNumberInput = false;
+      });
+    }
+    Alert.alert(data.message);
+  };
+
+  onChangePhoneNumberInput = (number: string) => {
+    runInAction(() => {
+      this.phoneNumber = number;
+    });
+  };
+
+  onChangeVerifyCodeInput = (number: string) => {
+    runInAction(() => {
+      this.verifyCode = number;
     });
   };
 }

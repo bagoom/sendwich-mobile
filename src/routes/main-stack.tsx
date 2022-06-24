@@ -12,8 +12,9 @@ import {withTheme} from 'styled-components';
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
 import HomeScreen from '../screens/MainTabHome';
-import SplashScreen from '../screens/Login';
-import Icon from '../../Icon-font.js';
+import LoginScreen from '../screens/Login';
+import RegisterFirstScreen from '../screens/RegisterFirst';
+import RegisterSecondScreen from '../screens/RegisterSecond';
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
 
@@ -55,19 +56,39 @@ class MainStack extends React.Component<MainStackProp> {
             shadowOpacity: 0,
           },
         }}>
-        {!store.loggedIn && !store.profile.nickname
+        {!store.loggedIn
           ? this.renderBeforeAuthScreens()
+          : !store.authChecked
+          ? this.renderCheckAuthScreen()
           : this.renderAfterAuthScreens()}
+
+        <MainStackStackNav.Screen
+          name="RegisterSecondScreen"
+          component={RegisterSecondScreen}
+          options={{headerShown: false}}
+        />
       </MainStackStackNav.Navigator>
     );
   }
+
+  renderCheckAuthScreen = () => {
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="RegisterFirst"
+          component={RegisterFirstScreen}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+  };
 
   renderBeforeAuthScreens = () => {
     return (
       <>
         <MainStackStackNav.Screen
-          name="Splash"
-          component={SplashScreen}
+          name="Login"
+          component={LoginScreen}
           options={{headerShown: false}}
         />
       </>

@@ -1,3 +1,5 @@
+import styled from 'styled-components/native';
+
 export default {
   color: {
     white: '#FFFFFF',
@@ -8,6 +10,17 @@ export default {
     normal: '14px',
   },
   padding: {
-    normal: '14x',
+    normal: '16px',
   },
 };
+
+export const RegisterContainer = styled.SafeAreaView`
+  flex: 1;
+`;
+
+export const InputLabel = styled.Text<{type?: string}>`
+  width: ${props => (props.type === 'text' ? '80px' : '70px')};
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.03px;
+`;
