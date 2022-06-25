@@ -62,11 +62,11 @@ class MainStack extends React.Component<MainStackProp> {
           ? this.renderCheckAuthScreen()
           : this.renderAfterAuthScreens()}
 
-        <MainStackStackNav.Screen
+        {/* <MainStackStackNav.Screen
           name="RegisterSecondScreen"
           component={RegisterSecondScreen}
           options={{headerShown: false}}
-        />
+        /> */}
       </MainStackStackNav.Navigator>
     );
   }
@@ -77,6 +77,11 @@ class MainStack extends React.Component<MainStackProp> {
         <MainStackStackNav.Screen
           name="RegisterFirst"
           component={RegisterFirstScreen}
+          options={{headerShown: false}}
+        />
+        <MainStackStackNav.Screen
+          name="RegisterSecondScreen"
+          component={RegisterSecondScreen}
           options={{headerShown: false}}
         />
       </>

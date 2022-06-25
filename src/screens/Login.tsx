@@ -78,7 +78,10 @@ const LoginScreen = () => {
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <ScreenHeader>
-          <Image source={require('../assets/images/logo.png')} />
+          <Image
+            source={require('../assets/images/logo.png')}
+            style={{width: 120, height: 28}}
+          />
         </ScreenHeader>
 
         <Swiper

@@ -9,7 +9,6 @@ import InputRowBasic from '../components/InputRow-basic';
 const RegisterFirst = (props: any) => {
   const g = useGlobalStore();
   const {navigation} = props;
-  console.log(props.navigation);
   return (
     <RegisterContainer>
       <Wrapper>
@@ -17,34 +16,36 @@ const RegisterFirst = (props: any) => {
           <HeaderTitle>회원 가입이{'\n'}거의 끝나갑니다.</HeaderTitle>
         </Header>
 
-        <Content>
-          <InputRowGender label={'성별'} />
-          <InputRowBasic label={'이름'} placeholder="이름을 입력 해주세요." />
+        <InputRowGender label={'성별'} />
+        <InputRowBasic
+          label={'이름'}
+          placeholder="이름을 입력 해주세요."
+          value={g.kakaoData.nickname}
+        />
+        <InputRowBasic
+          label={'전화번호'}
+          placeholder="전화번호를 입력 해주세요."
+          widthButton="sendSms"
+        />
+        {g.showPhoneAuthNumberInput && (
           <InputRowBasic
-            label={'전화번호'}
-            placeholder="전화번호를 입력 해주세요."
-            widthButton="sendSms"
+            label={'인증번호'}
+            placeholder="인증번호를 입력 해주세요."
+            widthButton="confirmCode"
           />
-          {g.showPhoneAuthNumberInput && (
-            <InputRowBasic
-              label={'인증번호'}
-              placeholder="인증번호를 입력 해주세요."
-              widthButton="confirmCode"
-            />
-          )}
-        </Content>
-      </Wrapper>
-      {g.activeNextStack && (
+        )}
+
         <FixedBtnContainer>
           <FixedBtn
             activeNextStack={g.activeNextStack}
+            disabled={!g.activeNextStack}
             onPress={() => navigation.navigate('RegisterSecondScreen')}>
             <FixedBtnText activeNextStack={g.activeNextStack}>
               다음
             </FixedBtnText>
           </FixedBtn>
         </FixedBtnContainer>
-      )}
+      </Wrapper>
     </RegisterContainer>
   );
 };
@@ -58,7 +59,7 @@ const Wrapper = styled.View`
 const Header = styled.View`
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom-width: 2;
+  border-bottom-width: 2px;
   border-color: #000;
 `;
 const HeaderTitle = styled.Text`
@@ -67,13 +68,9 @@ const HeaderTitle = styled.Text`
   line-height: 22px;
   letter-spacing: -0.1px;
 `;
-const Content = styled.View`
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-`;
 const FixedBtnContainer = styled.View`
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   right: 0;
   height: 50px;

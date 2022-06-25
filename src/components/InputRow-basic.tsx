@@ -6,13 +6,15 @@ import {InputLabel} from '../Theme';
 import styled from 'styled-components/native';
 
 const InputRowBasic = (props: any) => {
-  const {label, placeholder, widthButton} = props;
+  const {label, placeholder, widthButton, value} = props;
   const g = useGlobalStore();
   return (
     <InputRow>
       <InputLabel type="text">{label}</InputLabel>
       <InputBox>
-        {!widthButton && <InputText placeholder={placeholder} />}
+        {!widthButton && (
+          <InputText placeholder={placeholder} value={value ? value : null} />
+        )}
         {widthButton === 'sendSms' && (
           <>
             <InputText
