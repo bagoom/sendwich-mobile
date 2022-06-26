@@ -4,12 +4,16 @@ const BASE_URL = 'http://localhost:1337';
 class AuthRepository {
   DATA_COUNT_PER_FEED = 12;
 
-  signUp(signUpData: object) {
-    return axios.post(`${BASE_URL}/api/auth/local/register`, signUpData);
+  signUpWithKakao(signUpData: object) {
+    return axios.post(`${BASE_URL}/api/users-permissions/register`, signUpData);
+  }
+
+  signInWithKakao(accessToken: object) {
+    return axios.post(`${BASE_URL}/api/users-permissions/login`, accessToken);
   }
 
   checkAuthState(token: string) {
-    if (!token) return null;
+    // if (!token) return null;
     return axios.get(`${BASE_URL}/api/users/me`, {
       headers: {Authorization: `Bearer ${token}`},
     });

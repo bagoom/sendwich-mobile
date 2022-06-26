@@ -84,14 +84,16 @@ const RegisterSecond = (props: any) => {
           </Badge>
         )}
         <ListItemCover selected={isSelected}>
-          <ListItemImg
-            selected={isSelected}
-            source={{
-              uri: `${BASE_URL}${item.attributes?.image.data[0].attributes.url}`,
-            }}
-            imageStyle={isSelected && {opacity: 0.55}}
-            resizeMode="cover"
-          />
+          {item.image[0] && (
+            <ListItemImg
+              selected={isSelected}
+              source={{
+                uri: `${BASE_URL}${item?.image[0].url}`,
+              }}
+              imageStyle={isSelected && {opacity: 0.55}}
+              resizeMode="cover"
+            />
+          )}
         </ListItemCover>
       </ListItem>
     );
@@ -117,7 +119,7 @@ const RegisterSecond = (props: any) => {
           <FixedBtn
             activeNextStack={nextStep}
             disabled={!nextStep}
-            onPress={g.signUp}>
+            onPress={g.signUpWithKakao}>
             <FixedBtnText activeNextStack={nextStep}>가입완료</FixedBtnText>
           </FixedBtn>
         </FixedBtnContainer>

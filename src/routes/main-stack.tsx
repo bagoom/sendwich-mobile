@@ -56,10 +56,10 @@ class MainStack extends React.Component<MainStackProp> {
             shadowOpacity: 0,
           },
         }}>
-        {!store.loggedIn
-          ? this.renderBeforeAuthScreens()
-          : !store.authChecked
+        {!store.authChecked
           ? this.renderCheckAuthScreen()
+          : !store.loggedIn
+          ? this.renderBeforeAuthScreens()
           : this.renderAfterAuthScreens()}
 
         {/* <MainStackStackNav.Screen
@@ -75,13 +75,8 @@ class MainStack extends React.Component<MainStackProp> {
     return (
       <>
         <MainStackStackNav.Screen
-          name="RegisterFirst"
-          component={RegisterFirstScreen}
-          options={{headerShown: false}}
-        />
-        <MainStackStackNav.Screen
-          name="RegisterSecondScreen"
-          component={RegisterSecondScreen}
+          name="Login"
+          component={LoginScreen}
           options={{headerShown: false}}
         />
       </>
@@ -92,8 +87,13 @@ class MainStack extends React.Component<MainStackProp> {
     return (
       <>
         <MainStackStackNav.Screen
-          name="Login"
-          component={LoginScreen}
+          name="RegisterFirst"
+          component={RegisterFirstScreen}
+          options={{headerShown: false}}
+        />
+        <MainStackStackNav.Screen
+          name="RegisterSecondScreen"
+          component={RegisterSecondScreen}
           options={{headerShown: false}}
         />
       </>

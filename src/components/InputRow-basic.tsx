@@ -13,7 +13,11 @@ const InputRowBasic = (props: any) => {
       <InputLabel type="text">{label}</InputLabel>
       <InputBox>
         {!widthButton && (
-          <InputText placeholder={placeholder} value={value ? value : null} />
+          <InputText
+            placeholder={placeholder}
+            defaultValue={value ? value : null}
+            onChangeText={text => g.onChangeNameInput(text)}
+          />
         )}
         {widthButton === 'sendSms' && (
           <>
@@ -21,6 +25,7 @@ const InputRowBasic = (props: any) => {
               placeholder={placeholder}
               widthButton={widthButton}
               keyboardType="numeric"
+              editable={!g.authenticationed}
               onChangeText={text => g.onChangePhoneNumberInput(text)}
             />
             {!g.activeNextStack && (

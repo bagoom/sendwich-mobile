@@ -80,6 +80,8 @@ export class GlobalStore {
     profileUrl: '',
   };
 
+  jwt = '';
+  username = '';
   gender = '';
   phoneNumber = '';
   verifyCode = '';
@@ -87,6 +89,9 @@ export class GlobalStore {
   activeNextStack = false;
   _categories = [];
   _selectedCategories = [];
+
+  kakaoToken = '';
+  authenticationed = false;
 
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
@@ -96,15 +101,20 @@ export class GlobalStore {
       history: observable,
       loggedIn: observable,
       authChecked: observable,
+      jwt: observable,
+      username: observable,
       gender: observable,
       phoneNumber: observable,
       verifyCode: observable,
       showPhoneAuthNumberInput: observable,
       activeNextStack: observable,
+      kakaoToken: observable,
+      authenticationed: observable,
       _categories: observable,
       _selectedCategories: observable,
       _kakaoData: observable,
 
+      sendwichProfile: computed,
       categories: computed,
       kakaoData: computed,
     });
@@ -132,23 +142,46 @@ export class GlobalStore {
     });
   };
 
-  signUp = async () => {
+  setupAuth = async () => {
+    await this.getJtw();
+
+    if (this.jwt) {
+      try {
+        const {data} = await AuthRepository.checkAuthState(this.jwt);
+        this._sendwichProfile = data;
+        runInAction(() => {
+          this.loggedIn = true;
+          this.authChecked = true;
+        });
+        console.log(this.sendwichProfile);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  getJtw = async () => {
+    await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
+      if (result) {
+        runInAction(() => {
+          this.jwt = result;
+        });
+      }
+    });
+  };
+
+  signUpWithKakao = async () => {
     try {
       const signUpData = {
-        username: this.kakaoData.nickname,
+        idToken: this.kakaoToken,
+        username: this.username,
         email: this.kakaoData.email,
-        password: 'test1234',
         gender: this.gender,
-        provider: 'kakao',
-        confirmed: true,
-        blocked: false,
-        role: 1,
         phoneNumber: this.phoneNumber,
+        avatar: this.kakaoData.thumbnailImageUrl,
       };
-      const {
-        data: {user, jwt},
-      } = await AuthRepository.signUp(signUpData);
-      this.hydrateAuthState(user, jwt);
+      const {data} = await AuthRepository.signUpWithKakao(signUpData);
+      this.hydrateAuthState(data.user, data.jwt);
     } catch (e) {
       console.log(e);
     } finally {
@@ -156,16 +189,21 @@ export class GlobalStore {
   };
 
   hydrateAuthState = async (userinfo: any, jwt = null) => {
-    this._sendwichProfile.id = userinfo._id;
-    this._sendwichProfile.username = userinfo.username;
-    this._sendwichProfile.email = userinfo.email;
-    // this._sendwichProfile.profileUrl = (userinfo.profile && userinfo.profile.url) || '';
-    // this.device_id = userinfo.device_id || '';
+    runInAction(() => {
+      this._sendwichProfile = userinfo;
+    });
+
     if (jwt) {
       await AsyncStorage.setItem(`@sendwich_jwt`, jwt);
       runInAction(() => {
         this.loggedIn = true;
         this.authChecked = true;
+      });
+
+      await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
+        runInAction(() => {
+          this.jwt = result;
+        });
       });
     }
   };
@@ -175,23 +213,24 @@ export class GlobalStore {
       const {accessToken} = await login();
       //@ts-ignore
       const profile: Profile = await getKakaoProfile();
-
-      const {data} = await AuthRepository.checkEmailOverlap(profile.email);
-
-      if (!data.length) {
+      runInAction(() => {
+        this.username = profile.nickname;
+      });
+      const signInData = {
+        idToken: accessToken,
+        kakao_uid: profile.id,
+      };
+      const {data} = await AuthRepository.signInWithKakao(signInData);
+      this.hydrateAuthState(data.user, data.jwt);
+      if (data.errors?.msg === '일치하는 유저정보가 없습니다.') {
         runInAction(() => {
-          this.loggedIn = true;
-          this.authChecked = false;
-          this._kakaoData = profile;
-          console.log(profile);
-        });
-      } else {
-        runInAction(() => {
-          this.loggedIn = true;
           this.authChecked = true;
+          this.loggedIn = false;
+          this._kakaoData = profile;
+          this.kakaoToken = accessToken;
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
     } finally {
       // this.getProfile();
@@ -207,40 +246,11 @@ export class GlobalStore {
     } finally {
       runInAction(() => {
         this.loggedIn = false;
-        console.log(message);
+        this.jwt = '';
         AsyncStorage.clear();
-        // this.profile.nickname = '';
       });
+      this.clearStore();
     }
-  };
-
-  // getProfile = async (token): Promise<void> => {
-  //   //@ts-ignore
-  //   const profile: KakaoProfile = await getKakaoProfile();
-  //   runInAction(() => {
-  //     this.profile = profile;
-  //     if (this.profile) {
-  //       this.loggedIn = true;
-  //       AsyncStorage.setItem('user_id', this.profile.nickname, () => {});
-  //     }
-  //     // if (token) {
-  //     //   await AsyncStorage.setItem(`@${this.rootStore.PROJECT_NAME}_jwt`, jwt);
-  //     // }
-  //   });
-  // };
-
-  getUserAuth = () => {
-    runInAction(() => {
-      AsyncStorage.getItem('user_id', (err, result: any) => {
-        // this.profile.nickname = result;
-      });
-    });
-  };
-
-  setGender = (gender: string) => {
-    runInAction(() => {
-      this.gender = gender;
-    });
   };
 
   AuthenticatePhoneNumber = async (): Promise<void> => {
@@ -248,15 +258,25 @@ export class GlobalStore {
     if (!validate) {
       return Alert.alert('휴대폰 번호의 형식에 맞게 숫자만 입력해 주세요.');
     }
-    const {data} = await AuthRepository.checkPhoneVerifyNumber(
-      this.phoneNumber,
-    );
-    if (data.status == 200) {
-      runInAction(() => {
-        this.showPhoneAuthNumberInput = true;
-      });
+    try {
+      const {data} = await AuthRepository.checkPhoneVerifyNumber(
+        this.phoneNumber,
+      );
+      console.log(data);
+      if (data.status == 200) {
+        runInAction(() => {
+          this.showPhoneAuthNumberInput = true;
+        });
+      }
+      Alert.alert(data.message);
+    } catch (e: any) {
+      if (e.request.status == 400) {
+        Alert.alert('이미 사용 중인 휴대폰 번호입니다.');
+      }
+      if (e.request.status == 500) {
+        Alert.alert('일시적인 오류가 발생하였습니다. 관리자에게 문의해주세요.');
+      }
     }
-    Alert.alert(data.message);
   };
 
   confirmVerifyCode = async (): Promise<void> => {
@@ -264,14 +284,25 @@ export class GlobalStore {
       this.phoneNumber,
       this.verifyCode,
     );
-    console.log(data);
     if (data.status == 200) {
       runInAction(() => {
-        this.activeNextStack = true;
+        if (this.gender) {
+          this.activeNextStack = true;
+        }
+        this.authenticationed = true;
         this.showPhoneAuthNumberInput = false;
       });
     }
     Alert.alert(data.message);
+  };
+
+  setGender = (gender: string) => {
+    runInAction(() => {
+      this.gender = gender;
+      if (this.authenticationed) {
+        this.activeNextStack = true;
+      }
+    });
   };
 
   onChangePhoneNumberInput = (number: string) => {
@@ -283,6 +314,11 @@ export class GlobalStore {
   onChangeVerifyCodeInput = (number: string) => {
     runInAction(() => {
       this.verifyCode = number;
+    });
+  };
+  onChangeNameInput = (name: string) => {
+    runInAction(() => {
+      this.username = name;
     });
   };
 
@@ -306,6 +342,37 @@ export class GlobalStore {
     });
   };
 
+  clearStore = () => {
+    runInAction(() => {
+      this.loggedIn = false;
+      this.authChecked = false;
+      this._kakaoData = {
+        id: 0,
+        nickname: '',
+        email: '',
+        thumbnailImageUrl: '',
+      };
+      this._sendwichProfile = {
+        id: 0,
+        username: '',
+        email: '',
+        profileUrl: '',
+      };
+      this.gender = '';
+      this.phoneNumber = '';
+      this.verifyCode = '';
+      this.showPhoneAuthNumberInput = false;
+      this.activeNextStack = false;
+      this._categories = [];
+      this._selectedCategories = [];
+      this.kakaoToken = '';
+      this.authenticationed = false;
+    });
+  };
+
+  get sendwichProfile() {
+    return toJS(this._sendwichProfile);
+  }
   get categories() {
     return toJS(this._categories);
   }

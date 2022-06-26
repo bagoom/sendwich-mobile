@@ -9,6 +9,7 @@ import {GlobalStore} from '../store/store';
 import {ThemeProvider} from 'styled-components';
 import {QueryClientProvider, QueryClient} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
+import AsyncStorage from 'react-native';
 
 import Theme from '../Theme';
 
@@ -34,11 +35,11 @@ const navTheme = {
 class Root extends React.Component<RootProps> {
   constructor(props: RootProps) {
     super(props);
+    this.props.store.setupAuth();
   }
 
   render() {
     const {store} = this.props;
-    store.getUserAuth();
     return (
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
