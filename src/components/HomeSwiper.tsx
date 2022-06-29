@@ -28,7 +28,7 @@ const HomeSwiper = (props: any) => {
         <Swiper
           minDistanceToCapture={5}
           springConfig={{bounciness: 0}}
-          minDistanceForAction={0.05}
+          minDistanceForAction={0.1}
           controlsProps={{
             dotsPos: 'bottom-right',
             prevPos: false,

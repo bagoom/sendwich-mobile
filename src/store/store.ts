@@ -217,6 +217,7 @@ export class GlobalStore {
       const {accessToken} = await login();
       //@ts-ignore
       const profile: Profile = await getKakaoProfile();
+      console.log(accessToken);
       runInAction(() => {
         this.username = profile.nickname;
       });
@@ -225,6 +226,7 @@ export class GlobalStore {
         kakao_uid: profile.id,
       };
       const {data} = await AuthRepository.signInWithKakao(signInData);
+      // const {data} = await AuthRepository.signInWithKakao(signInData);
       this.hydrateAuthState(data.user, data.jwt);
       if (data.errors?.msg === '일치하는 유저정보가 없습니다.') {
         runInAction(() => {
