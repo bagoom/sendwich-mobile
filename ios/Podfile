@@ -25,6 +25,8 @@ target 'sendwich_mobile' do
 
   pod 'react-native-pager-view', :path => '../node_modules/react-native-pager-view'
 
+  pod 'RNGestureHandler', :podspec => '../node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
+
   target 'sendwich_mobileTests' do
     inherit! :complete
     # Pods for testing
