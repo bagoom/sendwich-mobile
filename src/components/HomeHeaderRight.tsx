@@ -21,6 +21,7 @@ const HomeHeaderRight = () => {
         }}
       />
       <Icon
+        onPress={g.signOutWithKakao}
         name="cart"
         // onPress={}
         style={{

@@ -11,6 +11,7 @@ const MainHeaderTabAfterAuth = () => {
   return (
     <MainHeaderTab.Navigator
       screenOptions={{
+        swipeEnabled: false,
         tabBarIndicatorStyle: {
           backgroundColor: '#FFBD2E',
         },
@@ -23,7 +24,7 @@ const MainHeaderTabAfterAuth = () => {
         // },
       }}>
       <MainHeaderTab.Screen name="추천" component={HomeScreen} />
-      <MainHeaderTab.Screen name="외식비지원" component={MainTabSearch} />
+      <MainHeaderTab.Screen name="모임비지원" component={MainTabSearch} />
       <MainHeaderTab.Screen name="데이트코스" component={MainTabSearch} />
     </MainHeaderTab.Navigator>
   );

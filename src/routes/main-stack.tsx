@@ -105,7 +105,7 @@ class MainStack extends React.Component<MainStackProp> {
     const currentRouteName = this.props.store.currentRoute.name;
     const showRender =
       currentRouteName === '추천' ||
-      currentRouteName === '외식비지원' ||
+      currentRouteName === '모임비지원' ||
       currentRouteName === '데이트코스';
     return (
       <MainStackStackNav.Screen

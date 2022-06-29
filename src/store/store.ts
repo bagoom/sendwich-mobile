@@ -24,7 +24,7 @@ import {
   logout,
   unlink,
 } from '@react-native-seoul/kakao-login';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthRepository from '../repositories/AuthRepository';
 type Route = {
   key: string;
@@ -88,7 +88,8 @@ export class GlobalStore {
   showPhoneAuthNumberInput = false;
   activeNextStack = false;
   _categories = [];
-  _selectedCategories = [];
+  _selectedCategories: any = [];
+  _homeIcons: any = [];
 
   kakaoToken = '';
   authenticationed = false;
@@ -113,10 +114,12 @@ export class GlobalStore {
       _categories: observable,
       _selectedCategories: observable,
       _kakaoData: observable,
+      _homeIcons: observable,
 
       sendwichProfile: computed,
       categories: computed,
       kakaoData: computed,
+      homeIcons: computed,
     });
 
     reaction(
@@ -179,6 +182,7 @@ export class GlobalStore {
         gender: this.gender,
         phoneNumber: this.phoneNumber,
         avatar: this.kakaoData.thumbnailImageUrl,
+        categories: this.selectedCategories,
       };
       const {data} = await AuthRepository.signUpWithKakao(signUpData);
       this.hydrateAuthState(data.user, data.jwt);
@@ -322,6 +326,14 @@ export class GlobalStore {
     });
   };
 
+  getHomeIcons = async () => {
+    const {data} = await AuthRepository.getHomeIcons();
+    runInAction(() => {
+      this._homeIcons = data.data;
+    });
+    console.log(data);
+  };
+
   getCategories = async (): Promise<void> => {
     const {data} = await AuthRepository.getCategories();
     runInAction(() => {
@@ -378,13 +390,16 @@ export class GlobalStore {
   }
   get selectedCategories() {
     const arr = toJS(this._selectedCategories);
-    arr.forEach(item => {
-      delete item['attributes'];
+    let newArr = arr.map((item: any) => {
+      return {id: item.id};
     });
-    return arr;
+    return newArr;
   }
   get kakaoData() {
     return toJS(this._kakaoData);
+  }
+  get homeIcons() {
+    return toJS(this._homeIcons);
   }
 }
 

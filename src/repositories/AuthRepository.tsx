@@ -1,6 +1,6 @@
 import axios from 'axios';
-// import Config from 'react-native-config';
-const BASE_URL = 'http://localhost:1337';
+import {BASE_URL} from '@env';
+
 class AuthRepository {
   DATA_COUNT_PER_FEED = 12;
 
@@ -31,6 +31,10 @@ class AuthRepository {
 
   getCategories() {
     return axios.get(`${BASE_URL}/api/categories?populate=*`);
+  }
+
+  getHomeIcons() {
+    return axios.get(`${BASE_URL}/api/home-icons?populate=*`);
   }
 
   confirmVerifyCode(phoneNumber: string, code: string) {

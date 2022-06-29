@@ -1,9 +1,9 @@
-import React, {Profiler} from 'react';
+import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, Text, Button, Image, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useGlobalStore} from '../store/util';
-import Icon from '../../Icon-font.js';
-import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-web-swiper';
+
 import styled from 'styled-components/native';
 import {
   widthPercentageToDP as wp,
@@ -11,32 +11,10 @@ import {
 } from 'react-native-responsive-screen';
 
 const width = wp('100%');
-const SliderImg = styled.Image`
-  width: ${width}px;
-  height: ${width}px;
-`;
 
 const styles = StyleSheet.create({
-  wrapper: {},
-  slide1: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-  slide2: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
+  container: {
+    height: width,
   },
 });
 
@@ -46,32 +24,69 @@ const HomeSwiper = (props: any) => {
 
   return (
     <>
-      <Swiper style={styles.wrapper} showsButtons={false} loop={false}>
-        <View style={styles.slide1}>
-          <SliderImg
-            source={{
-              uri: 'https://source.unsplash.com/random/?food',
-            }}
-          />
-        </View>
-        <View style={styles.slide2}>
-          <SliderImg
-            source={{
-              uri: 'https://source.unsplash.com/random/?food',
-            }}
-          />
-        </View>
-        <View style={styles.slide3}>
-          <SliderImg
-            source={{
-              uri: 'https://source.unsplash.com/random/?food',
-            }}
-          />
-        </View>
-      </Swiper>
-      <Button title="로그아웃" onPress={g.signOutWithKakao}></Button>
+      <View style={styles.container}>
+        <Swiper
+          minDistanceToCapture={5}
+          springConfig={{bounciness: 0}}
+          minDistanceForAction={0.05}
+          controlsProps={{
+            dotsPos: 'bottom-right',
+            prevPos: false,
+            nextPos: false,
+            DotComponent: ({index, activeIndex, isActive, onPress}) => (
+              <Pagination>
+                <PaginationText>
+                  {activeIndex + 1}/{index + 1} 전체보기
+                </PaginationText>
+              </Pagination>
+            ),
+          }}>
+          <View>
+            <SliderImg source={require('../assets/images/main_banner.jpeg')} />
+          </View>
+          <View>
+            <SliderImg
+              source={{
+                uri: 'https://source.unsplash.com/random/?food',
+              }}
+            />
+          </View>
+          <View>
+            <SliderImg
+              source={{
+                uri: 'https://source.unsplash.com/random/?food',
+              }}
+            />
+          </View>
+        </Swiper>
+      </View>
     </>
   );
 };
 
 export default observer(HomeSwiper);
+
+const SliderImg = styled.Image`
+  width: ${width}px;
+  height: ${width}px;
+`;
+
+const Pagination = styled.View`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  flex: 1;
+  min-width: 86px;
+  padding: 4px 13px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+`;
+const PaginationText = styled.Text`
+  font-size: 10px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+`;
