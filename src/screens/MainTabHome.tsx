@@ -6,6 +6,11 @@ import styled from 'styled-components/native';
 import HomeSwiper from '../components/HomeSwiper';
 import HomeSubSwiper from '../components/HomeSubSwiper';
 import HomeIcons from '../components/HomeIcons';
+import HomeMiddleSwiper from '../components/HomeMiddleSwiper';
+import StoreList from '../components/StoreList';
+import Footer from '../components/Footer';
+
+import {Space} from '../Theme';
 
 const MainTabA1Screen = () => {
   const g = useGlobalStore();
@@ -14,9 +19,16 @@ const MainTabA1Screen = () => {
       <HomeSwiper />
       <Container>
         <HomeSubSwiper />
-
         <HomeIcons />
       </Container>
+      <HomeMiddleSwiper />
+      <Space />
+      <ContainerType2>
+        <StoreList />
+      </ContainerType2>
+      <Space />
+
+      <Footer />
     </ScrollView>
   );
 };
@@ -26,5 +38,8 @@ export default observer(MainTabA1Screen);
 const Container = styled.View`
   flex: 1;
   padding: 16px;
-  background: red;
+`;
+const ContainerType2 = styled.View`
+  flex: 1;
+  padding: 0 16px;
 `;

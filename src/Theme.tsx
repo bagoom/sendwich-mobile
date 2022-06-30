@@ -24,3 +24,17 @@ export const InputLabel = styled.Text<{type?: string}>`
   font-weight: 500;
   letter-spacing: -0.03px;
 `;
+
+export const Space = styled.View`
+  flex: 1;
+  height: 7px;
+  background: #f9f9f9;
+`;
+
+export const Title = styled.Text`
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: -0.3px;
+`;

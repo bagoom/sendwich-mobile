@@ -6,18 +6,6 @@ import HomeIcon from './base-ui/HomeIcon';
 
 import styled from 'styled-components/native';
 
-const numColumns = 4;
-const data = [
-  {id: 1, icon: 'restaurant', name: '카페'},
-  {id: 2, icon: 'restaurant', name: '카페'},
-  {id: 3, icon: 'restaurant', name: '카페'},
-  {id: 4, icon: 'restaurant', name: '카페'},
-  {id: 5, icon: 'restaurant', name: '카페'},
-  {id: 6, icon: 'restaurant', name: '카페'},
-  {id: 7, icon: 'restaurant', name: '카페'},
-  {id: 8, icon: 'restaurant', name: '카페'},
-];
-
 const HomeIcons = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
@@ -31,12 +19,6 @@ const HomeIcons = (props: any) => {
       {g.homeIcons.map((item: any, index: number) => {
         return <HomeIcon data={item} key={index} index={index} />;
       })}
-
-      {/* <SectionList
-        sections={g.homeIcons}
-        getItemCount={items => items.length}
-        renderItem={({item}) => <HomeIcon data={item} />}
-      /> */}
     </Wrapper>
   );
 };
@@ -44,7 +26,7 @@ const HomeIcons = (props: any) => {
 export default observer(HomeIcons);
 
 const Wrapper = styled.View`
-  margin: 20px 0;
+  margin: 20px 0 30px;
   padding: 0 18px;
   flex-direction: row;
   flex-wrap: wrap;

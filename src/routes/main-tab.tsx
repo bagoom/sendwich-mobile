@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {observer, inject} from 'mobx-react';
 import {mainTabRoutes} from './main-tab-routes';
 import Icon from '../../Icon-font.js'; //import
+import styled from 'styled-components';
 
 const MainTab = createBottomTabNavigator();
 
@@ -14,9 +15,17 @@ const MainTabAfterAuth = () => {
         tabBarInactiveTintColor: '#999',
         tabBarActiveTintColor: '#FFBD2E',
         tabBarStyle: {
-          paddingVertical: 3,
+          height: 60,
+          paddingTop: 8,
           borderTopWidth: 1,
           borderTopColor: '#eee',
+          elevation: 0,
+        },
+        tabBarIconStyle: {
+          marginBottom: 0,
+        },
+        tabBarLabelStyle: {
+          paddingBottom: 10,
         },
       }}>
       {mainTabRoutes.map(route => (

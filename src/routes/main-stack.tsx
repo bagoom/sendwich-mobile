@@ -113,7 +113,8 @@ class MainStack extends React.Component<MainStackProp> {
         component={MainTab}
         options={({route}) => ({
           headerStyle: {
-            // borderBottomWidth: 0.1,
+            borderBottomWidth: 0.7,
+            borderBottomColor: '#f5f5f5',
           },
           headerLeft: () => showRender && <MainDrawer />,
           headerTitle: () => (

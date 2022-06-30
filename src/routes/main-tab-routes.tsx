@@ -5,22 +5,22 @@ import MainTabMypageScreen from '../screens/MainTabMypage';
 import mainHeaderTab from './main-header-tab';
 export const mainTabRoutes = [
   {
-    name: '메뉴1',
+    name: 'Home',
     com: mainHeaderTab,
     icon: 'home',
   },
   {
-    name: '메뉴2',
+    name: 'Search',
     com: MainTabSearchScreen,
     icon: 'search',
   },
   {
-    name: '메뉴3',
+    name: 'Like',
     com: MainTabLikesScreen,
     icon: 'like',
   },
   {
-    name: '메뉴4',
+    name: 'My',
     com: MainTabMypageScreen,
     icon: 'mypage',
   },

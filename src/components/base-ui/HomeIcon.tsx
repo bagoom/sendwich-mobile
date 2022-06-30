@@ -34,9 +34,14 @@ const IconButton = styled.TouchableOpacity<{mr?: boolean}>`
 const IconImage = styled.Image`
   width: 100%;
   height: ${(Dimensions.get('window').width - 160) / numColumns}px;
+  border-width: 1px;
+  border-color: #f6f2e1;
+  border-radius: ${(Dimensions.get('window').width - 160) / numColumns}px;
+  overflow: hidden;
 `;
 const IconText = styled.Text`
   margin-top: 7px;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 500;
   color: #7e745c;
 `;
