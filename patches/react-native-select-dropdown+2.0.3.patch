@@ -1,13 +1,99 @@
+diff --git a/node_modules/react-native-select-dropdown/index.d.ts b/node_modules/react-native-select-dropdown/index.d.ts
+index 4332b01..1513268 100644
+--- a/node_modules/react-native-select-dropdown/index.d.ts
++++ b/node_modules/react-native-select-dropdown/index.d.ts
+@@ -18,7 +18,7 @@ declare module "react-native-select-dropdown" {
+     /**
+      * function recieves selected item and its index, this function should return a string that will be represented in button after item is selected
+      */
+-    buttonTextAfterSelection: (selectedItem: any, index: number) => string;
++    buttonTextAfterSelection: (selectedItem: any, index: number) => React.ReactNode;
+     /**
+      * function recieves item and index for each row in dropdown, this function shoud return a string that will be represented in each row in dropdown
+      */
+diff --git a/node_modules/react-native-select-dropdown/src/SelectDropdown.js b/node_modules/react-native-select-dropdown/src/SelectDropdown.js
+index 31f39b7..3040f30 100644
+--- a/node_modules/react-native-select-dropdown/src/SelectDropdown.js
++++ b/node_modules/react-native-select-dropdown/src/SelectDropdown.js
+@@ -233,7 +233,7 @@ const SelectDropdown = (
+                 top:
+                   remainigHeightAvoidKeyboard < dropdownPY + safeDropdownViewUnderKeyboard
+                     ? remainigHeightAvoidKeyboard - safeDropdownViewUnderKeyboard
+-                    : dropdownPY,
++                    : dropdownPY - 2,
+                 height: dropdownHEIGHT,
+                 width: dropdownWIDTH,
+                 borderTopWidth: 0,
+@@ -283,13 +283,9 @@ const SelectDropdown = (
+           {renderCustomizedButtonChild(selectedItem, selectedIndex)}
+         </View>
+       ) : (
+-        <Text numberOfLines={1} allowFontScaling={false} style={{...styles.dropdownButtonText, ...buttonTextStyle}}>
+-          {isExist(selectedItem)
+-            ? buttonTextAfterSelection
+-              ? buttonTextAfterSelection(selectedItem, selectedIndex)
+-              : selectedItem.toString()
+-            : defaultButtonText || 'Select an option.'}
+-        </Text>
++        <View numberOfLines={1} allowFontScaling={false} style={{...styles.dropdownButtonText, ...buttonTextStyle}}>
++          {buttonTextAfterSelection(selectedItem, selectedIndex)}
++        </View>
+       )}
+     </TouchableOpacity>
+   );
 diff --git a/node_modules/react-native-select-dropdown/src/styles.js b/node_modules/react-native-select-dropdown/src/styles.js
-index d4d0d61..727dc29 100644
+index d4d0d61..e4f3034 100644
 --- a/node_modules/react-native-select-dropdown/src/styles.js
 +++ b/node_modules/react-native-select-dropdown/src/styles.js
-@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
+@@ -3,12 +3,13 @@ const {width, height} = Dimensions.get('window');
+ 
+ const styles = StyleSheet.create({
+   dropdownButton: {
+-    justifyContent: 'space-between',
++    justifyContent: 'center',
      alignItems: 'center',
      backgroundColor: '#EFEFEF',
-     width: width / 2,
+-    width: width / 2,
 -    height: 50,
+-    paddingHorizontal: 8,
++    padding: 0,
++    // width: width / 2,
 +    // height: 50,
-     paddingHorizontal: 8,
++    // paddingHorizontal: 8,
      overflow: 'hidden',
    },
+   searchViewStyle: {
+@@ -16,7 +17,6 @@ const styles = StyleSheet.create({
+     paddingHorizontal: 0,
+   },
+   dropdownButtonText: {
+-    flex: 1,
+     fontSize: 18,
+     color: '#000000',
+     textAlign: 'center',
+@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
+   },
+   dropdownCustomizedButtonParent: {
+     flex: 1,
++    padding: 0,
+     overflow: 'hidden',
+   },
+   //////////////////////////////////////
+@@ -33,6 +34,8 @@ const styles = StyleSheet.create({
+     backgroundColor: 'rgba(0,0,0,0.4)',
+   },
+   dropdownOverlayView: {
++    borderBottomLeftRadius: 3,
++    borderBottomRightRadius: 3,
+     backgroundColor: '#EFEFEF',
+   },
+   dropdownActivityIndicatorView: {
+@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
+     flexDirection: 'row',
+     justifyContent: 'center',
+     alignItems: 'center',
+-    borderBottomColor: '#C5C5C5',
++    borderBottomColor: '#e5e5e5',
+     borderBottomWidth: 1,
+   },
+   dropdownRowText: {
