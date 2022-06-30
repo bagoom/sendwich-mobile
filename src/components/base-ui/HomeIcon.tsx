@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {useGlobalStore} from '../../store/util';
 import styled from 'styled-components/native';
-import {Dimensions} from 'react-native';
+import {FlatList, Dimensions, Text} from 'react-native';
 import {BASE_URL} from '@env';
 const numColumns = 4;
 const HomeIcon = (props: any) => {
