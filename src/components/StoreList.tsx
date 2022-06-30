@@ -26,8 +26,8 @@ const StoreList = (props: any) => {
             justifyContent: 'space-between',
             flexWrap: 'wrap',
           }}>
-          {data.map(item => (
-            <StoreListItem item={item} />
+          {data.map((item, key) => (
+            <StoreListItem item={item} key={key} />
           ))}
         </View>
       </View>

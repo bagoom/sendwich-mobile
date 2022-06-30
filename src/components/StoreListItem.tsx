@@ -14,7 +14,6 @@ const StoreListItem = (props: any) => {
   const {navigation, item} = props;
   const FIRST_ITEM = item.id % 2;
   const g = useGlobalStore();
-  console.log(FIRST_ITEM, 'FIRST_ITEM');
 
   return (
     <StoreItem type={FIRST_ITEM}>

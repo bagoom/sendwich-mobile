@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
-import HomeSwiper from '../components/HomeSwiper';
+import HomeHeaderSwiper from '../components/HomeHeaderSwiper';
 import HomeSubSwiper from '../components/HomeSubSwiper';
 import HomeIcons from '../components/HomeIcons';
 import HomeMiddleSwiper from '../components/HomeMiddleSwiper';
@@ -12,11 +12,12 @@ import Footer from '../components/Footer';
 
 import {Space} from '../Theme';
 
-const MainTabA1Screen = () => {
+const MainTabA1Screen = (props: any) => {
+  const {navigation} = props;
   const g = useGlobalStore();
   return (
     <ScrollView style={{flex: 1}}>
-      <HomeSwiper />
+      <HomeHeaderSwiper navigation={navigation} />
       <Container>
         <HomeSubSwiper />
         <HomeIcons />

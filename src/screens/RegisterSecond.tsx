@@ -10,11 +10,11 @@ import {
   View,
   Button,
 } from 'react-native';
+import {BASE_URL} from '@env';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {RegisterContainer} from '../Theme';
 import Icon from '../../Icon-font.js';
 
-const BASE_URL = 'http://localhost:1337';
 const numColumns = 3;
 
 const formatData = (data: any, numColumns: number, selectedCategories: any) => {
@@ -141,10 +141,11 @@ const Header = styled.View`
   border-color: #000;
 `;
 const HeaderTitle = styled.Text`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 22px;
+  line-height: 24px;
   letter-spacing: -0.1px;
+  color: #000;
 `;
 
 const ListItem = styled.TouchableOpacity<{clear?: boolean}>`

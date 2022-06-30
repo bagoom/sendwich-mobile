@@ -15,6 +15,8 @@ import HomeScreen from '../screens/MainTabHome';
 import LoginScreen from '../screens/Login';
 import RegisterFirstScreen from '../screens/RegisterFirst';
 import RegisterSecondScreen from '../screens/RegisterSecond';
+import MainFoodBanner from '../screens/MainFoodBanner';
+
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
 
@@ -25,6 +27,14 @@ interface MainStackProp {
   navigation: any;
   theme: any;
 }
+
+const defaultHeaderStyle = {
+  borderBottomColor: '#eee',
+  borderBottomWidth: 1,
+};
+const defaultHeaderTextStyle = {
+  fontSize: 18,
+};
 
 class MainStack extends React.Component<MainStackProp> {
   constructor(props: MainStackProp) {
@@ -67,6 +77,16 @@ class MainStack extends React.Component<MainStackProp> {
           component={RegisterSecondScreen}
           options={{headerShown: false}}
         /> */}
+
+        <MainStackStackNav.Screen
+          name="MainFoodBanner"
+          component={MainFoodBanner}
+          options={{
+            headerTitle: '오늘 뭐 먹지?',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
       </MainStackStackNav.Navigator>
     );
   }

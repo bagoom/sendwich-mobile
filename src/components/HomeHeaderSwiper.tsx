@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Swiper from 'react-native-web-swiper';
 
@@ -18,10 +18,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeSwiper = (props: any) => {
+const HomeHeaderSwiper = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
-
   return (
     <>
       <View style={styles.container}>
@@ -42,7 +41,13 @@ const HomeSwiper = (props: any) => {
             ),
           }}>
           <View>
-            <SliderImg source={require('../assets/images/main_banner.jpeg')} />
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => navigation.navigate('MainFoodBanner')}>
+              <SliderImg
+                source={require('../assets/images/main_banner.jpeg')}
+              />
+            </TouchableOpacity>
           </View>
           <View>
             <SliderImg
@@ -64,7 +69,7 @@ const HomeSwiper = (props: any) => {
   );
 };
 
-export default observer(HomeSwiper);
+export default observer(HomeHeaderSwiper);
 
 const SliderImg = styled.Image`
   width: ${width}px;
