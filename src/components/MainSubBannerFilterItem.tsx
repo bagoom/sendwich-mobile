@@ -9,7 +9,6 @@ import styled from 'styled-components/native';
 
 const MainSubBannerFilterItem = ({name, isBordered = true}: any) => {
   const g = useGlobalStore();
-  console.log(isBordered);
   return (
     <ListItem border={isBordered}>
       <LabelArea>

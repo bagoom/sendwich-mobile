@@ -14,7 +14,7 @@ const HomeHeaderTitle = (props: any) => {
         alignItems: 'center',
       }}
       onPress={() => {
-        navigation.navigate('Login');
+        navigation.navigate('SetCurrentLocation');
       }}>
       <Text
         style={{

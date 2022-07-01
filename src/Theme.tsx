@@ -27,7 +27,7 @@ export const InputLabel = styled.Text<{type?: string}>`
 `;
 
 export const Space = styled.View`
-  flex: 1;
+  width: 100%;
   height: 7px;
   background: #f9f9f9;
 `;
@@ -38,4 +38,11 @@ export const Title = styled.Text`
   font-weight: 500;
   color: #000;
   letter-spacing: -0.3px;
+`;
+export const SubTitle = styled.Text`
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #999;
+  letter-spacing: -1px;
 `;

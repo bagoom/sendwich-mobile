@@ -17,6 +17,7 @@ import RegisterSecondScreen from '../screens/RegisterSecond';
 import MainFoodBanner from '../screens/MainFoodBanner';
 import MainSubBannerFilter from '../screens/MainSubBannerFilter';
 import MainAllBanner from '../screens/MainAllBanner';
+import SetCurrentLocation from '../screens/SetCurrentLocation';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -102,6 +103,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={MainAllBanner}
           options={{
             headerTitle: '이벤트 전체보기',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="SetCurrentLocation"
+          component={SetCurrentLocation}
+          options={{
+            headerTitle: '현재 위치 설정',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
