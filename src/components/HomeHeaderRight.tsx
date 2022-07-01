@@ -4,24 +4,27 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Icon from '../../Icon-font.js';
 
-const HomeHeaderRight = () => {
+const HomeHeaderRight = (props: any) => {
+  const {navigation} = props;
   const g = useGlobalStore();
 
   return (
     <View style={{paddingRight: 14, flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+        <Icon
+          name="noti"
+          // onPress={}
+          style={{
+            width: 20,
+            height: 20,
+            marginRight: 16,
+            fontSize: 20,
+            color: '#222',
+          }}
+        />
+      </TouchableOpacity>
       <Icon
-        name="noti"
-        // onPress={}
-        style={{
-          width: 20,
-          height: 20,
-          marginRight: 16,
-          fontSize: 20,
-          color: '#222',
-        }}
-      />
-      <Icon
-        onPress={g.signOutWithKakao}
+        // onPress={props.navigation.navigate('Notification')}
         name="cart"
         // onPress={}
         style={{

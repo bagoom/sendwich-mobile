@@ -18,6 +18,7 @@ import MainFoodBanner from '../screens/MainFoodBanner';
 import MainSubBannerFilter from '../screens/MainSubBannerFilter';
 import MainAllBanner from '../screens/MainAllBanner';
 import SetCurrentLocation from '../screens/SetCurrentLocation';
+import Notification from '../screens/Notification';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -116,6 +117,15 @@ class MainStack extends React.Component<MainStackProp> {
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
         />
+        <MainStackStackNav.Screen
+          name="Notification"
+          component={Notification}
+          options={{
+            headerTitle: '알림함',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
       </MainStackStackNav.Navigator>
     );
   }
@@ -173,7 +183,8 @@ class MainStack extends React.Component<MainStackProp> {
               currentRouteName={currentRouteName}
             />
           ),
-          headerRight: () => showRender && <HomeHeaderRight />,
+          headerRight: () =>
+            showRender && <HomeHeaderRight navigation={navigation} />,
         })}
       />
     );
