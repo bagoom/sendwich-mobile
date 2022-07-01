@@ -47,7 +47,6 @@ const HomeSubSwiper = (props: any) => {
           }}>
           <View>
             <TouchableOpacity
-              activeOpacity={0.9}
               onPress={() => navigation.navigate('MainSubBannerFilter')}>
               <SliderImg
                 source={require('../assets/images/main_sub_banner.jpeg')}

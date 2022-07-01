@@ -11,12 +11,12 @@ import {withTheme} from 'styled-components';
 
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
-import HomeScreen from '../screens/MainTabHome';
 import LoginScreen from '../screens/Login';
 import RegisterFirstScreen from '../screens/RegisterFirst';
 import RegisterSecondScreen from '../screens/RegisterSecond';
 import MainFoodBanner from '../screens/MainFoodBanner';
 import MainSubBannerFilter from '../screens/MainSubBannerFilter';
+import MainAllBanner from '../screens/MainAllBanner';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -93,6 +93,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={MainSubBannerFilter}
           options={{
             headerTitle: '필터검색',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="MainAllBanner"
+          component={MainAllBanner}
+          options={{
+            headerTitle: '이벤트 전체보기',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}

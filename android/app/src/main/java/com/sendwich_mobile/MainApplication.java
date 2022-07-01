@@ -14,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 import com.sendwich_mobile.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.horcrux.svg.SvgPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
               // packages.add(new VectorIconsPackage());
               packages.add(new RNGestureHandlerPackage());
+              // packages.add(new SvgPackage());
           return packages;
         }
 

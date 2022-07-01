@@ -61,7 +61,6 @@ const FilterArea = styled.View`
 const Priority = styled.View``;
 
 const TextInput = styled.TextInput`
-  min-width: 100;
   text-align: right;
   color: #000;
   font-size: 14px;

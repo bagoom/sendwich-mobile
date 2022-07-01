@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import HomeHeaderSwiper from '../components/HomeHeaderSwiper';
 import HomeSubSwiper from '../components/HomeSubSwiper';
 import HomeIcons from '../components/HomeIcons';
-import HomeSoteSwiper from '../components/HomeSoteSwiper';
+import HomeStoreSwiper from '../components/HomeStoreSwiper';
 import StoreList from '../components/StoreList';
 import Footer from '../components/Footer';
 
@@ -22,7 +22,7 @@ const MainTabA1Screen = (props: any) => {
         <HomeSubSwiper navigation={navigation} />
         <HomeIcons />
       </Container>
-      <HomeSoteSwiper />
+      <HomeStoreSwiper />
       <Space />
       <ContainerType2>
         <StoreList />

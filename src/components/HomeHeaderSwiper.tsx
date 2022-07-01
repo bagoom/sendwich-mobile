@@ -34,7 +34,7 @@ const HomeHeaderSwiper = (props: any) => {
             nextPos: false,
             //@ts-ignore
             DotComponent: ({index, activeIndex, isActive, onPress}) => (
-              <Pagination>
+              <Pagination onPress={() => navigation.navigate('MainAllBanner')}>
                 <PaginationText>
                   {activeIndex + 1}/{index + 1} 전체보기
                 </PaginationText>
@@ -77,7 +77,7 @@ const SliderImg = styled.Image`
   height: ${width}px;
 `;
 
-const Pagination = styled.View`
+const Pagination = styled.TouchableOpacity`
   position: absolute;
   bottom: 0;
   right: 0;

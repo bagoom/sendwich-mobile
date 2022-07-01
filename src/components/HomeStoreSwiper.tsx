@@ -20,14 +20,7 @@ const baseOptions = {
   height: PAGE_WIDTH - 120,
 } as const;
 
-const itemOption = {
-  width: PAGE_WIDTH / 2,
-  height: PAGE_WIDTH / 2,
-  marginRight: '5.5%',
-  backgroundColor: 'black',
-} as const;
-
-const HomeSoteSwiper = (props: any) => {
+const HomeStoreSwiper = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
 
@@ -62,7 +55,7 @@ const HomeSoteSwiper = (props: any) => {
   );
 };
 
-export default observer(HomeSoteSwiper);
+export default observer(HomeStoreSwiper);
 const Category = styled.Text`
   margin-right: 5px;
   font-size: 17px;
