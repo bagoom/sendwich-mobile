@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Swiper from 'react-native-web-swiper';
 
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
 
 const HomeSubSwiper = (props: any) => {
   const {navigation} = props;
+  console.log(navigation);
   const g = useGlobalStore();
 
   return (
@@ -45,9 +46,13 @@ const HomeSubSwiper = (props: any) => {
             dotsWrapperStyle: styles.paginationWrapper,
           }}>
           <View>
-            <SliderImg
-              source={require('../assets/images/main_sub_banner.jpeg')}
-            />
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => navigation.navigate('MainSubBannerFilter')}>
+              <SliderImg
+                source={require('../assets/images/main_sub_banner.jpeg')}
+              />
+            </TouchableOpacity>
           </View>
           <View>
             <SliderImg

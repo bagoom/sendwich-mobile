@@ -32,6 +32,7 @@ const HomeHeaderSwiper = (props: any) => {
             dotsPos: 'bottom-right',
             prevPos: false,
             nextPos: false,
+            //@ts-ignore
             DotComponent: ({index, activeIndex, isActive, onPress}) => (
               <Pagination>
                 <PaginationText>

@@ -16,6 +16,7 @@ import LoginScreen from '../screens/Login';
 import RegisterFirstScreen from '../screens/RegisterFirst';
 import RegisterSecondScreen from '../screens/RegisterSecond';
 import MainFoodBanner from '../screens/MainFoodBanner';
+import MainSubBannerFilter from '../screens/MainSubBannerFilter';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import HomeHeaderRight from '../components/HomeHeaderRight';
@@ -83,6 +84,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={MainFoodBanner}
           options={{
             headerTitle: '오늘 뭐 먹지?',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="MainSubBannerFilter"
+          component={MainSubBannerFilter}
+          options={{
+            headerTitle: '필터검색',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}

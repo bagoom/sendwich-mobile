@@ -1,12 +1,12 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {ScrollView, Text, TouchableOpacity} from 'react-native';
+import {ScrollView} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import HomeHeaderSwiper from '../components/HomeHeaderSwiper';
 import HomeSubSwiper from '../components/HomeSubSwiper';
 import HomeIcons from '../components/HomeIcons';
-import HomeMiddleSwiper from '../components/HomeMiddleSwiper';
+import HomeSoteSwiper from '../components/HomeSoteSwiper';
 import StoreList from '../components/StoreList';
 import Footer from '../components/Footer';
 
@@ -19,10 +19,10 @@ const MainTabA1Screen = (props: any) => {
     <ScrollView style={{flex: 1}}>
       <HomeHeaderSwiper navigation={navigation} />
       <Container>
-        <HomeSubSwiper />
+        <HomeSubSwiper navigation={navigation} />
         <HomeIcons />
       </Container>
-      <HomeMiddleSwiper />
+      <HomeSoteSwiper />
       <Space />
       <ContainerType2>
         <StoreList />

@@ -5,6 +5,7 @@ export default {
     white: '#FFFFFF',
     black: '#000000',
     point: '#FFBD2E',
+    red: '#F04747',
   },
   fonts: {
     normal: '14px',
