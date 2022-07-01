@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {SectionList, Dimensions, View, Text} from 'react-native';
+import {Platform, Dimensions, View, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
-import {Shadow} from 'react-native-shadow-2';
 import theme from '../Theme';
 import styled from 'styled-components/native';
 
@@ -11,25 +10,17 @@ const EventItem = (props: any) => {
   const g = useGlobalStore();
 
   return (
-    <Shadow
-      distance={20}
-      viewStyle={{width: '100%', alignSelf: 'stretch'}} // 스타일을 설정하면 됩니다.
-      // radius={10} // 그림자 radius
-      offset={[0, 16]} // 그림자 위치 (x, y)
-      startColor="rgba(0,0,0,0.025)" // 그림자 색상
-      finalColor="transparent">
-      <ListItem>
-        <Badge>
-          <BadgeText>선착순</BadgeText>
-        </Badge>
+    <ListItem>
+      <Badge>
+        <BadgeText>선착순</BadgeText>
+      </Badge>
 
-        <CouponImg source={require('../assets/images/coupon.png')} />
+      <CouponImg source={require('../assets/images/coupon.png')} />
 
-        <Catrory>쿠폰이벤트</Catrory>
-        <Title>3,000원 결제 할인</Title>
-        <Date>2022.04.30까지</Date>
-      </ListItem>
-    </Shadow>
+      <Catrory>쿠폰이벤트</Catrory>
+      <Title>3,000원 결제 할인</Title>
+      <Date>2022.04.30까지</Date>
+    </ListItem>
   );
 };
 
@@ -46,6 +37,7 @@ const ListItem = styled.TouchableOpacity`
   overflow: hidden;
   flex-direction: column;
   align-items: flex-start;
+  /* elevation: 1 */
 `;
 
 const Badge = styled.View`
