@@ -90,7 +90,7 @@ export class GlobalStore {
   _categories = [];
   _dynamic_categories = [];
   _selectedCategories: any = [];
-  _homeIcons: any = [];
+  _homeIcons = [];
 
   kakaoToken = '';
   authenticationed = false;
@@ -339,6 +339,7 @@ export class GlobalStore {
     const {data} = await AuthRepository.getHomeIcons();
     runInAction(() => {
       this._homeIcons = data.data;
+      this.authChecked = true;
     });
     // console.log(data);
   };
@@ -348,19 +349,6 @@ export class GlobalStore {
     runInAction(() => {
       this._categories = data.data;
     });
-  };
-
-  getDynamicCategories = async (): Promise<void> => {
-    try {
-      const {data} = await AuthRepository.getDynamicCategories();
-
-      runInAction(() => {
-        this._dynamic_categories = data.data;
-        this.authChecked = true;
-      });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   selectCategory = (item: any) => {
@@ -411,7 +399,7 @@ export class GlobalStore {
     return toJS(this._categories);
   }
   get dynamic_categories() {
-    const arr = toJS(this._dynamic_categories);
+    const arr = toJS(this._homeIcons);
     let newArr = arr.map((item: any) => {
       return {key: item.title, title: item.title};
     });

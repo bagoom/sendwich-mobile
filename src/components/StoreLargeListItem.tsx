@@ -9,8 +9,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const ITEM_WIDTH = wp('100%') / 2 - 23;
-const StoreListItem = (props: any) => {
+const ITEM_WIDTH = wp('100%') - 32;
+const StoreLargeListItem = (props: any) => {
   const {navigation, item} = props;
   const FIRST_ITEM = item.id % 2;
   const g = useGlobalStore();
@@ -26,18 +26,15 @@ const StoreListItem = (props: any) => {
 
       <Subject>브라운도트</Subject>
       <Description>전주 떡갈비</Description>
-      <Text1>학동역 도보로 5분</Text1>
-      <Text1>320m</Text1>
     </StoreItem>
   );
 };
 
-export default observer(StoreListItem);
+export default observer(StoreLargeListItem);
 
 const StoreItem = styled.View<{type?: number}>`
   width: ${ITEM_WIDTH}px;
-  margin-right: ${props => (props.type ? '14px' : '0px')};
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 `;
 
 const SliderImg = styled.Image`
@@ -47,10 +44,10 @@ const SliderImg = styled.Image`
 `;
 const Badge = styled.View`
   position: absolute;
-  bottom: 12px;
+  bottom: 22px;
   right: 10px;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background: #efb324;
   justify-content: center;
   align-items: center;

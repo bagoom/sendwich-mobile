@@ -102,6 +102,7 @@ const LoginScreen = () => {
         <Continer>
           <TouchableOpacity
             onPress={g.signInWithKakao}
+            activeOpacity={0.8}
             style={{width: '100%', marginTop: 20}}>
             <Image
               source={require('../assets/images/kakao_login.png')}

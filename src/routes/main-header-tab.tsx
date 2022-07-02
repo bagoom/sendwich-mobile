@@ -5,7 +5,7 @@ import HomeScreen from '../screens/MainTabHome';
 import MainTabSupport from '../screens/MainTabSupport';
 import MainTabDating from '../screens/MainTabDating';
 import MainHeaderTabSupport from './main-header-tab-nested';
-
+import HomeHeaderTitle from '../components/HomeHeaderTitle';
 const MainHeaderTab = createMaterialTopTabNavigator();
 
 const MainHeaderTabAfterAuth = () => {
@@ -22,8 +22,8 @@ const MainHeaderTabAfterAuth = () => {
         tabBarStyle: {
           paddingVertical: 3,
           borderBottomColor: '#f5f5f5',
-          // borderBottomWidth: 1,
-          elevation: 1,
+          borderBottomWidth: 1,
+          elevation: 0,
         },
       }}>
       <MainHeaderTab.Screen name="추천" component={HomeScreen} />

@@ -35,7 +35,7 @@ const navTheme = {
 class Root extends React.Component<RootProps> {
   constructor(props: RootProps) {
     super(props);
-    AsyncStorage.clear();
+    // AsyncStorage.clear();
   }
 
   render() {

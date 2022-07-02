@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
-import StoreListItem from '../components/StoreListItem';
+import StoreLargeListItem from './StoreLargeListItem';
 
 import {Title} from '../Theme';
 let titleVisible = false;
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}];
-const StoreList = (props: any) => {
+const data = [{id: 1}, {id: 2}, {id: 3}];
+const StoreLargeList = (props: any) => {
   const {navigation} = props;
   titleVisible = props.titleVisible;
   const g = useGlobalStore();
@@ -16,7 +16,7 @@ const StoreList = (props: any) => {
       <View
         style={{
           flex: 1,
-          marginTop: 30,
+          marginTop: 16,
           paddingBottom: 30,
         }}>
         {props.titleVisible && <Title>내 주변 매장</Title>}
@@ -28,7 +28,7 @@ const StoreList = (props: any) => {
             flexWrap: 'wrap',
           }}>
           {data.map((item, key) => (
-            <StoreListItem item={item} key={key} />
+            <StoreLargeListItem item={item} key={key} />
           ))}
         </View>
       </View>
@@ -36,4 +36,4 @@ const StoreList = (props: any) => {
   );
 };
 
-export default observer(StoreList);
+export default observer(StoreLargeList);

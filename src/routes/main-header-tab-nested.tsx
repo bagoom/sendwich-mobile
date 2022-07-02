@@ -1,81 +1,45 @@
-import React, {useState, useEffect} from 'react';
-import {View, useWindowDimensions, StyleSheet, Text} from 'react-native';
-
-import {useGlobalStore} from '../store/util';
+import React from 'react';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {observer, inject} from 'mobx-react';
-import {
-  TabView,
-  TabBar,
-  SceneMap,
-  SceneRendererProps,
-  NavigationState,
-} from 'react-native-tab-view';
+import {useGlobalStore} from '../store/util';
+import CustomRoute from './custom-router';
 
-type State = NavigationState<{
-  key: string;
-  title: string;
-}>;
+const Tab = createMaterialTopTabNavigator();
 
-const FirstRoute = (props: any) => (
-  <View style={{flex: 1, backgroundColor: '#fff'}}>
-    <Text style={{color: '#000'}}>{props.foo}</Text>
-  </View>
-);
-const renderTabBar = (props: SceneRendererProps & {navigationState: State}) => (
-  <TabBar
-    {...props}
-    scrollEnabled
-    indicatorStyle={styles.indicator}
-    style={styles.tabbar}
-    labelStyle={styles.label}
-    tabStyle={styles.tabStyle}
-    pressColor={'transparent'}
-    activeColor={'#222'}
-  />
-);
-
-const TabViewExample = () => {
+const MainHeaderSubTab = () => {
   const g = useGlobalStore();
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-
   const categories = g.dynamic_categories;
-  const obj = categories.reduce((accumulator, value) => {
-    return {...accumulator, [value.key]: () => <FirstRoute foo="dddd" />};
-  }, {});
-  const renderScene = SceneMap(obj);
-  const [routes] = useState(categories);
   return (
-    <TabView
-      swipeEnabled={false}
-      navigationState={{index, routes}}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{width: layout.width}}
-      renderTabBar={renderTabBar}
+    <Tab.Navigator
+      screenOptions={{
+        swipeEnabled: false,
+        tabBarPressColor: 'transparent',
+        tabBarIndicatorStyle: {
+          backgroundColor: 'transparent',
+        },
+        tabBarInactiveTintColor: '#aaa',
+        tabBarActiveTintColor: '#222',
+        tabBarStyle: {
+          borderBottomWidth: 1,
+          borderBottomColor: '#f5f5f5',
+          elevation: 0,
+        },
+      }}
       //@ts-ignore
-      tabStyle={styles.tabStyle}
-    />
+      tabBarOptions={{
+        scrollEnabled: true,
+        tabStyle: {
+          width: 'auto',
+        },
+        labelStyle: {paddingHorizontal: 5, margin: 0, border: 0},
+      }}>
+      {categories.map((router, index) => {
+        return (
+          <Tab.Screen name={router.title} key={index} component={CustomRoute} />
+        );
+      })}
+    </Tab.Navigator>
   );
 };
 
-export default observer(TabViewExample);
-
-const styles = StyleSheet.create({
-  tabbar: {
-    backgroundColor: 'transparent',
-    elevation: 0,
-    borderBottomWidth: 1,
-    borderColor: '#f5f5f5',
-  },
-  indicator: {
-    backgroundColor: 'transparent',
-  },
-  label: {
-    fontWeight: '400',
-    color: '#888',
-  },
-  tabStyle: {
-    width: 'auto',
-  },
-});
+export default observer(MainHeaderSubTab);

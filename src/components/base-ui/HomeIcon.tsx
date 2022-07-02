@@ -6,12 +6,13 @@ import {FlatList, Dimensions, Text} from 'react-native';
 import {BASE_URL} from '@env';
 const numColumns = 4;
 const HomeIcon = (props: any) => {
-  const {data, index} = props;
+  const {data, index, navigation} = props;
   const g = useGlobalStore();
-  // console.log(BASE_URL);
   const mr0 = index === 3 || index === 7;
   return (
-    <IconButton mr={mr0}>
+    <IconButton
+      mr={mr0}
+      onPress={() => navigation.navigate(data.title, {name: ''})}>
       <IconImage
         source={{
           uri: `${BASE_URL}${data.image.url}`,

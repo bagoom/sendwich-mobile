@@ -12,7 +12,7 @@ const CheckAuthScreen = () => {
 
   useEffect(() => {
     g.setupAuth();
-    g.getDynamicCategories();
+    g.getHomeIcons();
   }, []);
 
   return (

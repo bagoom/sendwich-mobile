@@ -20,12 +20,12 @@ const MainTabA1Screen = (props: any) => {
       <HomeHeaderSwiper navigation={navigation} />
       <Container>
         <HomeSubSwiper navigation={navigation} />
-        <HomeIcons />
+        <HomeIcons navigation={navigation} />
       </Container>
       <HomeStoreSwiper />
       <Space />
       <ContainerType2>
-        <StoreList />
+        <StoreList titleVisible={true} />
       </ContainerType2>
       <Space />
 

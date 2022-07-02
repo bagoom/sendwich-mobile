@@ -17,7 +17,14 @@ const HomeIcons = (props: any) => {
   return (
     <Wrapper>
       {g.homeIcons.map((item: any, index: number) => {
-        return <HomeIcon data={item} key={index} index={index} />;
+        return (
+          <HomeIcon
+            data={item}
+            key={index}
+            index={index}
+            navigation={navigation}
+          />
+        );
       })}
     </Wrapper>
   );
