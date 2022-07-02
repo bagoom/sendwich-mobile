@@ -3,13 +3,17 @@ import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Icon from '../../Icon-font.js';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeHeaderRight = (props: any) => {
-  const {navigation} = props;
+  const navigation = useNavigation<any>();
   const g = useGlobalStore();
 
   return (
-    <View style={{paddingRight: 14, flexDirection: 'row'}}>
+    <View
+      style={{
+        flexDirection: 'row',
+      }}>
       <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
         <Icon
           name="noti"

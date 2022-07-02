@@ -10,9 +10,7 @@ const HomeIcon = (props: any) => {
   const g = useGlobalStore();
   const mr0 = index === 3 || index === 7;
   return (
-    <IconButton
-      mr={mr0}
-      onPress={() => navigation.navigate(data.title, {name: ''})}>
+    <IconButton mr={mr0} onPress={() => navigation.navigate(data.title)}>
       <IconImage
         source={{
           uri: `${BASE_URL}${data.image.url}`,

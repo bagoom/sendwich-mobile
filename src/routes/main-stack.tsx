@@ -175,16 +175,6 @@ class MainStack extends React.Component<MainStackProp> {
             borderBottomWidth: 0.7,
             borderBottomColor: '#f5f5f5',
           },
-          headerLeft: () => showRender && <MainDrawer />,
-          headerTitle: () => (
-            <HomeHeaderTitle
-              showRender={showRender}
-              navigation={navigation}
-              currentRouteName={currentRouteName}
-            />
-          ),
-          headerRight: () =>
-            showRender && <HomeHeaderRight navigation={navigation} />,
         })}
       />
     );

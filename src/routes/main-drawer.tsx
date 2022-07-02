@@ -50,7 +50,7 @@ const DrawerNavigator = (props: any) => {
   };
 
   return (
-    <View style={{paddingHorizontal: 14}}>
+    <View style={{paddingRight: 10, marginRight: 27}}>
       <Icon
         name="menu"
         onPress={toggleModal}

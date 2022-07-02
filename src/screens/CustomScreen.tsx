@@ -4,27 +4,25 @@ import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
+import HeaderFilter from '../components/HeaderFilter';
 import StoreLargeList from '../components/StoreLargeList';
 import StoreList from '../components/StoreList';
 import Footer from '../components/Footer';
 import {Space} from '../Theme';
 
 const CustomRoute = (props: any) => {
-  const {navigation} = props;
-  console.log(props);
   const g = useGlobalStore();
-
   return (
     <>
       <ScrollView>
         <Wrapper>
-          {/* <HeaderFilter></HeaderFilter> */}
+          <HeaderFilter />
           <StoreLargeList />
         </Wrapper>
         <Space />
 
         <Wrapper>
-          <StoreList titleVisible={true} />
+          <StoreList />
         </Wrapper>
         <Space />
         <Footer />

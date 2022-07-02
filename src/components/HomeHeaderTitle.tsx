@@ -1,15 +1,18 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Icon from '../../Icon-font.js';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeHeaderTitle = (props: any) => {
-  const {navigation, currentRouteName, showRender} = props;
+  const {currentRouteName, showRender} = props;
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
   return showRender ? (
     <TouchableOpacity
       style={{
+        alignSelf: 'center',
         flexDirection: 'row',
         alignItems: 'center',
       }}

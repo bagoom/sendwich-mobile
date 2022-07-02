@@ -2,7 +2,7 @@ import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {observer, inject} from 'mobx-react';
 import {useGlobalStore} from '../store/util';
-import CustomRoute from './custom-router';
+import CustomScreen from '../screens/CustomScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -11,6 +11,7 @@ const MainHeaderSubTab = () => {
   const categories = g.dynamic_categories;
   return (
     <Tab.Navigator
+      backBehavior="none"
       screenOptions={{
         swipeEnabled: false,
         tabBarPressColor: 'transparent',
@@ -35,7 +36,11 @@ const MainHeaderSubTab = () => {
       }}>
       {categories.map((router, index) => {
         return (
-          <Tab.Screen name={router.title} key={index} component={CustomRoute} />
+          <Tab.Screen
+            name={router.title}
+            key={index}
+            component={CustomScreen}
+          />
         );
       })}
     </Tab.Navigator>
