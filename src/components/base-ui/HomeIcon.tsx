@@ -8,6 +8,7 @@ const numColumns = 4;
 const HomeIcon = (props: any) => {
   const {data, index} = props;
   const g = useGlobalStore();
+  // console.log(BASE_URL);
   const mr0 = index === 3 || index === 7;
   return (
     <IconButton mr={mr0}>

@@ -25,6 +25,7 @@ const HomeHeaderSwiper = (props: any) => {
     <>
       <View style={styles.container}>
         <Swiper
+          loop={true}
           minDistanceToCapture={5}
           springConfig={{bounciness: 0}}
           minDistanceForAction={0.05}

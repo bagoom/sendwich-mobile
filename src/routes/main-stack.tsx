@@ -11,6 +11,7 @@ import {withTheme} from 'styled-components';
 
 import MainTab from './main-tab';
 import MainDrawer from './main-drawer';
+import CheckAuthScreen from '../screens/CheckAuth';
 import LoginScreen from '../screens/Login';
 import RegisterFirstScreen from '../screens/RegisterFirst';
 import RegisterSecondScreen from '../screens/RegisterSecond';
@@ -61,7 +62,6 @@ class MainStack extends React.Component<MainStackProp> {
             // fontFamily: 'SpoqaHanSansNeo-Regular',
             //   fontSize: this.props.theme.dimensions.fs4,
             fontWeight: '400',
-            //   color: this.props.theme.colors.defaultText,
           },
           headerStyle: {
             borderWidth: 0,
@@ -74,12 +74,6 @@ class MainStack extends React.Component<MainStackProp> {
           : !store.loggedIn
           ? this.renderBeforeAuthScreens()
           : this.renderAfterAuthScreens()}
-
-        {/* <MainStackStackNav.Screen
-          name="RegisterSecondScreen"
-          component={RegisterSecondScreen}
-          options={{headerShown: false}}
-        /> */}
 
         <MainStackStackNav.Screen
           name="MainFoodBanner"
@@ -134,8 +128,8 @@ class MainStack extends React.Component<MainStackProp> {
     return (
       <>
         <MainStackStackNav.Screen
-          name="Login"
-          component={LoginScreen}
+          name="CheckAuth"
+          component={CheckAuthScreen}
           options={{headerShown: false}}
         />
       </>
@@ -145,6 +139,11 @@ class MainStack extends React.Component<MainStackProp> {
   renderBeforeAuthScreens = () => {
     return (
       <>
+        <MainStackStackNav.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
         <MainStackStackNav.Screen
           name="RegisterFirst"
           component={RegisterFirstScreen}

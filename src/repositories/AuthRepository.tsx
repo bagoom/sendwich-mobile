@@ -32,6 +32,9 @@ class AuthRepository {
   getCategories() {
     return axios.get(`${BASE_URL}/api/categories?populate=*`);
   }
+  getDynamicCategories() {
+    return axios.get(`${BASE_URL}/api/dynamic-categories`);
+  }
 
   getHomeIcons() {
     return axios.get(`${BASE_URL}/api/home-icons?populate=*`);

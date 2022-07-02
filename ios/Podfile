@@ -27,6 +27,8 @@ target 'sendwich_mobile' do
 
   pod 'RNGestureHandler', :podspec => '../node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
 
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
   target 'sendwich_mobileTests' do
     inherit! :complete
     # Pods for testing

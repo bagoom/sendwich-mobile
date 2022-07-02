@@ -140,6 +140,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
+        multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
         applicationId "com.sendwich_mobile"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -248,6 +249,20 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES.txt'
+
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -269,6 +284,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+
+    implementation project(':react-native-art')
+    
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:0.68.2"  // From node_modules
 

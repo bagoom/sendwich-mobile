@@ -2,7 +2,9 @@ import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {observer, inject} from 'mobx-react';
 import HomeScreen from '../screens/MainTabHome';
-import MainTabSearch from '../screens/MainTabSearch';
+import MainTabSupport from '../screens/MainTabSupport';
+import MainTabDating from '../screens/MainTabDating';
+import MainHeaderTabSupport from './main-header-tab-nested';
 
 const MainHeaderTab = createMaterialTopTabNavigator();
 
@@ -25,8 +27,11 @@ const MainHeaderTabAfterAuth = () => {
         },
       }}>
       <MainHeaderTab.Screen name="추천" component={HomeScreen} />
-      <MainHeaderTab.Screen name="모임비지원" component={MainTabSearch} />
-      <MainHeaderTab.Screen name="데이트코스" component={MainTabSearch} />
+      <MainHeaderTab.Screen
+        name="모임비지원"
+        component={MainHeaderTabSupport}
+      />
+      <MainHeaderTab.Screen name="데이트코스" component={MainTabDating} />
     </MainHeaderTab.Navigator>
   );
 };

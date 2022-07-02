@@ -88,6 +88,7 @@ export class GlobalStore {
   showPhoneAuthNumberInput = false;
   activeNextStack = false;
   _categories = [];
+  _dynamic_categories = [];
   _selectedCategories: any = [];
   _homeIcons: any = [];
 
@@ -115,9 +116,11 @@ export class GlobalStore {
       _selectedCategories: observable,
       _kakaoData: observable,
       _homeIcons: observable,
+      _dynamic_categories: observable,
 
       sendwichProfile: computed,
       categories: computed,
+      dynamic_categories: computed,
       kakaoData: computed,
       homeIcons: computed,
     });
@@ -165,10 +168,14 @@ export class GlobalStore {
 
   getJtw = async () => {
     await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
-      if (result) {
-        runInAction(() => {
-          this.jwt = result;
-        });
+      try {
+        if (result) {
+          runInAction(() => {
+            this.jwt = result;
+          });
+        }
+      } catch (e) {
+        console.log(e);
       }
     });
   };
@@ -333,7 +340,7 @@ export class GlobalStore {
     runInAction(() => {
       this._homeIcons = data.data;
     });
-    console.log(data);
+    // console.log(data);
   };
 
   getCategories = async (): Promise<void> => {
@@ -341,6 +348,19 @@ export class GlobalStore {
     runInAction(() => {
       this._categories = data.data;
     });
+  };
+
+  getDynamicCategories = async (): Promise<void> => {
+    try {
+      const {data} = await AuthRepository.getDynamicCategories();
+
+      runInAction(() => {
+        this._dynamic_categories = data.data;
+        this.authChecked = true;
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   selectCategory = (item: any) => {
@@ -389,6 +409,13 @@ export class GlobalStore {
   }
   get categories() {
     return toJS(this._categories);
+  }
+  get dynamic_categories() {
+    const arr = toJS(this._dynamic_categories);
+    let newArr = arr.map((item: any) => {
+      return {key: item.title, title: item.title};
+    });
+    return newArr;
   }
   get selectedCategories() {
     const arr = toJS(this._selectedCategories);
