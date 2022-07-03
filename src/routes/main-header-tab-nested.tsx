@@ -20,19 +20,19 @@ const MainHeaderSubTab = () => {
         },
         tabBarInactiveTintColor: '#aaa',
         tabBarActiveTintColor: '#222',
+        tabBarScrollEnabled: true,
         tabBarStyle: {
           borderBottomWidth: 1,
           borderBottomColor: '#f5f5f5',
           elevation: 0,
         },
-      }}
-      //@ts-ignore
-      tabBarOptions={{
-        scrollEnabled: true,
-        tabStyle: {
+        tabBarLabelStyle: {
+          paddingHorizontal: 5,
+          margin: 0,
+        },
+        tabBarItemStyle: {
           width: 'auto',
         },
-        labelStyle: {paddingHorizontal: 5, margin: 0, border: 0},
       }}>
       {categories.map((router, index) => {
         return (

@@ -17,7 +17,7 @@ export const mainTabRoutes = [
   {
     name: 'Like',
     com: MainTabLikesScreen,
-    icon: 'like',
+    icon: 'heart',
   },
   {
     name: 'My',

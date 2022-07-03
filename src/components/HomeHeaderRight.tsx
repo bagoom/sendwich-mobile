@@ -16,7 +16,7 @@ const HomeHeaderRight = (props: any) => {
       }}>
       <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
         <Icon
-          name="noti"
+          name="notification"
           // onPress={}
           style={{
             width: 20,

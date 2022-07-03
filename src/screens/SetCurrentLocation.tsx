@@ -29,7 +29,7 @@ const SetCurrentLocation = (props: any) => {
           </InputRow>
 
           <LocationButton>
-            <Icon name="target" style={{fontSize: 20, color: '#222'}} />
+            <Icon name="gps" style={{fontSize: 20, color: '#222'}} />
             <Text>현 위치로 주소 설정</Text>
           </LocationButton>
         </Container>

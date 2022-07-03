@@ -1,7 +1,6 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {observer, inject} from 'mobx-react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import HomeScreen from '../screens/MainTabHome';
 import MainTabDating from '../screens/MainTabDating';
 import MainHeaderTabSupport from './main-header-tab-nested';
@@ -10,7 +9,7 @@ const MainHeaderTab = createMaterialTopTabNavigator();
 
 const MainHeaderTabAfterAuth = () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <>
       <CustomTopTabHeader />
       <MainHeaderTab.Navigator
         screenOptions={{
@@ -35,7 +34,7 @@ const MainHeaderTabAfterAuth = () => {
         />
         <MainHeaderTab.Screen name="데이트코스" component={MainTabDating} />
       </MainHeaderTab.Navigator>
-    </SafeAreaView>
+    </>
   );
 };
 

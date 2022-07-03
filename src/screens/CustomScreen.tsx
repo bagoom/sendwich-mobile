@@ -13,21 +13,19 @@ import {Space} from '../Theme';
 const CustomRoute = (props: any) => {
   const g = useGlobalStore();
   return (
-    <>
-      <ScrollView>
-        <Wrapper>
-          <HeaderFilter />
-          <StoreLargeList />
-        </Wrapper>
-        <Space />
+    <ScrollView>
+      <Wrapper>
+        <HeaderFilter />
+        <StoreLargeList />
+      </Wrapper>
+      <Space />
 
-        <Wrapper>
-          <StoreList />
-        </Wrapper>
-        <Space />
-        <Footer />
-      </ScrollView>
-    </>
+      <Wrapper>
+        <StoreList />
+      </Wrapper>
+      <Space />
+      <Footer />
+    </ScrollView>
   );
 };
 

@@ -6,6 +6,8 @@ export default {
     black: '#000000',
     point: '#FFBD2E',
     red: '#F04747',
+    brown: '#7D331A',
+    dark_yellow: '#7E745C',
   },
   fonts: {
     normal: '14px',

@@ -4,19 +4,21 @@ import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
 
 const ITEM_WIDTH = wp('100%') - 32;
 const StoreLargeListItem = (props: any) => {
-  const {navigation, item} = props;
+  const {item} = props;
   const FIRST_ITEM = item.id % 2;
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
 
   return (
-    <StoreItem type={FIRST_ITEM}>
+    <StoreItem
+      type={FIRST_ITEM}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('SotreDetail')}>
       <View>
         <Badge>
           <BadgeText>10%</BadgeText>
@@ -32,7 +34,7 @@ const StoreLargeListItem = (props: any) => {
 
 export default observer(StoreLargeListItem);
 
-const StoreItem = styled.View<{type?: number}>`
+const StoreItem = styled.TouchableOpacity<{type?: number}>`
   width: ${ITEM_WIDTH}px;
   margin-bottom: 16px;
 `;

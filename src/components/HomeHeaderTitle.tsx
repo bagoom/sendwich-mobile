@@ -29,7 +29,7 @@ const HomeHeaderTitle = (props: any) => {
         부산시 사하구 비봉로 93
       </Text>
       <Icon
-        name="arrow"
+        name="arrow-down"
         // onPress={}
         style={{
           fontSize: 14,

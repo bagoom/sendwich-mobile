@@ -10,7 +10,8 @@ import {GlobalStore} from '../store/store';
 import {withTheme} from 'styled-components';
 
 import MainTab from './main-tab';
-import MainDrawer from './main-drawer';
+import {TransitionPresets} from '@react-navigation/stack';
+
 import CheckAuthScreen from '../screens/CheckAuth';
 import LoginScreen from '../screens/Login';
 import RegisterFirstScreen from '../screens/RegisterFirst';
@@ -20,9 +21,10 @@ import MainSubBannerFilter from '../screens/MainSubBannerFilter';
 import MainAllBanner from '../screens/MainAllBanner';
 import SetCurrentLocation from '../screens/SetCurrentLocation';
 import Notification from '../screens/Notification';
+import SotreDetail from '../screens/StoreDetail';
+import SotreDetailInfo from '../screens/SotreDetailInfo';
 
-import HomeHeaderTitle from '../components/HomeHeaderTitle';
-import HomeHeaderRight from '../components/HomeHeaderRight';
+import DetailHeaderRight from '../components/DetailHeaderRight';
 
 const MainStackStackNav = createStackNavigator();
 
@@ -116,6 +118,25 @@ class MainStack extends React.Component<MainStackProp> {
           component={Notification}
           options={{
             headerTitle: '알림함',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="SotreDetail"
+          component={SotreDetail}
+          options={{
+            headerTitle: '알림함',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+            headerRight: () => <DetailHeaderRight />,
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="SotreDetailInfo"
+          component={SotreDetailInfo}
+          options={{
+            headerTitle: '가게정보',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
