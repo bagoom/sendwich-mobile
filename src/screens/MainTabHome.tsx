@@ -19,7 +19,7 @@ const MainTabA1Screen = (props: any) => {
     <ScrollView style={{flex: 1}}>
       <HomeHeaderSwiper navigation={navigation} />
       <Container>
-        <HomeSubSwiper navigation={navigation} />
+        <HomeSubSwiper />
         <HomeIcons navigation={navigation} />
       </Container>
       <HomeStoreSwiper />

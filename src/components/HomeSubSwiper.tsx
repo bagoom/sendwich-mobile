@@ -9,6 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
 
 const width = wp('100%');
 
@@ -27,9 +28,9 @@ const styles = StyleSheet.create({
 });
 
 const HomeSubSwiper = (props: any) => {
-  const {navigation} = props;
-  console.log(navigation);
+  const {} = props;
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
 
   return (
     <>
