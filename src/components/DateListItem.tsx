@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
-
+import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 const DateListItem = (props: any) => {
-  const {navigation, item} = props;
+  const {item} = props;
   const g = useGlobalStore();
-
+  const navigation = useNavigation<any>();
   return (
-    <DateItem>
+    <DateItem onPress={() => navigation.navigate('DateDetail')}>
       <CoverImg
         source={require('../assets/images/main_banner.jpeg')}
         resizeMode="cover"
@@ -27,7 +27,7 @@ const DateListItem = (props: any) => {
 
 export default observer(DateListItem);
 
-const DateItem = styled.View<{type?: number}>`
+const DateItem = styled.TouchableOpacity<{type?: number}>`
   width: 100%;
   margin-bottom: 22px;
 `;

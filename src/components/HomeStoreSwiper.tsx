@@ -21,13 +21,13 @@ const baseOptions = {
 } as const;
 
 const HomeStoreSwiper = (props: any) => {
-  const {navigation} = props;
+  const {navigation, titleVisible = true} = props;
   const g = useGlobalStore();
 
   return (
     <>
       <View style={{flex: 1, paddingLeft: 16, paddingBottom: 30}}>
-        <Title>외식비 지원해 드릴게요</Title>
+        {titleVisible && <Title>외식비 지원해 드릴게요</Title>}
 
         <Carousel
           {...baseOptions}

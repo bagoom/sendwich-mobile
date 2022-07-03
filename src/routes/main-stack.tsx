@@ -23,6 +23,7 @@ import SetCurrentLocation from '../screens/SetCurrentLocation';
 import Notification from '../screens/Notification';
 import SotreDetail from '../screens/StoreDetail';
 import SotreDetailInfo from '../screens/SotreDetailInfo';
+import DateDetail from '../screens/DateDetail';
 
 import DetailHeaderRight from '../components/DetailHeaderRight';
 
@@ -137,6 +138,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={SotreDetailInfo}
           options={{
             headerTitle: '가게정보',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="DateDetail"
+          component={DateDetail}
+          options={{
+            headerTitle: '아트 인 메타버스',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
