@@ -1,0 +1,79 @@
+diff --git a/node_modules/react-native-tab-view/lib/commonjs/PagerViewAdapter.js b/node_modules/react-native-tab-view/lib/commonjs/PagerViewAdapter.js
+index c4ee5c8..082a6b5 100644
+--- a/node_modules/react-native-tab-view/lib/commonjs/PagerViewAdapter.js
++++ b/node_modules/react-native-tab-view/lib/commonjs/PagerViewAdapter.js
+@@ -50,7 +50,8 @@ function PagerViewAdapter({
+     var _pagerRef$current;
+ 
+     const index = navigationStateRef.current.routes.findIndex(route => route.key === key);
+-    (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPage(index);
++    // (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPage(index);
++    (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPageWithoutAnimation(index);
+   }, []);
+   React.useEffect(() => {
+     if (keyboardDismissMode === 'auto') {
+@@ -60,7 +61,8 @@ function PagerViewAdapter({
+     if (indexRef.current !== index) {
+       var _pagerRef$current2;
+ 
+-      (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPage(index);
++      // (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPage(index);
++      (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPageWithoutAnimation(index);
+     }
+   }, [keyboardDismissMode, index]);
+ 
+diff --git a/node_modules/react-native-tab-view/lib/module/PagerViewAdapter.js b/node_modules/react-native-tab-view/lib/module/PagerViewAdapter.js
+index 726b9f5..15680d8 100644
+--- a/node_modules/react-native-tab-view/lib/module/PagerViewAdapter.js
++++ b/node_modules/react-native-tab-view/lib/module/PagerViewAdapter.js
+@@ -32,7 +32,8 @@ export default function PagerViewAdapter({
+     var _pagerRef$current;
+ 
+     const index = navigationStateRef.current.routes.findIndex(route => route.key === key);
+-    (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPage(index);
++    // (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPage(index);
++    (_pagerRef$current = pagerRef.current) === null || _pagerRef$current === void 0 ? void 0 : _pagerRef$current.setPageWithoutAnimation(index);
+   }, []);
+   React.useEffect(() => {
+     if (keyboardDismissMode === 'auto') {
+@@ -42,7 +43,8 @@ export default function PagerViewAdapter({
+     if (indexRef.current !== index) {
+       var _pagerRef$current2;
+ 
+-      (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPage(index);
++      // (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPage(index);
++      (_pagerRef$current2 = pagerRef.current) === null || _pagerRef$current2 === void 0 ? void 0 : _pagerRef$current2.setPageWithoutAnimation(index);
+     }
+   }, [keyboardDismissMode, index]);
+ 
+diff --git a/node_modules/react-native-tab-view/src/PagerViewAdapter.tsx b/node_modules/react-native-tab-view/src/PagerViewAdapter.tsx
+index b858cb4..77586bc 100644
+--- a/node_modules/react-native-tab-view/src/PagerViewAdapter.tsx
++++ b/node_modules/react-native-tab-view/src/PagerViewAdapter.tsx
+@@ -64,6 +64,7 @@ export default function PagerViewAdapter<T extends Route>({
+     );
+ 
+     pagerRef.current?.setPage(index);
++    // pagerRef.current?.setPageWithoutAnimation(index);
+   }, []);
+ 
+   React.useEffect(() => {
+@@ -72,7 +73,8 @@ export default function PagerViewAdapter<T extends Route>({
+     }
+ 
+     if (indexRef.current !== index) {
+-      pagerRef.current?.setPage(index);
++      // pagerRef.current?.setPage(index);
++      pagerRef.current?.setPageWithoutAnimation(index);
+     }
+   }, [keyboardDismissMode, index]);
+ 
+@@ -142,6 +144,8 @@ export default function PagerViewAdapter<T extends Route>({
+         onPageSelected={(e) => {
+           const index = e.nativeEvent.position;
+           indexRef.current = index;
++          position.setValue(index);
++          offset.setValue(0);
+           onIndexChange(index);
+         }}
+         onPageScrollStateChanged={onPageScrollStateChanged}

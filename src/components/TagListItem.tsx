@@ -18,7 +18,7 @@ const TagListItem = (props: any) => {
 
 export default observer(TagListItem);
 
-const TagItem = styled.TouchableOpacity<{type?: number}>`
+const TagItem = styled.View<{type?: number}>`
   margin-right: 5px;
   margin-bottom: 8px;
   padding: 7px 14px;

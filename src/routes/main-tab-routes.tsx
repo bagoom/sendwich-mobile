@@ -8,20 +8,24 @@ export const mainTabRoutes = [
     name: 'Home',
     com: mainHeaderTab,
     icon: 'home',
+    header: false,
   },
   {
-    name: 'Search',
+    name: '검색',
     com: MainTabSearchScreen,
     icon: 'search',
+    header: true,
   },
   {
-    name: 'Like',
+    name: '즐겨찾기',
     com: MainTabLikesScreen,
     icon: 'heart',
+    header: true,
   },
   {
-    name: 'My',
+    name: '마이페이지',
     com: MainTabMypageScreen,
     icon: 'mypage',
+    header: true,
   },
 ];
