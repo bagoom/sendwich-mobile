@@ -4,7 +4,32 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import theme, {Title} from '../Theme';
+import NaverMapView, {
+  Circle,
+  Marker,
+  Path,
+  Polyline,
+  Polygon,
+} from 'react-native-nmap';
 
+const MyMap = () => {
+  const P0 = {latitude: 37.3648095, longitude: 127.1076833};
+
+  return (
+    <NaverMapView
+      style={{width: '100%', height: '100%'}}
+      showsMyLocationButton={true}
+      center={{...P0, zoom: 16}}
+      onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
+      <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />
+      <Marker
+        coordinate={P0}
+        pinColor="blue"
+        onClick={() => console.warn('onClick! p1')}
+      />
+    </NaverMapView>
+  );
+};
 const SotreDetailInfo = () => {
   const g = useGlobalStore();
   return (
@@ -27,7 +52,9 @@ const SotreDetailInfo = () => {
           위치안내
         </Title>
 
-        <Map></Map>
+        <Map>
+          <MyMap />
+        </Map>
       </Container>
     </ScrollView>
   );
@@ -78,6 +105,9 @@ const Description = styled.Text`
 `;
 const Map = styled.View`
   width: 100%;
-  height: 100px;
-  background: #000;
+  height: 300px;
+  border-width: 0.5px;
+  overflow: hidden;
+  border-color: #000;
+  /* background: #000; */
 `;

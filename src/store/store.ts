@@ -26,6 +26,7 @@ import {
 } from '@react-native-seoul/kakao-login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthRepository from '../repositories/AuthRepository';
+import MapRepository from '../repositories/MapRepository';
 type Route = {
   key: string;
   name: string;
@@ -100,6 +101,11 @@ export class GlobalStore {
   couponModalVisible = false;
   alertStatus = false;
 
+  headerAddr = '';
+
+  _coordsToAddr: any = {};
+  _searchAddrArr: any = [];
+
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
     this.storageService = prepareStorageService();
@@ -120,6 +126,9 @@ export class GlobalStore {
       CCFilterIndex: observable,
       couponModalVisible: observable,
       nonMember: observable,
+      headerAddr: observable,
+      _coordsToAddr: observable,
+      _searchAddrArr: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -133,6 +142,8 @@ export class GlobalStore {
       dynamic_categories: computed,
       kakaoData: computed,
       homeIcons: computed,
+      coordsToAddr: computed,
+      searchAddrArr: computed,
     });
 
     reaction(
@@ -169,7 +180,13 @@ export class GlobalStore {
           this.loggedIn = true;
           this.authChecked = true;
         });
-        console.log(this.sendwichProfile);
+        await AsyncStorage.getItem('@sendwich_addr', (err, result: any) => {
+          runInAction(() => {
+            this.headerAddr = result;
+          });
+        });
+        console.log(this.headerAddr);
+        // console.log(this.sendwichProfile);
       } catch (e) {
         console.log(e);
       }
@@ -218,8 +235,6 @@ export class GlobalStore {
           this.authChecked = true;
           this.nonMember = false;
         });
-        console.log(this.nonMember);
-
         await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
           runInAction(() => {
             this.jwt = result;
@@ -398,6 +413,39 @@ export class GlobalStore {
     });
   };
 
+  setMyLocation = async (coords: string) => {
+    try {
+      const {data} = await MapRepository.getAddr(coords);
+      // console.log(data);
+      runInAction(() => {
+        this._coordsToAddr = data?.documents[0];
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    return;
+  };
+
+  searchAddr = async (keyword: string) => {
+    try {
+      const {data} = await MapRepository.searchAddr(keyword);
+      runInAction(() => {
+        this._searchAddrArr = data?.documents;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    return;
+  };
+
+  selectHeaderAddr = (addr: string) => {
+    console.log(addr);
+    runInAction(() => {
+      this.headerAddr = addr;
+    });
+    AsyncStorage.setItem(`@sendwich_addr`, this.headerAddr);
+  };
+
   clearStore = () => {
     runInAction(() => {
       this.loggedIn = false;
@@ -451,6 +499,19 @@ export class GlobalStore {
   }
   get homeIcons() {
     return toJS(this._homeIcons);
+  }
+  get searchAddrArr() {
+    return toJS(this._searchAddrArr);
+  }
+  get coordsToAddr() {
+    const arr = toJS(this._coordsToAddr);
+
+    const addr = arr?.address?.address_name;
+    const roadArr = arr?.road_address
+      ? arr?.road_address?.address_name + ' ' + arr?.road_address?.building_name
+      : arr?.address?.address_name;
+
+    return {addr: addr, roadArr: roadArr};
   }
 }
 

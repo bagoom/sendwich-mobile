@@ -1,4 +1,4 @@
-import React, {ReactChild, useEffect} from 'react';
+import React, {ReactChild, useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, FlatList, ScrollView, Dimensions} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -7,13 +7,29 @@ import styled from 'styled-components/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Icon from '../../Icon-font.js';
 import {Space} from '../Theme';
+import SearchAddressList from '../components/SearchAddressList';
 import RecentAddressList from '../components/RecentAddressList';
+import {useNavigation} from '@react-navigation/native';
 
 const WrapperWidth = wp('100%') - 32;
 
 const SetCurrentLocation = (props: any) => {
   const g = useGlobalStore();
+  const [isfocus, setfocus] = useState(false);
+  const [keyword, setKeyword] = useState('');
+  const navigation = useNavigation<any>();
 
+  const InputFocus = () => {
+    setfocus(true);
+  };
+  const InputBlur = () => {
+    if (keyword.length == 0) {
+      setfocus(false);
+    }
+  };
+  const onChangeInput = (val: string) => {
+    setKeyword(val);
+  };
   return (
     <>
       <ScrollView style={{flex: 1}}>
@@ -22,22 +38,39 @@ const SetCurrentLocation = (props: any) => {
             <TextInput
               placeholder="건물명, 도로명 또는 지번으로 검색"
               placeholderTextColor={'#aaa'}
+              onFocus={InputFocus}
+              onBlur={InputBlur}
+              onChangeText={g.searchAddr}
+              onChange={val => onChangeInput(val.nativeEvent.text)}
             />
             <SearchButton>
               <Icon name="search" style={{fontSize: 20, color: '#222'}} />
             </SearchButton>
           </InputRow>
 
-          <LocationButton>
-            <Icon name="gps" style={{fontSize: 20, color: '#222'}} />
-            <Text>현 위치로 주소 설정</Text>
-          </LocationButton>
+          {!isfocus && (
+            <LocationButton
+              onPress={() => navigation.navigate('SetCurrentMapLocation')}>
+              <Icon name="gps" style={{fontSize: 20, color: '#222'}} />
+              <Text>현 위치로 주소 설정</Text>
+            </LocationButton>
+          )}
         </Container>
-        <Space />
 
-        <Container>
-          <RecentAddressList />
-        </Container>
+        {!isfocus && (
+          <>
+            <Space />
+            <Container>
+              <RecentAddressList />
+            </Container>
+          </>
+        )}
+
+        {isfocus && (
+          <Container>
+            <SearchAddressList />
+          </Container>
+        )}
       </ScrollView>
     </>
   );

@@ -26,7 +26,7 @@ const HomeHeaderTitle = (props: any) => {
           fontSize: 14,
           fontWeight: '500',
         }}>
-        부산시 사하구 비봉로 93
+        {g.headerAddr ? g.headerAddr : '현재 위치를 설정 해주세요.'}
       </Text>
       <Icon
         name="arrow-down"

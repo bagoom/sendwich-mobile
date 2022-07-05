@@ -68,7 +68,7 @@ const Date = styled.Text`
   font-weight: 300;
   letter-spacing: -0.5px;
 `;
-const Button = styled.TouchableOpacity`
+const Button = styled.View`
   position: absolute;
   right: 16px;
   bottom: 20px;

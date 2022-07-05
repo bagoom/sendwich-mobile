@@ -20,6 +20,7 @@ import MainFoodBanner from '../screens/MainFoodBanner';
 import MainSubBannerFilter from '../screens/MainSubBannerFilter';
 import MainAllBanner from '../screens/MainAllBanner';
 import SetCurrentLocation from '../screens/SetCurrentLocation';
+import SetCurrentMapLocation from '../screens/SetCurrentMapLocation';
 import Notification from '../screens/Notification';
 import SotreDetail from '../screens/StoreDetail';
 import SotreDetailInfo from '../screens/SotreDetailInfo';
@@ -54,7 +55,6 @@ class MainStack extends React.Component<MainStackProp> {
 
   render() {
     const {store, theme} = this.props;
-    console.log(store.nonMember);
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
@@ -178,6 +178,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={SetCurrentLocation}
           options={{
             headerTitle: '현재 위치 설정',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="SetCurrentMapLocation"
+          component={SetCurrentMapLocation}
+          options={{
+            headerTitle: '지도에서 위치 확인',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
