@@ -67,6 +67,7 @@ const HeaderTitle = styled.Text`
   font-weight: 700;
   line-height: 22px;
   letter-spacing: -0.1px;
+  color: #000;
 `;
 const FixedBtnContainer = styled.View`
   position: absolute;

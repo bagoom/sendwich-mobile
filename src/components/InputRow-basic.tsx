@@ -77,6 +77,7 @@ const InputBox = styled.View`
 const InputText = styled.TextInput<{widthButton?: boolean}>`
   flex: 1;
   height: 52px;
+  color: #000;
   //   background: blue;
 `;
 

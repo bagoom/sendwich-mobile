@@ -25,6 +25,7 @@ export const InputLabel = styled.Text<{type?: string}>`
   width: ${props => (props.type === 'text' ? '80px' : '70px')};
   font-size: 13px;
   font-weight: 500;
+  color: #000;
   letter-spacing: -0.03px;
 `;
 

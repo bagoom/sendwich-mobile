@@ -24,6 +24,10 @@ import Notification from '../screens/Notification';
 import SotreDetail from '../screens/StoreDetail';
 import SotreDetailInfo from '../screens/SotreDetailInfo';
 import DateDetail from '../screens/DateDetail';
+import Notice from '../screens/Notice';
+import CustomerService from '../screens/CustomerService';
+import Config from '../screens/Config';
+import Withdrawal from '../screens/Withdrawal';
 
 import DetailHeaderRight from '../components/DetailHeaderRight';
 
@@ -50,6 +54,7 @@ class MainStack extends React.Component<MainStackProp> {
 
   render() {
     const {store, theme} = this.props;
+    console.log(store.nonMember);
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
@@ -76,7 +81,70 @@ class MainStack extends React.Component<MainStackProp> {
           ? this.renderCheckAuthScreen()
           : !store.loggedIn
           ? this.renderBeforeAuthScreens()
+          : store.nonMember
+          ? this.renderEmptyAuthScreens()
           : this.renderAfterAuthScreens()}
+      </MainStackStackNav.Navigator>
+    );
+  }
+
+  renderCheckAuthScreen = () => {
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="CheckAuth"
+          component={CheckAuthScreen}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+  };
+
+  renderBeforeAuthScreens = () => {
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+  };
+
+  renderEmptyAuthScreens = () => {
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="RegisterFirst"
+          component={RegisterFirstScreen}
+          options={{headerShown: false}}
+        />
+        <MainStackStackNav.Screen
+          name="RegisterSecondScreen"
+          component={RegisterSecondScreen}
+          options={{headerShown: false}}
+        />
+      </>
+    );
+  };
+
+  renderAfterAuthScreens = () => {
+    const {navigation} = this.props;
+    const currentRouteName = this.props.store.currentRoute.name;
+    return (
+      <>
+        <MainStackStackNav.Screen
+          name="MainStack"
+          component={MainTab}
+          options={({route}) => ({
+            headerShown: false,
+            headerStyle: {
+              borderBottomWidth: 0.7,
+              borderBottomColor: '#f5f5f5',
+            },
+          })}
+        />
 
         <MainStackStackNav.Screen
           name="MainFoodBanner"
@@ -151,63 +219,43 @@ class MainStack extends React.Component<MainStackProp> {
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
         />
-      </MainStackStackNav.Navigator>
-    );
-  }
-
-  renderCheckAuthScreen = () => {
-    return (
-      <>
         <MainStackStackNav.Screen
-          name="CheckAuth"
-          component={CheckAuthScreen}
-          options={{headerShown: false}}
+          name="Notice"
+          component={Notice}
+          options={{
+            headerTitle: '공지사항',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="CustomerService"
+          component={CustomerService}
+          options={{
+            headerTitle: '고객센터',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="Config"
+          component={Config}
+          options={{
+            headerTitle: '환경설정',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="Withdrawal"
+          component={Withdrawal}
+          options={{
+            headerTitle: '회원탈퇴',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
         />
       </>
-    );
-  };
-
-  renderBeforeAuthScreens = () => {
-    return (
-      <>
-        <MainStackStackNav.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
-        <MainStackStackNav.Screen
-          name="RegisterFirst"
-          component={RegisterFirstScreen}
-          options={{headerShown: false}}
-        />
-        <MainStackStackNav.Screen
-          name="RegisterSecondScreen"
-          component={RegisterSecondScreen}
-          options={{headerShown: false}}
-        />
-      </>
-    );
-  };
-
-  renderAfterAuthScreens = () => {
-    const {navigation} = this.props;
-    const currentRouteName = this.props.store.currentRoute.name;
-    const showRender =
-      currentRouteName === '추천' ||
-      currentRouteName === '모임비지원' ||
-      currentRouteName === '데이트코스';
-    return (
-      <MainStackStackNav.Screen
-        name="MainStack"
-        component={MainTab}
-        options={({route}) => ({
-          headerShown: false,
-          headerStyle: {
-            borderBottomWidth: 0.7,
-            borderBottomColor: '#f5f5f5',
-          },
-        })}
-      />
     );
   };
 }

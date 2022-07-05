@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import {InputLabel} from '../Theme';
 import styled from 'styled-components/native';
@@ -54,7 +54,9 @@ const Button = styled.TouchableOpacity<{gender?: boolean}>`
   justify-content: center;
   align-items: center;
 `;
-
+const Text = styled.Text`
+  color: #000;
+`;
 const styles = StyleSheet.create({
   inputRow: {
     width: '100%',

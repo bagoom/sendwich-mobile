@@ -48,5 +48,5 @@ const Description = styled.Text`
   margin-top: 0px;
   font-size: 14px;
   font-weight: 500;
-  color: #7e745c;
+  color: #999;
 `;

@@ -65,6 +65,7 @@ export class GlobalStore {
   /** Auth status */
   loggedIn = false;
   authChecked = false;
+  nonMember = false;
 
   _kakaoData: Profile = {
     id: 0,
@@ -95,6 +96,10 @@ export class GlobalStore {
   kakaoToken = '';
   authenticationed = false;
 
+  CCFilterIndex = 0;
+  couponModalVisible = false;
+  alertStatus = false;
+
   constructor() {
     this.navService = prepareNavigationService(this.navigationRef);
     this.storageService = prepareStorageService();
@@ -111,6 +116,11 @@ export class GlobalStore {
       showPhoneAuthNumberInput: observable,
       activeNextStack: observable,
       kakaoToken: observable,
+      alertStatus: observable,
+      CCFilterIndex: observable,
+      couponModalVisible: observable,
+      nonMember: observable,
+
       authenticationed: observable,
       _categories: observable,
       _selectedCategories: observable,
@@ -200,23 +210,28 @@ export class GlobalStore {
   };
 
   hydrateAuthState = async (userinfo: any, jwt = null) => {
+    try {
+      if (jwt) {
+        await AsyncStorage.setItem(`@sendwich_jwt`, jwt);
+        runInAction(() => {
+          this.loggedIn = true;
+          this.authChecked = true;
+          this.nonMember = false;
+        });
+        console.log(this.nonMember);
+
+        await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
+          runInAction(() => {
+            this.jwt = result;
+          });
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
     runInAction(() => {
       this._sendwichProfile = userinfo;
     });
-
-    if (jwt) {
-      await AsyncStorage.setItem(`@sendwich_jwt`, jwt);
-      runInAction(() => {
-        this.loggedIn = true;
-        this.authChecked = true;
-      });
-
-      await AsyncStorage.getItem('@sendwich_jwt', (err, result: any) => {
-        runInAction(() => {
-          this.jwt = result;
-        });
-      });
-    }
   };
 
   signInWithKakao = async (): Promise<void> => {
@@ -233,12 +248,12 @@ export class GlobalStore {
         kakao_uid: profile.id,
       };
       const {data} = await AuthRepository.signInWithKakao(signInData);
-      // const {data} = await AuthRepository.signInWithKakao(signInData);
       this.hydrateAuthState(data.user, data.jwt);
       if (data.errors?.msg === '일치하는 유저정보가 없습니다.') {
         runInAction(() => {
           this.authChecked = true;
-          this.loggedIn = false;
+          this.loggedIn = true;
+          this.nonMember = true;
           this._kakaoData = profile;
           this.kakaoToken = accessToken;
         });
@@ -254,15 +269,16 @@ export class GlobalStore {
     let message = '';
     try {
       message = await logout();
-    } catch (e) {
-      console.log(e);
-    } finally {
       runInAction(() => {
         this.loggedIn = false;
         this.jwt = '';
-        AsyncStorage.clear();
       });
+      AsyncStorage.clear();
       this.clearStore();
+      this.authChecked = true;
+    } catch (e) {
+      console.log(e);
+    } finally {
     }
   };
 
@@ -332,6 +348,24 @@ export class GlobalStore {
   onChangeNameInput = (name: string) => {
     runInAction(() => {
       this.username = name;
+    });
+  };
+
+  onChangeCCFilter = (index: number) => {
+    runInAction(() => {
+      this.CCFilterIndex = index;
+    });
+  };
+
+  toggleCouponModal = (status: boolean) => {
+    runInAction(() => {
+      this.couponModalVisible = status;
+    });
+  };
+
+  toggleAlertStatus = (status: boolean) => {
+    runInAction(() => {
+      this.alertStatus = status;
     });
   };
 

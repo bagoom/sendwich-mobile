@@ -5,7 +5,6 @@ import {mainTabRoutes} from './main-tab-routes';
 import Icon from '../../Icon-font.js'; //import
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components';
-import CustomTopTabHeaderType2 from '../components/CustomTopTabHeaderType2';
 
 const MainTab = createBottomTabNavigator();
 
@@ -53,6 +52,7 @@ const MainTabAfterAuth = () => {
             component={route.com}
             options={{
               headerShown: route.header,
+              tabBarLabel: route.label,
               tabBarIcon: ({focused}) => {
                 return (
                   <Icon
