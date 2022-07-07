@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
+import {useNavigation} from '@react-navigation/native';
 
 import styled from 'styled-components/native';
 import {
@@ -11,12 +12,15 @@ import {
 
 const ITEM_WIDTH = wp('100%') / 2 - 23;
 const StoreListItem = (props: any) => {
-  const {navigation, item} = props;
+  const {item} = props;
   const FIRST_ITEM = item.id % 2;
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
 
   return (
-    <StoreItem type={FIRST_ITEM}>
+    <StoreItem
+      type={FIRST_ITEM}
+      onPress={() => navigation.navigate('SotreDetail')}>
       <View>
         <Badge>
           <BadgeText>10%</BadgeText>
@@ -34,7 +38,7 @@ const StoreListItem = (props: any) => {
 
 export default observer(StoreListItem);
 
-const StoreItem = styled.View<{type?: number}>`
+const StoreItem = styled.TouchableOpacity<{type?: number}>`
   width: ${ITEM_WIDTH}px;
   margin-right: ${props => (props.type ? '14px' : '0px')};
   margin-bottom: 18px;

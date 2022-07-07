@@ -19,7 +19,7 @@ const StoreDetail = () => {
       <Container ph0={false}>
         <TagList />
         <Title style={{marginTop: 28, marginBottom: 16}}>
-          외식비 지원 매장
+          모임비 지원 매장
         </Title>
         <CouponListItem />
       </Container>

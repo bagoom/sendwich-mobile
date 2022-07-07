@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Carousel from 'react-native-reanimated-carousel';
 
@@ -9,7 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import {useNavigation} from '@react-navigation/native';
 import {Title} from '../Theme';
 
 const PAGE_WIDTH = wp('100%');
@@ -21,13 +21,14 @@ const baseOptions = {
 } as const;
 
 const HomeStoreSwiper = (props: any) => {
-  const {navigation, titleVisible = true} = props;
+  const {titleVisible = true} = props;
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
 
   return (
     <>
       <View style={{flex: 1, paddingLeft: 16, paddingBottom: 30}}>
-        {titleVisible && <Title>외식비 지원해 드릴게요</Title>}
+        {titleVisible && <Title>모임비 지원해 드릴게요</Title>}
 
         <Carousel
           {...baseOptions}
@@ -37,7 +38,9 @@ const HomeStoreSwiper = (props: any) => {
           }}
           data={[1, 2, 3]}
           renderItem={({item}) => (
-            <View style={{flex: 1, marginRight: 13}}>
+            <TouchableOpacity
+              style={{flex: 1, marginRight: 13}}
+              onPress={() => navigation.navigate('SotreDetail')}>
               <SliderImg
                 source={require('../assets/images/main_banner.jpeg')}
               />
@@ -47,7 +50,7 @@ const HomeStoreSwiper = (props: any) => {
                 <Subject>브라운도트</Subject>
               </View>
               <Description>최고급 육질의 소고기</Description>
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>

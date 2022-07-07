@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, StyleSheet} from 'react-native';
 import {useGlobalStore} from '../store/util';
+import {useNavigation} from '@react-navigation/native';
 
 import styled from 'styled-components/native';
 
 const DetailMenuItem = (props: any) => {
-  const {navigation, item, index} = props;
+  const {item, index} = props;
   const g = useGlobalStore();
   const firstItem = index == 0;
+  const navigation = useNavigation<any>();
   return (
-    <MenuItem withBorderTop={firstItem}>
+    <MenuItem
+      withBorderTop={firstItem}
+      onPress={() => navigation.navigate('StoreCartOption')}>
       <Name>1인세트 A</Name>
       <Description>
         가락떡볶이 + 수제생크림와플 + (500ml캔 아메리카노) 심플 시그니처 모카
@@ -22,7 +26,7 @@ const DetailMenuItem = (props: any) => {
 
 export default observer(DetailMenuItem);
 
-const MenuItem = styled.View<{withBorderTop?: boolean}>`
+const MenuItem = styled.TouchableOpacity<{withBorderTop?: boolean}>`
   padding: 22px 16px;
   border-bottom-width: 1px;
   border-top-width: ${props => (props.withBorderTop ? '1px' : '0')};

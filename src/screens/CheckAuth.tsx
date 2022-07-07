@@ -22,10 +22,6 @@ const CheckAuthScreen = () => {
         source={require('../assets/images/splash_logo.png')}
         resizeMode="contain"
       />
-      <View>
-        <Text>{BASE_URL}</Text>
-        <Text>{g.authChecked}</Text>
-      </View>
       {!g.authChecked && (
         <IndicatorWrap>
           <BubblesLoader size={22} dotRadius={4} color="#fff" />

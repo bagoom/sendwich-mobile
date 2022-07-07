@@ -283,14 +283,16 @@ export class GlobalStore {
   signOutWithKakao = async (): Promise<void> => {
     let message = '';
     try {
+      console.log('dddd');
       message = await logout();
+      console.log(message, 'dddd');
       runInAction(() => {
         this.loggedIn = false;
+        this.authChecked = true;
         this.jwt = '';
       });
       AsyncStorage.clear();
       this.clearStore();
-      this.authChecked = true;
     } catch (e) {
       console.log(e);
     } finally {

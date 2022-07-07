@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">sendwich_mobile</string>
     <string name="kakao_app_key">565369c6bc8baee87ad27016ddf68997</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">lrSPP0w1DGaZG-KF5XgS6lD24xWV9Pj-qbf-j</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

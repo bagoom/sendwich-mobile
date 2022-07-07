@@ -24,6 +24,7 @@ import SetCurrentMapLocation from '../screens/SetCurrentMapLocation';
 import Notification from '../screens/Notification';
 import SotreDetail from '../screens/StoreDetail';
 import SotreDetailInfo from '../screens/SotreDetailInfo';
+import StoreCartOption from '../screens/StoreCartOption';
 import DateDetail from '../screens/DateDetail';
 import Notice from '../screens/Notice';
 import CustomerService from '../screens/CustomerService';
@@ -55,6 +56,7 @@ class MainStack extends React.Component<MainStackProp> {
 
   render() {
     const {store, theme} = this.props;
+    console.log(store.loggedIn);
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
@@ -204,7 +206,7 @@ class MainStack extends React.Component<MainStackProp> {
           name="SotreDetail"
           component={SotreDetail}
           options={{
-            headerTitle: '알림함',
+            headerTitle: '브라운도트',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
             headerRight: () => <DetailHeaderRight />,
@@ -215,6 +217,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={SotreDetailInfo}
           options={{
             headerTitle: '가게정보',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="StoreCartOption"
+          component={StoreCartOption}
+          options={{
+            headerTitle: '장바구니 담기',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}

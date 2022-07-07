@@ -11,18 +11,20 @@ const SearchAddressListItem = (props: any) => {
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
   return (
-    <ListItem
-      onPress={() => {
-        g.selectHeaderAddr(item.road_address?.address_name);
-        navigation.goBack();
-      }}>
-      <Icon
-        name="marker"
-        style={{fontSize: 20, color: '#222', position: 'absolute', top: 2}}
-      />
-      <NewAddr>{item.road_address?.address_name}</NewAddr>
-      <OldAddr>{item.address_name}</OldAddr>
-    </ListItem>
+    item.road_address && (
+      <ListItem
+        onPress={() => {
+          g.selectHeaderAddr(item.road_address?.address_name);
+          navigation.goBack();
+        }}>
+        <Icon
+          name="marker"
+          style={{fontSize: 20, color: '#222', position: 'absolute', top: 2}}
+        />
+        <NewAddr>{item.road_address?.address_name}</NewAddr>
+        <OldAddr>{item.address_name}</OldAddr>
+      </ListItem>
+    )
   );
 };
 

@@ -2,6 +2,7 @@ import React, {ReactChild, useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, FlatList, ScrollView, Dimensions} from 'react-native';
 import {useGlobalStore} from '../store/util';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import styled from 'styled-components/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -31,8 +32,8 @@ const SetCurrentLocation = (props: any) => {
     setKeyword(val);
   };
   return (
-    <>
-      <ScrollView style={{flex: 1}}>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="handled">
         <Container>
           <InputRow>
             <TextInput
@@ -72,7 +73,7 @@ const SetCurrentLocation = (props: any) => {
           </Container>
         )}
       </ScrollView>
-    </>
+    </KeyboardAwareScrollView>
   );
 };
 
