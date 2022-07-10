@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "756884727605",
+    "project_id": "sendwich-518cd",
+    "storage_bucket": "sendwich-518cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756884727605:android:1fc7f0274b16e40555ce7c",
+        "android_client_info": {
+          "package_name": "com.sendwich_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756884727605-h9g996o2pk6t13jnmh2oooph2ial589j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sendwich_mobile",
+            "certificate_hash": "2df72c30345a9da54f6ddb0132931c0a68c3c4cc"
+          }
+        },
+        {
+          "client_id": "756884727605-oe4baev9ssvuooubstthnrhd9f8fkqv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sendwich_mobile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "756884727605-ie0lts65e0q7k047p8s1bde58935la7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvrhyGksHDi03eokKBlUBIKSEcQ5CPl6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756884727605-ie0lts65e0q7k047p8s1bde58935la7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
