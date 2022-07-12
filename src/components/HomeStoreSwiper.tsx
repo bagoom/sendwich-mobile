@@ -11,7 +11,9 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {Title} from '../Theme';
-
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
 const PAGE_WIDTH = wp('100%');
 const IMG_HEIGHT = PAGE_WIDTH / 1.8;
 const baseOptions = {
@@ -25,6 +27,23 @@ const HomeStoreSwiper = (props: any) => {
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
 
+  const fetchStoreList = () => {
+    return axios.get(`${BASE_URL}/api/stores/with-coupon?populate=*`);
+  };
+  const {isLoading, isError, data, error} = useQuery(
+    'home-store-swiper',
+    fetchStoreList,
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+      onSuccess: (data: any) => {
+        console.log(data.data.data);
+      },
+      onError: (e: any) => {
+        console.log(e.message);
+      },
+    },
+  );
   return (
     <>
       <View style={{flex: 1, paddingLeft: 16, paddingBottom: 30}}>
@@ -36,21 +55,22 @@ const HomeStoreSwiper = (props: any) => {
           panGestureHandlerProps={{
             activeOffsetX: [-10, 10],
           }}
-          data={[1, 2, 3]}
-          renderItem={({item}) => (
+          data={data?.data.data}
+          renderItem={({item}: any) => (
             <TouchableOpacity
+              key={item.id}
               activeOpacity={1}
               style={{flex: 1, marginRight: 13}}
               onPress={() => navigation.navigate('SotreDetail')}>
               <SliderImg
-                source={require('../assets/images/main_banner.jpeg')}
+                source={{uri: `${BASE_URL}${item?.main_image[0].url}`}}
               />
 
               <View style={{marginTop: 10, flexDirection: 'row'}}>
-                <Category>30% 지원</Category>
-                <Subject>브라운도트</Subject>
+                <Category>{item.coupon.discount_rate}% 지원</Category>
+                <Subject>{item.shop_name}</Subject>
               </View>
-              <Description>최고급 육질의 소고기</Description>
+              <Description>{item.coupon.name}</Description>
             </TouchableOpacity>
           )}
         />

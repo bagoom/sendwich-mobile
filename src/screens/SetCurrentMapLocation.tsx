@@ -6,12 +6,15 @@ import Geolocation from '@react-native-community/geolocation';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import NaverMapView, {Marker} from 'react-native-nmap';
+import {useNavigation} from '@react-navigation/native';
+import theme from '../Theme';
 
 import Loader from '../components/Loader';
 
 const mapHeight = hp('100%');
 const SetCurrentMapLocation = (props: any) => {
   const mapRef = useRef(null);
+  const navigation = useNavigation<any>();
 
   const g = useGlobalStore();
   const [loading, setLoading] = useState(false);
@@ -41,7 +44,7 @@ const SetCurrentMapLocation = (props: any) => {
     }
   }, []);
 
-  console.log(g.coordsToAddr);
+  // console.log(g.coordsToAddr);
 
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 37.53815725,
@@ -79,6 +82,14 @@ const SetCurrentMapLocation = (props: any) => {
           <ArrdWrap>
             <RoadAddr>{g.coordsToAddr.roadArr}</RoadAddr>
             <Addr>{g.coordsToAddr.addr}</Addr>
+
+            <Btn
+              onPress={() => {
+                g.selectHeaderAddr(g.coordsToAddr.roadArr2);
+                navigation.navigate('MainStack');
+              }}>
+              <BtnText>선택한 위치로 설정</BtnText>
+            </Btn>
           </ArrdWrap>
         </Wrapper>
       )}
@@ -92,9 +103,10 @@ export default observer(SetCurrentMapLocation);
 
 const Wrapper = styled.View`
   flex: 1;
+  background: #000;
 `;
 const MapWrapper = styled.View`
-  height: ${mapHeight - 130}px;
+  height: ${mapHeight - 193}px;
 `;
 
 const ArrdWrap = styled.View`
@@ -116,4 +128,20 @@ const Addr = styled.Text`
   font-weight: 400;
   color: #999;
   letter-spacing: -0.3px;
+`;
+
+const Btn = styled.TouchableOpacity`
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background: ${theme.color.point};
+`;
+
+const BtnText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
 `;

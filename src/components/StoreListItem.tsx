@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import {useNavigation} from '@react-navigation/native';
-
+import {BASE_URL} from '@env';
 import styled from 'styled-components/native';
 import {
   widthPercentageToDP as wp,
@@ -12,25 +12,26 @@ import {
 
 const ITEM_WIDTH = wp('100%') / 2 - 23;
 const StoreListItem = (props: any) => {
-  const {item} = props;
-  const FIRST_ITEM = item.id % 2;
+  const {item, index} = props;
+  const FIRST_ITEM = (index + 1) % 2;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
 
   return (
     <StoreItem
+      activeOpacity={1}
       type={FIRST_ITEM}
       onPress={() => navigation.navigate('SotreDetail')}>
       <View>
         <Badge>
           <BadgeText>10%</BadgeText>
         </Badge>
-        <SliderImg source={require('../assets/images/main_banner.jpeg')} />
+        <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
       </View>
 
-      <Subject>브라운도트</Subject>
-      <Description>전주 떡갈비</Description>
-      <Text1>학동역 도보로 5분</Text1>
+      <Subject>{item?.shop_name}</Subject>
+      <Description>{item.coupon.name}</Description>
+      <Text1>{item.location_information}</Text1>
       <Text1>320m</Text1>
     </StoreItem>
   );

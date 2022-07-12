@@ -32,14 +32,14 @@ const HomeHeaderSwiper = (props: any) => {
   const [slideIdx, setIdx] = useState(0);
 
   const {isLoading, isError, data, error} = useQuery(
-    'mian-slider-banner',
+    'mian-header-banner',
     fetchBannerList,
     {
       refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
       retry: 0, // 실패시 재호출 몇번 할지
       onSuccess: (data: any) => {
         // 성공시 호출
-        console.log(data.data.data);
+        // console.log(data.data.data);
       },
       onError: (e: any) => {
         // 실패시 호출 (401, 404 같은 error가 아니라 정말 api 호출이 실패한 경우만 호출됩니다.)
@@ -70,11 +70,6 @@ const HomeHeaderSwiper = (props: any) => {
                 style={{flex: 1}}
                 onPress={() => navigation.navigate('MainFoodBanner')}>
                 <SliderImg source={{uri: `${BASE_URL}${item?.image.url}`}} />
-
-                <View style={{marginTop: 10, flexDirection: 'row'}}>
-                  <Category>{index}</Category>
-                  <Subject>브라운도트</Subject>
-                </View>
               </TouchableOpacity>
             ) : (
               <SliderImg source={{uri: `${BASE_URL}${item?.image.url}`}} />

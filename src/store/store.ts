@@ -421,6 +421,7 @@ export class GlobalStore {
       // console.log(data);
       runInAction(() => {
         this._coordsToAddr = data?.documents[0];
+        console.log(data);
       });
     } catch (e) {
       console.log(e);
@@ -513,7 +514,11 @@ export class GlobalStore {
       ? arr?.road_address?.address_name + ' ' + arr?.road_address?.building_name
       : arr?.address?.address_name;
 
-    return {addr: addr, roadArr: roadArr};
+    const roadArr2 = arr?.road_address
+      ? arr?.road_address?.address_name
+      : arr?.address?.address_name;
+
+    return {addr: addr, roadArr: roadArr, roadArr2: roadArr2};
   }
 }
 
