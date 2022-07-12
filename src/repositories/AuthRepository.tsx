@@ -34,7 +34,7 @@ class AuthRepository {
   }
 
   getHomeIcons() {
-    return axios.get(`${BASE_URL}/api/home-icons?populate=*`);
+    return axios.get(`${BASE_URL}/api/home-icons?populate=*&sort=order`);
   }
 
   confirmVerifyCode(phoneNumber: string, code: string) {

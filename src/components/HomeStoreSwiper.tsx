@@ -39,6 +39,7 @@ const HomeStoreSwiper = (props: any) => {
           data={[1, 2, 3]}
           renderItem={({item}) => (
             <TouchableOpacity
+              activeOpacity={1}
               style={{flex: 1, marginRight: 13}}
               onPress={() => navigation.navigate('SotreDetail')}>
               <SliderImg
