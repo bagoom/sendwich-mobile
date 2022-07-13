@@ -15,8 +15,8 @@ const RecentAddressListItem = (props: any) => {
         name="marker"
         style={{fontSize: 20, color: '#222', position: 'absolute', top: 2}}
       />
-      <NewAddr>{item.newAddr}</NewAddr>
-      <OldAddr>{item.oldAddr}</OldAddr>
+      <NewAddr>{item.addr}</NewAddr>
+      <OldAddr>{item.road_addr}</OldAddr>
 
       <CloseButton>
         <Icon name="close" style={{fontSize: 16, color: '#bbb'}} />

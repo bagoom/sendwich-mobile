@@ -14,7 +14,7 @@ const SearchAddressListItem = (props: any) => {
     item.road_address && (
       <ListItem
         onPress={() => {
-          g.selectHeaderAddr(item.road_address?.address_name);
+          g.selectHeaderAddr(item.road_address?.address_name, item);
           navigation.goBack();
         }}>
         <Icon

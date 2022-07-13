@@ -97,6 +97,8 @@ export class GlobalStore {
   kakaoToken = '';
   authenticationed = false;
 
+  _recently_address = [];
+
   CCFilterIndex = 0;
   couponModalVisible = false;
   alertStatus = false;
@@ -127,6 +129,7 @@ export class GlobalStore {
       couponModalVisible: observable,
       nonMember: observable,
       headerAddr: observable,
+      _recently_address: observable,
       _coordsToAddr: observable,
       _searchAddrArr: observable,
 
@@ -144,6 +147,7 @@ export class GlobalStore {
       homeIcons: computed,
       coordsToAddr: computed,
       searchAddrArr: computed,
+      recently_address: computed,
     });
 
     reaction(
@@ -152,6 +156,7 @@ export class GlobalStore {
         console.log('this.loggedIn: ', value);
       },
     );
+    this.initRecentAddress();
   }
 
   setCurrentRoute = (state: NavigationState) => {
@@ -441,12 +446,40 @@ export class GlobalStore {
     return;
   };
 
-  selectHeaderAddr = (addr: string) => {
+  selectHeaderAddr = async (addr: any, arrAddr: any) => {
     console.log(addr);
     runInAction(() => {
       this.headerAddr = addr;
+      if (arrAddr) {
+        this._recently_address.unshift({
+          //@ts-ignore
+          addr: arrAddr.address.address_name,
+          //@ts-ignore
+          road_addr: arrAddr.road_address.address_name,
+        });
+      }
+      if (this.recently_address.length > 5) {
+        this._recently_address.pop();
+      }
+      console.log(this.recently_address);
     });
-    AsyncStorage.setItem(`@sendwich_addr`, this.headerAddr);
+
+    //@ts-ignore
+    await AsyncStorage.setItem(`@sendwich_addr`, this.headerAddr);
+    await AsyncStorage.setItem(
+      `@sendwich_recent_addr`,
+      JSON.stringify(this.recently_address),
+    );
+  };
+
+  initRecentAddress = async () => {
+    const address = await AsyncStorage.getItem(`@sendwich_recent_addr`);
+    runInAction(() => {
+      if (address) {
+        this._recently_address = JSON.parse(address);
+      }
+    });
+    console.log(this.recently_address);
   };
 
   clearStore = () => {
@@ -499,6 +532,9 @@ export class GlobalStore {
   }
   get kakaoData() {
     return toJS(this._kakaoData);
+  }
+  get recently_address() {
+    return toJS(this._recently_address);
   }
   get homeIcons() {
     return toJS(this._homeIcons);

@@ -35,7 +35,7 @@ const RecentAddressList = (props: any) => {
     <>
       <Wrapper>
         <SubTitle>최근 주소</SubTitle>
-        {dummy.map((item, key) => (
+        {g.recently_address.map((item, key) => (
           <RecentAddressListItem item={item} key={key} />
         ))}
       </Wrapper>
