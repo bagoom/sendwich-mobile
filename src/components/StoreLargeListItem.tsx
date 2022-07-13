@@ -18,7 +18,7 @@ const StoreLargeListItem = (props: any) => {
     <StoreItem
       type={FIRST_ITEM}
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('SotreDetail')}>
+      onPress={() => navigation.navigate('SotreDetail', item.id)}>
       <View>
         <Badge>
           <BadgeText>10%</BadgeText>

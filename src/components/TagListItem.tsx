@@ -11,7 +11,7 @@ const TagListItem = (props: any) => {
 
   return (
     <TagItem>
-      <Text>브라운도트</Text>
+      <Text>{item}</Text>
     </TagItem>
   );
 };

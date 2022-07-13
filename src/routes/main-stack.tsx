@@ -56,7 +56,6 @@ class MainStack extends React.Component<MainStackProp> {
 
   render() {
     const {store, theme} = this.props;
-    console.log(store.loggedIn);
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"

@@ -61,7 +61,7 @@ const HomeStoreSwiper = (props: any) => {
               key={item.id}
               activeOpacity={1}
               style={{flex: 1, marginRight: 13}}
-              onPress={() => navigation.navigate('SotreDetail')}>
+              onPress={() => navigation.navigate('SotreDetail', item.id)}>
               <SliderImg
                 source={{uri: `${BASE_URL}${item?.main_image[0].url}`}}
               />

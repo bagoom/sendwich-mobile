@@ -4,26 +4,42 @@ import {View, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
-import theme from '../Theme';
+import theme, {Title} from '../Theme';
+
+import {commaTheNumbers} from '../lib/transfer';
 
 const CouponListItem = (props: any) => {
-  const {navigation, item} = props;
+  const {navigation, item, coupon} = props;
   const g = useGlobalStore();
-
+  console.log(coupon);
   return (
-    <CouponItem>
-      <View style={{flex: 1}}>
-        <Subject>떡갈비 스테이크 40% 할인지원</Subject>
-        <Price>
-          <Text style={{textDecorationLine: 'line-through'}}>23,000원</Text> →{' '}
-          <Text style={{color: theme.color.brown}}>13,800원</Text>
-        </Price>
-      </View>
+    <>
+      {coupon.name !== '' && (
+        <>
+          <Title style={{marginTop: 28, marginBottom: 16}}>
+            모임비 지원 매장
+          </Title>
+          <CouponItem>
+            <View style={{flex: 1}}>
+              <Subject>{coupon?.name}</Subject>
+              <Price>
+                <Text style={{textDecorationLine: 'line-through'}}>
+                  {commaTheNumbers(coupon?.prime_cost)}원
+                </Text>{' '}
+                →{' '}
+                <Text style={{color: theme.color.brown}}>
+                  {commaTheNumbers(coupon?.display_discount_cost)}원
+                </Text>
+              </Price>
+            </View>
 
-      <Button>
-        <ButtonText>구매하기</ButtonText>
-      </Button>
-    </CouponItem>
+            <Button>
+              <ButtonText>구매하기</ButtonText>
+            </Button>
+          </CouponItem>
+        </>
+      )}
+    </>
   );
 };
 

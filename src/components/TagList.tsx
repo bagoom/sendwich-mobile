@@ -6,9 +6,8 @@ import TagListItem from '../components/TagListItem';
 
 import {Title} from '../Theme';
 let titleVisible = false;
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}];
 const TagList = (props: any) => {
-  const {navigation} = props;
+  const {navigation, data} = props;
   titleVisible = props.titleVisible;
   const g = useGlobalStore();
   return (
@@ -19,7 +18,7 @@ const TagList = (props: any) => {
           justifyContent: 'flex-start',
           flexWrap: 'wrap',
         }}>
-        {data.map((item, key) => (
+        {data?.map((item: any, key: any) => (
           <TagListItem item={item} key={key} />
         ))}
       </View>

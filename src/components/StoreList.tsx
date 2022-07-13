@@ -14,24 +14,10 @@ const StoreList = (props: any) => {
   const {navigation} = props;
   titleVisible = props.titleVisible;
   const g = useGlobalStore();
-
-  const fetchStoreList = () => {
-    return axios.get(`${BASE_URL}/api/stores/with-coupon?populate=*`);
-  };
-  const {isLoading, isError, data, error} = useQuery(
-    'home-store-swiper',
-    fetchStoreList,
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      onSuccess: (data: any) => {
-        // console.log(data.data.data);
-      },
-      onError: (e: any) => {
-        // console.log(e.message);
-      },
-    },
+  const {isLoading, error, data} = useQuery('home-store-swiper', () =>
+    axios(`${BASE_URL}/api/stores/with-coupon?populate=*`),
   );
+
   const listData = data?.data.data;
   return (
     <>

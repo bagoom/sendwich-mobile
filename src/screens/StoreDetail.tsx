@@ -1,33 +1,56 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
-import {Title} from '../Theme';
+
+import {useNavigation} from '@react-navigation/native';
 
 import DetailHeaderSwiper from '../components/DetailHeaderSwiper';
 import TagList from '../components/TagList';
 import CouponListItem from '../components/CouponListItem';
 import DetailMenuList from '../components/DetailMenuList';
 
-const StoreDetail = () => {
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
+import Loader from '../components/Loader';
+const StoreDetail = ({route}: any) => {
+  // console.log(route);
+
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
+
+  const {isLoading, error, data} = useQuery('fetch-detail', () =>
+    axios(`${BASE_URL}/api/stores/with-coupon/${route.params}?populate=*`),
+  );
+  const detailData = data?.data.data;
+  useEffect(() => {
+    if (!isLoading) {
+      navigation.setOptions({headerTitle: detailData?.shop_name});
+    }
+  }, [detailData]);
+
+  console.log(isLoading, 'isLoading');
   return (
-    <ScrollView>
-      <DetailHeaderSwiper />
+    <>
+      {isLoading && <Loader />}
 
-      <Container ph0={false}>
-        <TagList />
-        <Title style={{marginTop: 28, marginBottom: 16}}>
-          모임비 지원 매장
-        </Title>
-        <CouponListItem />
-      </Container>
+      {!isLoading && (
+        <ScrollView>
+          <DetailHeaderSwiper data={detailData} isLoading={isLoading} />
 
-      <Container2 ph0={true}>
-        <DetailMenuList titleVisible={true} />
-      </Container2>
-    </ScrollView>
+          <Container ph0={false}>
+            <TagList data={detailData?.theme_item} />
+            <CouponListItem coupon={detailData?.coupon} />
+          </Container>
+
+          <Container2 ph0={true}>
+            <DetailMenuList titleVisible={true} />
+          </Container2>
+        </ScrollView>
+      )}
+    </>
   );
 };
 
