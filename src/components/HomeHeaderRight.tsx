@@ -27,17 +27,19 @@ const HomeHeaderRight = (props: any) => {
           }}
         />
       </TouchableOpacity>
-      <Icon
-        // onPress={props.navigation.navigate('Notification')}
-        name="cart"
-        // onPress={}
-        style={{
-          width: 20,
-          height: 20,
-          fontSize: 20,
-          color: '#222',
-        }}
-      />
+
+      <TouchableOpacity onPress={() => navigation.navigate('StoreCartList')}>
+        <Icon
+          name="cart"
+          // onPress={}
+          style={{
+            width: 20,
+            height: 20,
+            fontSize: 20,
+            color: '#222',
+          }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

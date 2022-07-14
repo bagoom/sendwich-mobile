@@ -6,14 +6,14 @@ import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import theme, {Title} from '../Theme';
 
-import {commaTheNumbers} from '../lib/transfer';
+import {commaTheNumbers2} from '../lib/transfer';
 
 const CouponListItem = (props: any) => {
   const {navigation, item, coupon} = props;
   const g = useGlobalStore();
   return (
     <>
-      {coupon.name !== '' && (
+      {coupon?.name !== '' && (
         <>
           <Title style={{marginTop: 28, marginBottom: 16}}>
             모임비 지원 매장
@@ -23,11 +23,19 @@ const CouponListItem = (props: any) => {
               <Subject>{coupon?.name}</Subject>
               <Price>
                 <Text style={{textDecorationLine: 'line-through'}}>
-                  {commaTheNumbers(coupon?.prime_cost)}원
+                  {commaTheNumbers2(
+                    coupon?.prime_cost ? coupon?.prime_cost : '',
+                  )}
+                  원
                 </Text>{' '}
                 →{' '}
                 <Text style={{color: theme.color.brown}}>
-                  {commaTheNumbers(coupon?.display_discount_cost)}원
+                  {commaTheNumbers2(
+                    coupon?.display_discount_cost
+                      ? coupon?.display_discount_cost
+                      : '',
+                  )}
+                  원
                 </Text>
               </Price>
             </View>

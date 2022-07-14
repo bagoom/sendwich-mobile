@@ -27,14 +27,14 @@ const DetailHeaderSwiper = (props: any) => {
   const main_img = data?.main_image ? data?.main_image : [];
 
   useEffect(() => {
-    if (data.gif_image) {
+    if (data?.gif_image) {
       setBigImg(data.gif_image[0]?.url);
     } else {
       setBigImg('/uploads/4_f5b6feca83.jpg');
     }
     return () => {
       setBigImg('');
-      console.log('언마운트');
+      console.log(bigImg);
     };
   }, [data]);
   const likeData = useQuery('fetch-detail-like', () =>

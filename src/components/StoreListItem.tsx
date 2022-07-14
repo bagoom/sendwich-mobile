@@ -24,7 +24,7 @@ const StoreListItem = (props: any) => {
       onPress={() => navigation.navigate('SotreDetail', item.id)}>
       <View>
         <Badge>
-          <BadgeText>10%</BadgeText>
+          <BadgeText>{item.coupon.discount_rate}%</BadgeText>
         </Badge>
         <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
       </View>

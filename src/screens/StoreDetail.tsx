@@ -25,6 +25,7 @@ const StoreDetail = ({route, navigation}: any) => {
   const {isLoading, error, data} = useQuery('fetch-detail', () =>
     axios(`${BASE_URL}/api/stores/with-coupon/${route.params}?populate=*`),
   );
+
   const detailData = data?.data.data;
   useEffect(() => {
     if (!isLoading) {
@@ -54,7 +55,7 @@ const StoreDetail = ({route, navigation}: any) => {
             </Container>
 
             <Container2 ph0={true}>
-              {detailData.menu_list[0].category ? (
+              {detailData?.menu_list[0].category ? (
                 <DetailMenuList
                   titleVisible={true}
                   data={detailData.menu_list}
@@ -62,12 +63,16 @@ const StoreDetail = ({route, navigation}: any) => {
                 />
               ) : (
                 <EmptyMenuList>
-                  <Text>아직 메뉴가 등록 되지 않은 매장입니다.</Text>
+                  <Text style={{color: '#999'}}>
+                    아직 메뉴가 등록 되지 않은 매장입니다.
+                  </Text>
                 </EmptyMenuList>
               )}
             </Container2>
           </ScrollView>
-          <CartBtn activeOpacity={1}>
+          <CartBtn
+            activeOpacity={1}
+            onPress={() => navigation.navigate('StoreCartList')}>
             <Badge>
               <BadgeText>{cartCount?.count}</BadgeText>
             </Badge>

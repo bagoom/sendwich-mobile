@@ -19,27 +19,39 @@ import Loader from '../components/Loader';
 
 const MyMap = (props: any) => {
   const coord = props.coord;
+  const [render, setRender] = useState<any>(false);
   console.log(coord);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRender(true);
+    }, 600);
+  }, []);
+
   return (
     <>
-      <NaverMapView
-        style={{width: '100%', height: '100%'}}
-        showsMyLocationButton={true}
-        center={{
-          ...coord,
-          zoom: 16,
-        }}
-        onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
-        <Marker
-          coordinate={coord}
-          onClick={() => console.warn('onClick! p0')}
-        />
-        {/* <Marker
-            coordinate={P0}
-            pinColor="blue"
-            onClick={() => console.warn('onClick! p1')}
-          /> */}
-      </NaverMapView>
+      {!render ? (
+        <Loader />
+      ) : (
+        <NaverMapView
+          style={{width: '100%', height: '100%'}}
+          showsMyLocationButton={true}
+          center={{
+            ...coord,
+            zoom: 16,
+          }}
+          onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
+          <Marker
+            coordinate={coord}
+            onClick={() => console.warn('onClick! p0')}
+          />
+          {/* <Marker
+        coordinate={P0}
+        pinColor="blue"
+        onClick={() => console.warn('onClick! p1')}
+      /> */}
+        </NaverMapView>
+      )}
     </>
   );
 };
@@ -57,12 +69,13 @@ const SotreDetailInfo = ({navigation, route}: any) => {
     {staleTime: 100000},
   );
   const infoData = data?.data.data;
-  console.log(infoData);
+
   useEffect(() => {
     g.searchAddr(infoData.addr);
   }, []);
-  console.log(g.searchAddrArr.length);
+
   if (isLoading) return <Loader />;
+
   const coord = {
     latitude: parseFloat(g.searchAddrArr[0]?.y),
     longitude: parseFloat(g.searchAddrArr[0]?.x),

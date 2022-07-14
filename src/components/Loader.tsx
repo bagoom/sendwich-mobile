@@ -4,6 +4,7 @@ import {View, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
+import theme from '../Theme';
 //@ts-ignore
 import {BubblesLoader} from 'react-native-indicator';
 
@@ -13,7 +14,7 @@ const Loader = (props: any) => {
 
   return (
     <IndicatorWrap>
-      <BubblesLoader size={28} dotRadius={6} color="#000" />
+      <BubblesLoader size={28} dotRadius={6} color={theme.color.point} />
     </IndicatorWrap>
   );
 };
