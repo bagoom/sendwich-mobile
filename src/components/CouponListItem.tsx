@@ -11,7 +11,6 @@ import {commaTheNumbers} from '../lib/transfer';
 const CouponListItem = (props: any) => {
   const {navigation, item, coupon} = props;
   const g = useGlobalStore();
-  console.log(coupon);
   return (
     <>
       {coupon.name !== '' && (

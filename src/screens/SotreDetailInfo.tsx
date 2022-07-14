@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -12,51 +12,84 @@ import NaverMapView, {
   Polygon,
 } from 'react-native-nmap';
 
-const MyMap = () => {
-  const P0 = {latitude: 37.3648095, longitude: 127.1076833};
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
+import Loader from '../components/Loader';
 
+const MyMap = (props: any) => {
+  const coord = props.coord;
+  console.log(coord);
   return (
-    <NaverMapView
-      style={{width: '100%', height: '100%'}}
-      showsMyLocationButton={true}
-      center={{...P0, zoom: 16}}
-      onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
-      <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />
-      <Marker
-        coordinate={P0}
-        pinColor="blue"
-        onClick={() => console.warn('onClick! p1')}
-      />
-    </NaverMapView>
+    <>
+      <NaverMapView
+        style={{width: '100%', height: '100%'}}
+        showsMyLocationButton={true}
+        center={{
+          ...coord,
+          zoom: 16,
+        }}
+        onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}>
+        <Marker
+          coordinate={coord}
+          onClick={() => console.warn('onClick! p0')}
+        />
+        {/* <Marker
+            coordinate={P0}
+            pinColor="blue"
+            onClick={() => console.warn('onClick! p1')}
+          /> */}
+      </NaverMapView>
+    </>
   );
 };
-const SotreDetailInfo = () => {
+const SotreDetailInfo = ({navigation, route}: any) => {
   const g = useGlobalStore();
+
+  // const [coord, setCoord] = useState<any>({
+  //   latitude: 37.3648095,
+  //   longitude: 127.1076833,
+  // });
+
+  const {isLoading, error, data} = useQuery(
+    'fetch-detail',
+    () => axios(`${BASE_URL}/api/stores/with-coupon/${route.params}`),
+    {staleTime: 100000},
+  );
+  const infoData = data?.data.data;
+  console.log(infoData);
+  useEffect(() => {
+    g.searchAddr(infoData.addr);
+  }, []);
+  console.log(g.searchAddrArr.length);
+  if (isLoading) return <Loader />;
+  const coord = {
+    latitude: parseFloat(g.searchAddrArr[0]?.y),
+    longitude: parseFloat(g.searchAddrArr[0]?.x),
+  };
+
   return (
-    <ScrollView>
-      <Container ph0={false}>
-        <Name>브라운도트</Name>
-        <Location>
-          경기도 성남시 분당구 정자일로 177 젤존타워 정자역에서 정자동 우체국
-          방향으로 도보 5분
-        </Location>
-        <Contact>031.718.3737</Contact>
-        <Line />
-        <Description>
-          성북구 돈암동에 위치한 해물솥밥&막걸리 전문점 ”브라운도트”는, 세련된
-          분위기의 퓨전 한식당으로서 일본풍 가정식 느낌의 개인트레 이를
-          사용함으로 개인 위생 및 프라이빗을 중요시
-        </Description>
+    <>
+      {!isLoading && g.searchAddrArr.length !== 0 && (
+        <ScrollView>
+          <Container ph0={false}>
+            <Name>{infoData.shop_name}</Name>
+            <Location>{infoData.location_information}</Location>
+            <Contact>{infoData.conatac_number}</Contact>
+            <Line />
+            <Description>{infoData.content}</Description>
 
-        <Title style={{fontSize: 16, fontWeight: 'bold', marginTop: 35}}>
-          위치안내
-        </Title>
+            <Title style={{fontSize: 16, fontWeight: 'bold', marginTop: 35}}>
+              위치안내
+            </Title>
 
-        <Map>
-          <MyMap />
-        </Map>
-      </Container>
-    </ScrollView>
+            <Map>
+              <MyMap coord={coord} />
+            </Map>
+          </Container>
+        </ScrollView>
+      )}
+    </>
   );
 };
 

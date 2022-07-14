@@ -1,3 +1,134 @@
+diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput 2.js b/node_modules/react-native-counter-input/build/dist/CounterInput 2.js
+new file mode 100644
+index 0000000..d9148b7
+--- /dev/null
++++ b/node_modules/react-native-counter-input/build/dist/CounterInput 2.js	
+@@ -0,0 +1,83 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++const tslib_1 = require("tslib");
++const React = tslib_1.__importStar(require("react"));
++const react_native_1 = require("react-native");
++const react_native_bounceable_1 = tslib_1.__importDefault(require("@freakycoder/react-native-bounceable"));
++/**
++ * ? Local Imports
++ */
++const CounterInput_style_1 = tslib_1.__importStar(require("./CounterInput.style"));
++// ? White Assets
++const plusIconWhite = require("./local-assets/plus-white.png");
++const minusIconWhite = require("./local-assets/minus-white.png");
++// ? Black Assets
++const plusIconBlack = require("./local-assets/plus-black.png");
++const minusIconBlack = require("./local-assets/minus-black.png");
++class CounterInput extends React.Component {
++    constructor(props) {
++        super(props);
++        this.handleOnIncreasePress = () => {
++            const { onChange, onIncreasePress, value } = this.props;
++            this.setState({ isPressed: true, counter: value + 1 }, () => {
++                onIncreasePress && onIncreasePress(this.state.counter);
++                onChange && onChange(this.state.counter);
++            });
++        };
++        this.handleOnDecreasePress = () => {
++            const { onChange, onDecreasePress,value } = this.props;
++            this.setState({ isPressed: false, counter: value - 1 }, () => {
++                onDecreasePress && onDecreasePress(this.state.counter);
++                onChange && onChange(this.state.counter);
++            });
++        };
++        this.handleOnChangeText = (text) => {
++            const { onChange, onChangeText } = this.props;
++            let _number = parseInt(text) || 0;
++            this.setState({ counter: _number }, () => {
++                onChangeText && onChangeText(this.state.counter);
++                onChange && onChange(this.state.counter);
++            });
++        };
++        /* -------------------------------------------------------------------------- */
++        /*                               Render Methods                               */
++        /* -------------------------------------------------------------------------- */
++        this.renderIncreaseCounter = () => {
++            const { ImageComponent = react_native_1.Image, increaseButtonBackgroundColor = "#0b349a", } = this.props;
++            const { isPressed } = this.state;
++            return (<react_native_bounceable_1.default style={CounterInput_style_1._increaseButtonStyle(isPressed, increaseButtonBackgroundColor)} bounceEffect={0.8} bounceFriction={2} onPress={this.handleOnIncreasePress}>
++        <ImageComponent style={CounterInput_style_1.default.buttonImageStyle} source={isPressed ? plusIconWhite : plusIconBlack}/>
++      </react_native_bounceable_1.default>);
++        };
++        this.renderDecreaseCounter = () => {
++            const { ImageComponent = react_native_1.Image, decreaseButtonBackgroundColor = "#0b349a", } = this.props;
++            const { isPressed } = this.state;
++            return (<react_native_bounceable_1.default style={CounterInput_style_1._decreaseButtonStyle(isPressed, decreaseButtonBackgroundColor)} bounceEffect={0.8} bounceFriction={2} onPress={this.handleOnDecreasePress}>
++        <ImageComponent style={CounterInput_style_1.default.buttonImageStyle} source={isPressed ? minusIconBlack : minusIconWhite}/>
++      </react_native_bounceable_1.default>);
++        };
++        this.renderTextInput = () => {
++            const { counter } = this.state;
++            return (<react_native_1.TextInput numberOfLines={1} editable={false} keyboardType="numeric" style={CounterInput_style_1.default.textInputStyle} onChangeText={(text) => this.handleOnChangeText(text)}>
++        {counter}
++      </react_native_1.TextInput>);
++        };
++        this.state = {
++            counter: props.initial || 0,
++            isPressed: true,
++        };
++    }
++    render() {
++        const { style, horizontal = false, backgroundColor = "#fff", width = horizontal ? 100 : undefined, borderRadius = 24, } = this.props;
++        return (<react_native_1.View style={[
++            CounterInput_style_1._container(width, horizontal, backgroundColor, borderRadius),
++            style,
++        ]}>
++        {this.renderDecreaseCounter()}
++        {this.renderTextInput()}
++        {this.renderIncreaseCounter()}
++      </react_native_1.View>);
++    }
++}
++exports.default = CounterInput;
++//# sourceMappingURL=CounterInput.js.map
+\ No newline at end of file
+diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput.d 2.ts b/node_modules/react-native-counter-input/build/dist/CounterInput.d 2.ts
+new file mode 100644
+index 0000000..b2ffd1b
+--- /dev/null
++++ b/node_modules/react-native-counter-input/build/dist/CounterInput.d 2.ts	
+@@ -0,0 +1,35 @@
++import * as React from "react";
++import { StyleProp, ViewStyle } from "react-native";
++declare type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
++export interface ICounterInputProps {
++    style?: CustomStyleProp;
++    initial?: number;
++    ImageComponent?: any;
++    horizontal?: boolean;
++    backgroundColor?: string;
++    increaseButtonBackgroundColor?: string;
++    decreaseButtonBackgroundColor?: string;
++    width?: number;
++    height?: number;
++    value?: number;
++    borderRadius?: number;
++    onIncreasePress?: (counter: number) => void;
++    onDecreasePress?: (counter: number) => void;
++    onChangeText?: (counter: number | string) => void;
++    onChange: (counter: number) => void;
++}
++interface IState {
++    counter: number;
++    isPressed: boolean;
++}
++export default class CounterInput extends React.Component<ICounterInputProps, IState> {
++    constructor(props: ICounterInputProps);
++    handleOnIncreasePress: () => void;
++    handleOnDecreasePress: () => void;
++    handleOnChangeText: (text: string) => void;
++    renderIncreaseCounter: () => JSX.Element;
++    renderDecreaseCounter: () => JSX.Element;
++    renderTextInput: () => JSX.Element;
++    render(): JSX.Element;
++}
++export {};
 diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput.d.ts b/node_modules/react-native-counter-input/build/dist/CounterInput.d.ts
 index e5fa5aa..b2ffd1b 100644
 --- a/node_modules/react-native-counter-input/build/dist/CounterInput.d.ts
@@ -11,10 +142,10 @@ index e5fa5aa..b2ffd1b 100644
      onIncreasePress?: (counter: number) => void;
      onDecreasePress?: (counter: number) => void;
 diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput.js b/node_modules/react-native-counter-input/build/dist/CounterInput.js
-index 74aae92..d9148b7 100644
+index 74aae92..d97026e 100644
 --- a/node_modules/react-native-counter-input/build/dist/CounterInput.js
 +++ b/node_modules/react-native-counter-input/build/dist/CounterInput.js
-@@ -18,15 +18,15 @@ class CounterInput extends React.Component {
+@@ -18,18 +18,20 @@ class CounterInput extends React.Component {
      constructor(props) {
          super(props);
          this.handleOnIncreasePress = () => {
@@ -29,12 +160,20 @@ index 74aae92..d9148b7 100644
          this.handleOnDecreasePress = () => {
 -            const { onChange, onDecreasePress } = this.props;
 -            this.setState({ isPressed: false, counter: this.state.counter - 1 }, () => {
+-                onDecreasePress && onDecreasePress(this.state.counter);
+-                onChange && onChange(this.state.counter);
+-            });
 +            const { onChange, onDecreasePress,value } = this.props;
-+            this.setState({ isPressed: false, counter: value - 1 }, () => {
-                 onDecreasePress && onDecreasePress(this.state.counter);
-                 onChange && onChange(this.state.counter);
-             });
-@@ -58,7 +58,7 @@ class CounterInput extends React.Component {
++            if(value > 1 ){
++                this.setState({ isPressed: false, counter: value - 1 }, () => {
++                    onDecreasePress && onDecreasePress(this.state.counter);
++                    onChange && onChange(this.state.counter);
++                });
++            }
+         };
+         this.handleOnChangeText = (text) => {
+             const { onChange, onChangeText } = this.props;
+@@ -58,7 +60,7 @@ class CounterInput extends React.Component {
          };
          this.renderTextInput = () => {
              const { counter } = this.state;
@@ -43,7 +182,7 @@ index 74aae92..d9148b7 100644
          {counter}
        </react_native_1.TextInput>);
          };
-@@ -68,7 +68,7 @@ class CounterInput extends React.Component {
+@@ -68,7 +70,7 @@ class CounterInput extends React.Component {
          };
      }
      render() {
@@ -52,6 +191,87 @@ index 74aae92..d9148b7 100644
          return (<react_native_1.View style={[
              CounterInput_style_1._container(width, horizontal, backgroundColor, borderRadius),
              style,
+diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput.style 2.js b/node_modules/react-native-counter-input/build/dist/CounterInput.style 2.js
+new file mode 100644
+index 0000000..f1bbdd0
+--- /dev/null
++++ b/node_modules/react-native-counter-input/build/dist/CounterInput.style 2.js	
+@@ -0,0 +1,74 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++exports._decreaseButtonStyle = exports._increaseButtonStyle = exports._container = void 0;
++const react_native_1 = require("react-native");
++exports._container = (width, horizontal, backgroundColor, borderRadius) => ({
++    width: width,
++    height: 30,
++    backgroundColor,
++    borderRadius: 3,
++    padding: horizontal ? 10 : 9,
++    minHeight: horizontal ? 45 : 140,
++    maxWidth: horizontal ? undefined : 70,
++    flexDirection: horizontal ? "row" : "column",
++    alignItems: "center",
++    justifyContent: "space-evenly",
++    borderWidth: 1,
++    borderColor: '#eee',
++    // shadowRadius: 8,
++    // shadowOpacity: 0.2,
++    // shadowColor: "#000",
++    // elevation: 2,
++    // shadowOffset: {
++    //     width: 0,
++    //     height: 3,
++    // },
++});
++exports._increaseButtonStyle = (isPressed, increaseButtonBackgroundColor) => ({
++    width: 25,
++    height: 25,
++    borderRadius: 16,
++    alignItems: "center",
++    justifyContent: "center",
++    backgroundColor: isPressed ? increaseButtonBackgroundColor : "transparent",
++    // shadowOpacity: isPressed ? 0.1 : 0,
++    // shadowRadius: 3,
++    // shadowColor: "#000",
++    // shadowOffset: {
++    //     width: 0,
++    //     height: 3,
++    // },
++});
++exports._decreaseButtonStyle = (isPressed, decreaseButtonBackgroundColor) => ({
++    width: 25,
++    height: 25,
++    borderRadius: 16,
++    alignItems: "center",
++    justifyContent: "center",
++    backgroundColor: isPressed ? "transparent" : decreaseButtonBackgroundColor,
++    // shadowOpacity: isPressed ? 0 : 0.1,
++    // shadowRadius: 3,
++    // shadowColor: "#000",
++    // shadowOffset: {
++    //     width: 0,
++    //     height: 3,
++    // },
++});
++exports.default = react_native_1.StyleSheet.create({
++    textInputStyle: {
++        width: 40,
++        minHeight: 40,
++        fontSize: 18,
++        marginTop: 12,
++        marginBottom: 8,
++        color: '#000',
++        alignSelf: "center",
++        fontWeight: "bold",
++        textAlign: "center",
++    },
++    buttonImageStyle: {
++        width: 10,
++        height: 10,
++    },
++});
++//# sourceMappingURL=CounterInput.style.js.map
+\ No newline at end of file
 diff --git a/node_modules/react-native-counter-input/build/dist/CounterInput.style.js b/node_modules/react-native-counter-input/build/dist/CounterInput.style.js
 index be88451..f1bbdd0 100644
 --- a/node_modules/react-native-counter-input/build/dist/CounterInput.style.js

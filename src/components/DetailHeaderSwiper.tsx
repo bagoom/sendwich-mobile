@@ -11,13 +11,17 @@ import {
 import Icon from '../../Icon-font.js';
 import {BASE_URL} from '@env';
 
+import axios from 'axios';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+
 const width = wp('100%');
 const ImageWidth = wp('100%') / 5 - 15;
 
 const DetailHeaderSwiper = (props: any) => {
-  const {navigation, data, isLoading} = props;
+  const {navigation, data, isLoading, id} = props;
   const g = useGlobalStore();
   const [bigImg, setBigImg] = useState<any>('');
+  const queryClient = useQueryClient();
 
   const gif_img = data?.gif_image ? data?.gif_image : [];
   const main_img = data?.main_image ? data?.main_image : [];
@@ -33,14 +37,51 @@ const DetailHeaderSwiper = (props: any) => {
       console.log('언마운트');
     };
   }, [data]);
+  const likeData = useQuery('fetch-detail-like', () =>
+    axios(
+      `${BASE_URL}/api/likes?filters[user_id][$eq][0]=${g.sendwichProfile.id}&filters[shop_id][$eq][1]=${id}`,
+    ),
+  );
+  const liked = likeData.data?.data.data;
+
+  const mutateDelete = useMutation(
+    () => axios.delete(`${BASE_URL}/api/likes/${liked[0].id}`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('fetch-detail-like');
+      },
+    },
+  );
+
+  const mutatePost = useMutation(
+    () =>
+      axios.post(`${BASE_URL}/api/likes`, {
+        data: {shop_id: id, user_id: g.sendwichProfile.id},
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('fetch-detail-like');
+      },
+    },
+  );
 
   return (
     <>
       {isLoading && <Loader />}
       {!isLoading && (
         <ImageWrapper>
-          <LikeButton activeOpacity={0.7}>
-            <Icon name="heart-fill" style={{fontSize: 20, color: '#fff'}} />
+          <LikeButton
+            activeOpacity={0.7}
+            onPress={() => {
+              liked?.length !== 0 ? mutateDelete.mutate() : mutatePost.mutate();
+            }}>
+            <Icon
+              name="heart-fill"
+              style={{
+                fontSize: 20,
+                color: liked?.length !== 0 ? '#ee5e52' : '#fff',
+              }}
+            />
           </LikeButton>
           <CoverImg source={{uri: `${BASE_URL}${bigImg}`}} />
 

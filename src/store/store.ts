@@ -440,6 +440,7 @@ export class GlobalStore {
       runInAction(() => {
         this._searchAddrArr = data?.documents;
       });
+      console.log(this.searchAddrArr);
     } catch (e) {
       console.log(e);
     }

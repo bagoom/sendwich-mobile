@@ -204,21 +204,21 @@ class MainStack extends React.Component<MainStackProp> {
         <MainStackStackNav.Screen
           name="SotreDetail"
           component={SotreDetail}
-          options={{
+          options={({route}) => ({
             headerTitle: '브라운도트',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
-            headerRight: () => <DetailHeaderRight />,
-          }}
+            headerRight: () => <DetailHeaderRight route={route} />,
+          })}
         />
         <MainStackStackNav.Screen
           name="SotreDetailInfo"
           component={SotreDetailInfo}
-          options={{
-            headerTitle: '가게정보',
+          options={({route}) => ({
+            headerTitle: '매장 정보',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
-          }}
+          })}
         />
         <MainStackStackNav.Screen
           name="StoreCartOption"
