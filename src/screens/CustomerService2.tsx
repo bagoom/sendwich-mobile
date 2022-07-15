@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, Text, Linking} from 'react-native';
+import {View, Text, Linking, Alert} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import theme, {Space} from '../Theme';
 
 import Icon from '../../Icon-font.js';
-
+import {useAlertModal} from '../components/AlertModal';
 import {BASE_URL} from '@env';
-
+import Loader from '../components/Loader';
 import axios from 'axios';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 const CustomerService = () => {
@@ -16,6 +16,7 @@ const CustomerService = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const queryClient = useQueryClient();
+  const alertModal = useAlertModal();
 
   const mutatePost = useMutation(
     () =>
@@ -29,7 +30,12 @@ const CustomerService = () => {
       }),
     {
       onSuccess: () => {
-        console.log('dddd');
+        alertModal.show({
+          title: '1:1문의 접수 안내',
+          cancelText: null,
+          message: '1:1문의 접수가 완료 되었습니다.',
+          confirmText: '확인',
+        });
         queryClient.invalidateQueries('cs-list');
       },
 
@@ -39,8 +45,21 @@ const CustomerService = () => {
     },
   );
 
+  const submit = () => {
+    if (!title) {
+      Alert.alert('제목을 입력 해주세요.');
+      return false;
+    }
+    if (!content) {
+      Alert.alert('내용을 입력 해주세요.');
+      return false;
+    }
+
+    mutatePost.mutate();
+  };
   return (
     <>
+      {mutatePost.isLoading && <Loader />}
       <Container>
         <Title>긴급 전화문의</Title>
         <Desc>
@@ -96,7 +115,7 @@ const CustomerService = () => {
             onChangeText={content => setContent(content)}
           />
         </InputWrap>
-        <ConfirmButton onPress={() => mutatePost.mutate()}>
+        <ConfirmButton onPress={submit}>
           <ConfirmButtonText>문의하기</ConfirmButtonText>
         </ConfirmButton>
       </Container>
