@@ -4,17 +4,19 @@ import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import theme, {SubTitle} from '../Theme';
+import {convertNumberToMobile} from '../lib/transfer';
 
 const Profile = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
+  const profile = g.sendwichProfile;
   return (
     <Wrapper>
       <Row>
-        <Avatar source={require('../assets/images/2.jpg')} resizeMode="cover" />
+        <Avatar source={{uri: `${profile.avatar}`}} resizeMode="cover" />
         <Info>
-          <Title>김엘라님 반갑습니다.</Title>
-          <Contact>010-3678-9633</Contact>
+          <Title>{profile.username}님 반갑습니다.</Title>
+          <Contact>{convertNumberToMobile(profile.phoneNumber)}</Contact>
         </Info>
       </Row>
 

@@ -5,7 +5,7 @@ import {Dimensions} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const CheckBox = (props: any) => {
-  const {size, radius, label, color} = props;
+  const {size, radius, label, color, onChange} = props;
   const g = useGlobalStore();
   const [isChecked, setToggleCheckBox] = useState(false);
   const toggleTextColor = isChecked ? '#000' : '#888';
@@ -26,6 +26,7 @@ const CheckBox = (props: any) => {
       }}
       onPress={(isChecked: boolean) => {
         setToggleCheckBox(isChecked);
+        onChange();
       }}
     />
   );

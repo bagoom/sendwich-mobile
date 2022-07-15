@@ -6,17 +6,17 @@ import styled from 'styled-components/native';
 import theme, {Space} from '../Theme';
 
 import Icon from '../../Icon-font.js';
-import {useAlertModal} from '../components/AlertModal';
+import AlertModal from '../components/AlertModal';
 import {BASE_URL} from '@env';
 import Loader from '../components/Loader';
 import axios from 'axios';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 const CustomerService = () => {
   const g = useGlobalStore();
+  const [visible, showModal] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const queryClient = useQueryClient();
-  const alertModal = useAlertModal();
 
   const mutatePost = useMutation(
     () =>
@@ -30,12 +30,7 @@ const CustomerService = () => {
       }),
     {
       onSuccess: () => {
-        alertModal.show({
-          title: '1:1문의 접수 안내',
-          cancelText: null,
-          message: '1:1문의 접수가 완료 되었습니다.',
-          confirmText: '확인',
-        });
+        showModal(true);
         queryClient.invalidateQueries('cs-list');
       },
 
@@ -61,6 +56,16 @@ const CustomerService = () => {
     <>
       {mutatePost.isLoading && <Loader />}
       <Container>
+        <AlertModal
+          visible={visible}
+          confirm={() => g.onChangeCCFilter(0)}
+          param={{
+            title: '1:1문의 접수 안내',
+            cancelText: null,
+            message: '1:1문의 접수가 완료 되었습니다.',
+            confirmText: '확인',
+          }}
+        />
         <Title>긴급 전화문의</Title>
         <Desc>
           <Text>

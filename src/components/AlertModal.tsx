@@ -1,27 +1,42 @@
 import React from 'react';
-import {createUseModal} from 'react-native-use-modal';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import Modal from 'react-native-modal';
+import {View, StyleSheet, Platform, Dimensions} from 'react-native';
 import styled from 'styled-components/native';
 import {useGlobalStore} from '../store/util';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Icon from '../../Icon-font.js';
 import theme from '../Theme';
 
-const width = wp('85%');
-export const useAlertModal = createUseModal<
-  void, // First generic argument
-  {
-    title: string;
-    message: string;
-    cancelText: string | null;
-    confirmText: string;
-  } // Second generic argument
->(({confirm, param}) => {
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight =
+  Platform.OS === 'ios'
+    ? Dimensions.get('window').height
+    : require('react-native-extra-dimensions-android').get(
+        'REAL_WINDOW_HEIGHT',
+      );
+
+const styles = StyleSheet.create({
+  drawerMenuStyle: {
+    width: deviceWidth, // SideMenu width
+    margin: 0,
+    paddingHorizontal: 40,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+});
+
+const AlertModal = ({visible, confirm, cancel, param}: any) => {
   const g = useGlobalStore();
-  const action =
-    param.title === '1:1문의 접수 안내' ? () => g.onChangeCCFilter(0) : confirm;
   return (
-    <Container>
+    <Modal
+      isVisible={visible}
+      deviceWidth={deviceWidth}
+      deviceHeight={deviceHeight}
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      hasBackdrop={Platform.OS === 'android' ? true : false}
+      hideModalContentWhileAnimating
+      useNativeDriver={true}
+      style={styles.drawerMenuStyle}>
       <Box>
         <Body>
           <Icon name="info" style={{fontSize: 42, color: '#666'}} />
@@ -31,26 +46,23 @@ export const useAlertModal = createUseModal<
 
         <Footer>
           {param.cancelText && (
-            <CancelBtn onPress={action} activeOpacity={1}>
+            <CancelBtn onPress={cancel} activeOpacity={1}>
               <CancelBtnText>{param.cancelText}</CancelBtnText>
             </CancelBtn>
           )}
-          <ConfirmBtn onPress={action} activeOpacity={1}>
+          <ConfirmBtn onPress={() => confirm()} activeOpacity={1}>
             <ConfirmBtnText>{param.confirmText}</ConfirmBtnText>
           </ConfirmBtn>
         </Footer>
       </Box>
-    </Container>
+    </Modal>
   );
-});
+};
 
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+export default AlertModal;
+
+const Container = styled.View``;
 const Box = styled.View`
-  width: ${width}px;
   background: #f5f5f5;
   border-radius: 5px;
   elevation: 5;
@@ -58,7 +70,7 @@ const Box = styled.View`
 `;
 
 const Body = styled.View`
-  padding: 55px 0 120px;
+  padding: 65px 0 120px;
   align-items: center;
   justify-content: center;
 `;

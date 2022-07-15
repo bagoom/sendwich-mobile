@@ -46,6 +46,8 @@ type SendwichProfile = {
   username: string;
   email: string;
   profileUrl: string;
+  phoneNumber: string;
+  avatar: string;
 };
 
 export class GlobalStore {
@@ -80,6 +82,8 @@ export class GlobalStore {
     username: '',
     email: '',
     profileUrl: '',
+    phoneNumber: '',
+    avatar: '',
   };
 
   jwt = '';
@@ -237,6 +241,10 @@ export class GlobalStore {
   hydrateAuthState = async (userinfo: any, jwt = null) => {
     try {
       if (jwt) {
+        if (userinfo.status === '탈퇴' && userinfo.blocked) {
+          Alert.alert('탈퇴한 회원이므로 서비스를 이용하실 수 없습니다.');
+          return false;
+        }
         await AsyncStorage.setItem(`@sendwich_jwt`, jwt);
         runInAction(() => {
           this.loggedIn = true;

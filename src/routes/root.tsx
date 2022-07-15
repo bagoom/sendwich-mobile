@@ -10,7 +10,6 @@ import {ThemeProvider} from 'styled-components';
 import {QueryClientProvider, QueryClient} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ModalProvider} from 'react-native-use-modal';
 
 import Theme from '../Theme';
 
@@ -45,31 +44,29 @@ class Root extends React.Component<RootProps> {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
           <SafeAreaProvider>
-            <ModalProvider>
-              <NavigationContainer
-                ref={store.navigationRef}
-                theme={navTheme}
-                //@ts-ignore
-                onStateChange={store.setCurrentRoute}>
-                <RootStackNav.Navigator
-                  screenOptions={({route, navigation}) => ({
-                    presentation: 'modal',
-                    headerShown: false,
-                    gestureEnabled: Platform.OS === 'ios' ? true : false,
-                    cardOverlayEnabled: true,
-                    headerStatusBarHeight:
-                      navigation
-                        .getState()
-                        .routes.findIndex((r: any) => r.key === route.key) > 0
-                        ? 0
-                        : undefined,
-                    ...TransitionPresets.ModalPresentationIOS,
-                  })}>
-                  <RootStackNav.Screen name="Home" component={MainStack} />
-                </RootStackNav.Navigator>
-              </NavigationContainer>
-              <ReactQueryDevtools initialIsOpen={true} position="top-right" />
-            </ModalProvider>
+            <NavigationContainer
+              ref={store.navigationRef}
+              theme={navTheme}
+              //@ts-ignore
+              onStateChange={store.setCurrentRoute}>
+              <RootStackNav.Navigator
+                screenOptions={({route, navigation}) => ({
+                  presentation: 'modal',
+                  headerShown: false,
+                  gestureEnabled: Platform.OS === 'ios' ? true : false,
+                  cardOverlayEnabled: true,
+                  headerStatusBarHeight:
+                    navigation
+                      .getState()
+                      .routes.findIndex((r: any) => r.key === route.key) > 0
+                      ? 0
+                      : undefined,
+                  ...TransitionPresets.ModalPresentationIOS,
+                })}>
+                <RootStackNav.Screen name="Home" component={MainStack} />
+              </RootStackNav.Navigator>
+            </NavigationContainer>
+            <ReactQueryDevtools initialIsOpen={true} position="top-right" />
           </SafeAreaProvider>
         </ThemeProvider>
       </QueryClientProvider>

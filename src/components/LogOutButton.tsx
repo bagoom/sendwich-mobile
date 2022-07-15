@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
-
+import AlertModal from '../components/AlertModal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import theme from '../Theme';
@@ -11,22 +11,41 @@ import Icon from '../../Icon-font.js';
 const MypageButton = (props: any) => {
   const {title, style} = props;
   const g = useGlobalStore();
+  const [visible, showModal] = useState(false);
   const navigation = useNavigation<any>();
 
-  return (
-    <ListItem style={{...style}} onPress={g.signOutWithKakao}>
-      <Title>{title}</Title>
+  const logoutHandel = () => {
+    showModal(true);
+  };
 
-      <Button>
-        <Icon
-          name="arrow-left"
-          style={{
-            fontSize: 14,
-            color: '#aaa',
-          }}
-        />
-      </Button>
-    </ListItem>
+  return (
+    <>
+      <AlertModal
+        visible={visible}
+        //@ts-ignore
+        cancel={() => showModal()}
+        confirm={() => g.signOutWithKakao()}
+        param={{
+          title: '로그아웃 안내',
+          message: '로그아웃을 하시겠습니까?',
+          cancelText: '취소',
+          confirmText: '확인',
+        }}
+      />
+      <ListItem style={{...style}} onPress={logoutHandel}>
+        <Title>{title}</Title>
+
+        <Button>
+          <Icon
+            name="arrow-left"
+            style={{
+              fontSize: 14,
+              color: '#aaa',
+            }}
+          />
+        </Button>
+      </ListItem>
+    </>
   );
 };
 
