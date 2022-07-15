@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import theme, {Title} from '../Theme';
 
 import LikeList from '../components/LikeList';
+import RecentList from '../components/RecentList';
 
 const MainTabA1Screen = () => {
   const g = useGlobalStore();
@@ -13,7 +14,7 @@ const MainTabA1Screen = () => {
     <ScrollView>
       <Wrpper>
         <Title>최근 구경한 장소</Title>
-        <LikeList />
+        <RecentList />
 
         <Container>
           <Title>내가 찜한 장소</Title>

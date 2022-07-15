@@ -7,12 +7,20 @@ import LikeListItem from '../components/LikeListItem';
 
 import {Title} from '../Theme';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
+
 const LikeList = (props: any) => {
   const g = useGlobalStore();
+
+  const {isLoading, error, data} = useQuery('like-list', () =>
+    axios(`${BASE_URL}/api/likes/with-store`),
+  );
+  const likeData = data?.data.storeInfo;
   return (
     <Wrapper>
-      {data.map((item, key) => (
+      {likeData?.map((item: any, key: any) => (
         <LikeListItem item={item} key={key} />
       ))}
     </Wrapper>

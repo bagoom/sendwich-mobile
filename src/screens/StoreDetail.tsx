@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
 import DetailHeaderSwiper from '../components/DetailHeaderSwiper';
@@ -31,6 +31,7 @@ const StoreDetail = ({route, navigation}: any) => {
     if (!isLoading) {
       navigation.setOptions({headerTitle: detailData?.shop_name});
     }
+    g.setRecentStore(data?.data.data);
     cartCountFetch.refetch();
     console.log('ddd');
   }, [detailData]);

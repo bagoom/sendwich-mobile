@@ -31,8 +31,8 @@ const Config = () => {
               </Row>
             </View>
           </Row>
-          <ConfirmButton update={false}>
-            <ConfirmButtonText update={false}>문의하기</ConfirmButtonText>
+          <ConfirmButton update={false} activeOpacity={1}>
+            <ConfirmButtonText update={false}>업데이트</ConfirmButtonText>
           </ConfirmButton>
         </Container>
 

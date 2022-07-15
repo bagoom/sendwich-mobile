@@ -98,6 +98,7 @@ export class GlobalStore {
   authenticationed = false;
 
   _recently_address = [];
+  recent_store = [];
 
   CCFilterIndex = 0;
   couponModalVisible = false;
@@ -132,6 +133,7 @@ export class GlobalStore {
       _recently_address: observable,
       _coordsToAddr: observable,
       _searchAddrArr: observable,
+      recent_store: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -157,6 +159,7 @@ export class GlobalStore {
       },
     );
     this.initRecentAddress();
+    this.initRecentSotre();
   }
 
   setCurrentRoute = (state: NavigationState) => {
@@ -473,6 +476,39 @@ export class GlobalStore {
     );
   };
 
+  setRecentStore = async (store: any) => {
+    try {
+      runInAction(() => {
+        if (store) {
+          this.recent_store = this.recent_store.filter(
+            (arr: any, index, callback) =>
+              index === callback.findIndex((t: any) => t.id === arr.id),
+          );
+
+          this.recent_store.unshift({
+            //@ts-ignore
+            id: store?.id,
+            //@ts-ignore
+            shop_name: store?.shop_name,
+            //@ts-ignore
+            coupon_name: store?.coupon?.name,
+            //@ts-ignore
+            img: store?.main_image[0]?.url,
+          });
+        }
+        if (this.recent_store.length > 4) {
+          this.recent_store.pop();
+        }
+      });
+      await AsyncStorage.setItem(
+        `@sendwich_recent_store`,
+        JSON.stringify(this.recent_store),
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   initRecentAddress = async () => {
     const address = await AsyncStorage.getItem(`@sendwich_recent_addr`);
     runInAction(() => {
@@ -480,7 +516,16 @@ export class GlobalStore {
         this._recently_address = JSON.parse(address);
       }
     });
-    console.log(this.recently_address);
+  };
+
+  initRecentSotre = async () => {
+    const store = await AsyncStorage.getItem(`@sendwich_recent_store`);
+    runInAction(() => {
+      if (store) {
+        this.recent_store = JSON.parse(store);
+      }
+    });
+    console.log(toJS(this.recent_store));
   };
 
   clearStore = () => {

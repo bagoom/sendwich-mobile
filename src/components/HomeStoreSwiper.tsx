@@ -9,6 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Loader from '../components/Loader';
 import {useNavigation} from '@react-navigation/native';
 import {Title} from '../Theme';
 import axios from 'axios';
@@ -37,7 +38,7 @@ const HomeStoreSwiper = (props: any) => {
       refetchOnWindowFocus: false,
       retry: 0,
       onSuccess: (data: any) => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
       },
       onError: (e: any) => {
         console.log(e.message);
@@ -46,35 +47,38 @@ const HomeStoreSwiper = (props: any) => {
   );
   return (
     <>
-      <View style={{flex: 1, paddingLeft: 16, paddingBottom: 30}}>
-        {titleVisible && <Title>모임비 지원해 드릴게요</Title>}
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <View style={{flex: 1, paddingLeft: 16, paddingBottom: 30}}>
+          {titleVisible && <Title>모임비 지원해 드릴게요</Title>}
 
-        <Carousel
-          {...baseOptions}
-          style={{width: '100%'}}
-          panGestureHandlerProps={{
-            activeOffsetX: [-10, 10],
-          }}
-          data={data?.data.data}
-          renderItem={({item}: any) => (
-            <TouchableOpacity
-              key={item.id}
-              activeOpacity={1}
-              style={{flex: 1, marginRight: 13}}
-              onPress={() => navigation.navigate('SotreDetail', item.id)}>
-              <SliderImg
-                source={{uri: `${BASE_URL}${item?.main_image[0].url}`}}
-              />
+          <Carousel
+            {...baseOptions}
+            style={{width: '100%'}}
+            panGestureHandlerProps={{
+              activeOffsetX: [-10, 10],
+            }}
+            data={data?.data?.data}
+            renderItem={({item}: any) => (
+              <TouchableOpacity
+                key={item.id}
+                activeOpacity={1}
+                style={{flex: 1, marginRight: 13}}
+                onPress={() => navigation.navigate('SotreDetail', item.id)}>
+                <SliderImg
+                  source={{uri: `${BASE_URL}${item?.main_image[0]?.url}`}}
+                />
 
-              <View style={{marginTop: 10, flexDirection: 'row'}}>
-                <Category>{item.coupon.discount_rate}% 지원</Category>
-                <Subject>{item.shop_name}</Subject>
-              </View>
-              <Description>{item.coupon.name}</Description>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+                <View style={{marginTop: 10, flexDirection: 'row'}}>
+                  <Category>{item?.coupon?.discount_rate}% 지원</Category>
+                  <Subject>{item?.shop_name}</Subject>
+                </View>
+                <Description>{item?.coupon?.name}</Description>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
     </>
   );
 };

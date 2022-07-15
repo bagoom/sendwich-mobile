@@ -6,23 +6,23 @@ import {BASE_URL} from '@env';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
-const LikeListItem = (props: any) => {
+const RecentListItem = (props: any) => {
   const {item} = props;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
-
+  console.log(item);
   return (
-    <ListItem onPress={() => navigation.navigate('SotreDetail', item.shop_id)}>
-      <Img source={{uri: `${BASE_URL}${item?.cover_img}`}} />
+    <ListItem onPress={() => navigation.navigate('SotreDetail', item.id)}>
+      <Img source={{uri: `${BASE_URL}${item?.img}`}} />
       <Info>
         <Subject>{item?.shop_name}</Subject>
-        <Description>{item?.display_name}</Description>
+        <Description>{item?.coupon_name}</Description>
       </Info>
     </ListItem>
   );
 };
 
-export default observer(LikeListItem);
+export default observer(RecentListItem);
 
 const ListItem = styled.TouchableOpacity<{type?: number}>`
   flex-direction: row;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
-
+import {BASE_URL} from '@env';
 import styled from 'styled-components/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
@@ -13,7 +13,6 @@ const StoreLargeListItem = (props: any) => {
   const FIRST_ITEM = item.id % 2;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
-
   return (
     <StoreItem
       type={FIRST_ITEM}
@@ -21,13 +20,13 @@ const StoreLargeListItem = (props: any) => {
       onPress={() => navigation.navigate('SotreDetail', item.id)}>
       <View>
         <Badge>
-          <BadgeText>10%</BadgeText>
+          <BadgeText>{item.coupon.discount_rate}%</BadgeText>
         </Badge>
-        <SliderImg source={require('../assets/images/main_banner.jpeg')} />
+        <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
       </View>
 
-      <Subject>브라운도트</Subject>
-      <Description>전주 떡갈비</Description>
+      <Subject>{item.shop_name}</Subject>
+      <Description>{item.coupon.name}</Description>
     </StoreItem>
   );
 };

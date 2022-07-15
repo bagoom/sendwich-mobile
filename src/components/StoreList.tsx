@@ -14,8 +14,12 @@ const StoreList = (props: any) => {
   const {navigation} = props;
   titleVisible = props.titleVisible;
   const g = useGlobalStore();
-  const {isLoading, error, data} = useQuery('home-store-swiper', () =>
-    axios(`${BASE_URL}/api/stores/with-coupon?populate=*`),
+  const {isLoading, error, data} = useQuery('store-list', () =>
+    axios(
+      `${BASE_URL}/api/stores/with-coupon?populate=*&pagination[start]=${
+        props.start
+      }&pagination[limit]=${props.start + 8}&sort=id:asc`,
+    ),
   );
 
   const listData = data?.data.data;

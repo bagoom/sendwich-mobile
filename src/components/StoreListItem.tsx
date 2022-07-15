@@ -24,14 +24,14 @@ const StoreListItem = (props: any) => {
       onPress={() => navigation.navigate('SotreDetail', item.id)}>
       <View>
         <Badge>
-          <BadgeText>{item.coupon.discount_rate}%</BadgeText>
+          <BadgeText>{item?.coupon?.discount_rate}%</BadgeText>
         </Badge>
         <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
       </View>
 
       <Subject>{item?.shop_name}</Subject>
-      <Description>{item.coupon.name}</Description>
-      <Text1>{item.location_information}</Text1>
+      <Description>{item?.coupon?.name}</Description>
+      <Text1>{item?.location_information}</Text1>
       <Text1>320m</Text1>
     </StoreItem>
   );

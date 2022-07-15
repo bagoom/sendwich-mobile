@@ -44,6 +44,8 @@ const DetailHeaderSwiper = (props: any) => {
   );
   const liked = likeData.data?.data.data;
 
+  console.log(liked);
+
   const mutateDelete = useMutation(
     () => axios.delete(`${BASE_URL}/api/likes/${liked[0].id}`),
     {

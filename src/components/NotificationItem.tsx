@@ -16,7 +16,7 @@ const NotificationItem = (props: any) => {
       <Desc>{item.description}</Desc>
 
       <ExpandButton>
-        <Icon name="arrow" style={{fontSize: 16, color: '#bbb'}} />
+        <Icon name="arrow-down" style={{fontSize: 16, color: '#bbb'}} />
       </ExpandButton>
     </ListItem>
   );

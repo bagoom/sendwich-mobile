@@ -21,7 +21,7 @@ const CustomRoute = (props: any) => {
       <Space />
 
       <Wrapper>
-        <StoreList />
+        <StoreList start={3} />
       </Wrapper>
       <Space />
       <Footer />

@@ -25,7 +25,7 @@ const MainTabA1Screen = (props: any) => {
       <HomeStoreSwiper />
       <Space />
       <ContainerType2>
-        <StoreList titleVisible={true} />
+        <StoreList titleVisible={true} start={0} />
       </ContainerType2>
       <Space />
 
