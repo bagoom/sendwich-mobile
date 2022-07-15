@@ -17,7 +17,7 @@ const Config = () => {
         <Container>
           <Row>
             <AppAvatar
-              source={require('../assets/images/2.jpg')}
+              source={require('../assets/images/logo_icon.png')}
               resizeMode="cover"
             />
             <View>

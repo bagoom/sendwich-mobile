@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, Animated, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -8,30 +8,21 @@ import Icon from '../../Icon-font.js';
 import theme from '../Theme';
 
 const NoticeListItem = (props: any) => {
-  const {item, currentNumber, index, isShow, setCurrentIndex}: any = props;
+  const {item}: any = props;
   const g = useGlobalStore();
-  const onMoreButtonClick = (index: any, isShow: any) => {
-    console.log(index, isShow);
-    if (isShow) {
-      setCurrentIndex(-1);
-    } else {
-      setCurrentIndex(index);
-    }
-  };
+  const [open, setOpen] = useState(false);
 
   return (
     <View>
       <ListItem
-        isShow={isShow}
+        open={open}
         activeOpacity={1}
-        onPress={() => {
-          onMoreButtonClick(index, isShow);
-        }}>
+        onPress={() => setOpen(prev => !prev)}>
         <View>
           <Subject>{item.title}</Subject>
           <Date>{moment(item.createdAt).format('yy.MM.DD')}</Date>
         </View>
-        <View style={{transform: [{rotate: isShow ? '90deg' : '-90deg'}]}}>
+        <View style={{transform: [{rotate: open ? '90deg' : '-90deg'}]}}>
           <Icon
             name="arrow-left"
             style={{
@@ -41,7 +32,7 @@ const NoticeListItem = (props: any) => {
           />
         </View>
       </ListItem>
-      {isShow && (
+      {open && (
         <Content>
           <ContentText>{item.content}</ContentText>
         </Content>
@@ -52,14 +43,14 @@ const NoticeListItem = (props: any) => {
 
 export default observer(NoticeListItem);
 
-const ListItem = styled.TouchableOpacity<{isShow?: boolean}>`
+const ListItem = styled.TouchableOpacity<{open?: boolean}>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
   border-bottom-width: 1px;
   border-color: #eee;
-  background: ${props => (props.isShow ? '#f4f4f4' : '#fff')};
+  background: ${props => (props.open ? '#f4f4f4' : '#fff')};
 `;
 
 const Subject = styled.Text`
