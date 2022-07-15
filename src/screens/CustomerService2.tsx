@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {observer} from 'mobx-react';
 import {View, Text, Linking} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -7,8 +7,38 @@ import theme, {Space} from '../Theme';
 
 import Icon from '../../Icon-font.js';
 
+import {BASE_URL} from '@env';
+
+import axios from 'axios';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
 const CustomerService = () => {
   const g = useGlobalStore();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const queryClient = useQueryClient();
+
+  const mutatePost = useMutation(
+    () =>
+      axios.post(`${BASE_URL}/api/faqs`, {
+        data: {
+          title: title,
+          content: content,
+          user_id: g.sendwichProfile.id,
+          pending: 0,
+        },
+      }),
+    {
+      onSuccess: () => {
+        console.log('dddd');
+        queryClient.invalidateQueries('cs-list');
+      },
+
+      onError: (e: any) => {
+        console.log(e);
+      },
+    },
+  );
+
   return (
     <>
       <Container>
@@ -54,15 +84,19 @@ const CustomerService = () => {
           <InputText
             placeholder="제목을 입력하세요."
             placeholderTextColor={'#aaa'}
+            value={title}
+            onChangeText={title => setTitle(title)}
           />
           <TextArea
             placeholder="내용을 입력하세요."
             multiline
             placeholderTextColor={'#aaa'}
             textAlignVertical="top"
+            value={content}
+            onChangeText={content => setContent(content)}
           />
         </InputWrap>
-        <ConfirmButton>
+        <ConfirmButton onPress={() => mutatePost.mutate()}>
           <ConfirmButtonText>문의하기</ConfirmButtonText>
         </ConfirmButton>
       </Container>

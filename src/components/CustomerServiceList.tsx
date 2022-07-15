@@ -9,9 +9,18 @@ import CustomerService2 from '../screens/CustomerService2';
 
 import {Title} from '../Theme';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
 const CustomerServiceList = (props: any) => {
   const g = useGlobalStore();
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
+  const {isLoading, error, data} = useQuery('cs-list', () =>
+    axios(`${BASE_URL}/api/faqs?filters[user_id][$eq]=${g.sendwichProfile.id}`),
+  );
+  const csData = data?.data.data;
+
   return (
     <Wrapper>
       <ButtonWrap>
@@ -19,8 +28,15 @@ const CustomerServiceList = (props: any) => {
       </ButtonWrap>
 
       {g.CCFilterIndex == 0 ? (
-        data.map((item, key) => (
-          <CustomerServiceListItem item={item} key={key} />
+        csData?.map((item: any, index: any) => (
+          <CustomerServiceListItem
+            item={item}
+            key={index}
+            currentNumber={index + 1}
+            index={index}
+            isShow={index === currentIndex ? true : false}
+            setCurrentIndex={setCurrentIndex}
+          />
         ))
       ) : (
         <CustomerService2 />

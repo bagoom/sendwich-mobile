@@ -7,6 +7,7 @@ export default {
     point: '#FFBD2E',
     red: '#F04747',
     brown: '#7D331A',
+    light: '#FFF9EC',
     dark_yellow: '#7E745C',
   },
   fonts: {

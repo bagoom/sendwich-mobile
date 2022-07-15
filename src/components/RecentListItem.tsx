@@ -10,7 +10,6 @@ const RecentListItem = (props: any) => {
   const {item} = props;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
-  console.log(item);
   return (
     <ListItem onPress={() => navigation.navigate('SotreDetail', item.id)}>
       <Img source={{uri: `${BASE_URL}${item?.img}`}} />
