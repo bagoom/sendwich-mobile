@@ -12,11 +12,11 @@ const FilterButton = (props: any) => {
   const [activeValue, setActive] = useState('');
 
   const onPress = (value: string) => {
-    setActive(value);
+    g.seleteFilterBtn(value);
   };
 
   return titles.map((title: string, index: number) => {
-    const activeState = title === activeValue;
+    const activeState = title === g.seletedFilterBtn;
     return (
       <Button
         activeOpacity={0.8}

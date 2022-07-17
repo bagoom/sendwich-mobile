@@ -16,7 +16,7 @@ const LikeListItem = (props: any) => {
       <Img source={{uri: `${BASE_URL}${item?.cover_img}`}} />
       <Info>
         <Subject>{item?.shop_name}</Subject>
-        <Description>{item?.display_name}</Description>
+        <Description>{item?.coupon_name}</Description>
       </Info>
     </ListItem>
   );
@@ -28,6 +28,9 @@ const ListItem = styled.TouchableOpacity<{type?: number}>`
   flex-direction: row;
   align-items: center;
   margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom-width: 0.7px;
+  border-color: #eee;
 `;
 
 const Img = styled.Image`

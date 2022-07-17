@@ -22,7 +22,11 @@ const StoreLargeListItem = (props: any) => {
         <Badge>
           <BadgeText>{item.coupon.discount_rate}%</BadgeText>
         </Badge>
-        <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
+        {item?.main_image ? (
+          <SliderImg source={{uri: `${BASE_URL}${item?.main_image[0].url}`}} />
+        ) : (
+          <NoImg />
+        )}
       </View>
 
       <Subject>{item.shop_name}</Subject>
@@ -36,12 +40,20 @@ export default observer(StoreLargeListItem);
 const StoreItem = styled.TouchableOpacity<{type?: number}>`
   width: ${ITEM_WIDTH}px;
   margin-bottom: 16px;
+  background: #000;
+  height: 200px;
 `;
 
 const SliderImg = styled.Image`
   width: 100%;
   height: ${ITEM_WIDTH}px;
   border-radius: 8px;
+`;
+const NoImg = styled.View`
+  width: 100%;
+  height: ${ITEM_WIDTH}px;
+  border-radius: 8px;
+  background: #f3f3f3;
 `;
 const Badge = styled.View`
   position: absolute;

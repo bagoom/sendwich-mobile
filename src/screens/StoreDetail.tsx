@@ -3,9 +3,6 @@ import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
-
 import DetailHeaderSwiper from '../components/DetailHeaderSwiper';
 import TagList from '../components/TagList';
 import CouponListItem from '../components/CouponListItem';

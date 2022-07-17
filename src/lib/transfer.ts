@@ -13,3 +13,13 @@ export const convertNumberToMobile = (number: string) => {
   const value = number.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
   return value;
 };
+
+export const converMeter = (number: number) => {
+  let value;
+  if (number > 1) {
+    value = number.toFixed(1) + 'km';
+  } else {
+    value = (number * 1000).toFixed(0) + 'm';
+  }
+  return value;
+};

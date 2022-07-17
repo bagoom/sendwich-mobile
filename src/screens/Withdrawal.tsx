@@ -69,7 +69,7 @@ const Withdrawal = () => {
           onChange={() => setReason2('가맹점이 별로 없어서,')}
         />
       </CheckRow>
-      <Text style={{marginTop: 20}}>기타</Text>
+      <Text style={{marginTop: 20, color: '#222'}}>기타</Text>
       {/* <Contact>
         <Icon name="call" style={{fontSize: 14, color: '#000'}} />
         <Tel>1599-4923</Tel>

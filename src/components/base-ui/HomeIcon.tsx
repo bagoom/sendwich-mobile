@@ -13,7 +13,7 @@ const HomeIcon = (props: any) => {
     <IconButton mr={mr0} onPress={() => navigation.navigate(data.title)}>
       <IconImage
         source={{
-          uri: `${BASE_URL}${data.image.url}`,
+          uri: `${BASE_URL}${data?.image?.url}`,
         }}
         resizeMode="contain"
       />

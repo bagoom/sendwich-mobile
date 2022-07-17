@@ -11,7 +11,7 @@ const MyCouponListItem = (props: any) => {
   const g = useGlobalStore();
   console.log(g.couponModalVisible);
   return (
-    <ListItem onPress={() => g.toggleCouponModal(true)}>
+    <ListItem onPress={() => g.toggleCouponModal(true)} activeOpacity={1}>
       <CouponImg source={require('../assets/images/coupon.png')} />
 
       <Title>떡갈비 스테이크</Title>

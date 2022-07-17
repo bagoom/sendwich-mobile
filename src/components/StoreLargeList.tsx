@@ -13,18 +13,27 @@ import Loader from '../components/Loader';
 
 let titleVisible = false;
 const StoreLargeList = (props: any) => {
-  const {navigation} = props;
+  const {start, type, category} = props;
   titleVisible = props.titleVisible;
   const g = useGlobalStore();
-
-  const {isLoading, error, data} = useQuery('store-large-list', () =>
-    axios(
-      `${BASE_URL}/api/stores/with-coupon?populate=*&pagination[start]=0&pagination[limit]=3&sort=id:asc`,
-    ),
+  let api: any;
+  api = axios(
+    `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
+      start + 3
+    }&km=12&lat=${g.coords?.lat}&lng=${
+      g.coords?.lng
+    }&order=${type}&category=${category}`,
   );
+  const queryName = `store-list-start-${type}-${start}-${g.coords?.lat}-${category}`;
+  const {isLoading, error, data} = useQuery(queryName, () => api);
+  const listData = data?.data.data;
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && (
+        <View style={{flex: 1}}>
+          <Loader />
+        </View>
+      )}
 
       {!isLoading && (
         <View
@@ -41,7 +50,7 @@ const StoreLargeList = (props: any) => {
               justifyContent: 'space-between',
               flexWrap: 'wrap',
             }}>
-            {data?.data.data.map((item: any, key: any) => (
+            {listData?.map((item: any, key: any) => (
               <StoreLargeListItem item={item} key={key} />
             ))}
           </View>

@@ -24,6 +24,7 @@ const CheckAuthScreen = () => {
       />
       {!g.authChecked && (
         <IndicatorWrap>
+          {/* <Text style={{color: '#fff'}}>{BASE_URL}</Text> */}
           <BubblesLoader size={22} dotRadius={4} color="#fff" />
         </IndicatorWrap>
       )}

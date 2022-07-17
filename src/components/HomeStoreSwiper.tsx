@@ -65,9 +65,13 @@ const HomeStoreSwiper = (props: any) => {
                 activeOpacity={1}
                 style={{flex: 1, marginRight: 13}}
                 onPress={() => navigation.navigate('SotreDetail', item.id)}>
-                <SliderImg
-                  source={{uri: `${BASE_URL}${item?.main_image[0]?.url}`}}
-                />
+                {item?.main_image ? (
+                  <SliderImg
+                    source={{uri: `${BASE_URL}${item?.main_image[0]?.url}`}}
+                  />
+                ) : (
+                  <NoImg />
+                )}
 
                 <View style={{marginTop: 10, flexDirection: 'row'}}>
                   <Category>{item?.coupon?.discount_rate}% 지원</Category>
@@ -106,4 +110,10 @@ const SliderImg = styled.Image`
   width: 100%;
   height: ${IMG_HEIGHT}px;
   border-radius: 8px;
+`;
+const NoImg = styled.View`
+  width: 100%;
+  height: ${IMG_HEIGHT}px;
+  border-radius: 8px;
+  background: #f3f3f3;
 `;

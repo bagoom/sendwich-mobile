@@ -11,7 +11,7 @@ const HeaderFilter = (props: any) => {
 
   return (
     <Wrapper>
-      <FilterButton titles={['인기순', '거리순', '할인률순']} />
+      <FilterButton titles={['인기순', '거리순', '할인율순']} />
     </Wrapper>
   );
 };
@@ -19,6 +19,6 @@ const HeaderFilter = (props: any) => {
 export default observer(HeaderFilter);
 
 const Wrapper = styled.View`
-  margin-top: 16px;
+  margin: 16px;
   flex-direction: row;
 `;

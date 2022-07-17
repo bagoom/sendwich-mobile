@@ -34,7 +34,6 @@ const AlertModal = ({visible, confirm, cancel, param}: any) => {
       animationIn="fadeIn"
       animationOut="fadeOut"
       hasBackdrop={Platform.OS === 'android' ? true : false}
-      hideModalContentWhileAnimating
       useNativeDriver={true}
       style={styles.drawerMenuStyle}>
       <Box>
@@ -65,7 +64,6 @@ const Container = styled.View``;
 const Box = styled.View`
   background: #f5f5f5;
   border-radius: 5px;
-  elevation: 5;
   overflow: hidden;
 `;
 

@@ -68,7 +68,7 @@ const MainTabA1Screen = () => {
 
 export default observer(MainTabA1Screen);
 
-const Wrapper = styled.View`
+const Wrapper = styled.ScrollView`
   padding: 16px;
 `;
 
@@ -86,7 +86,7 @@ const Container = styled.View`
   margin-bottom: 30px;
 `;
 const Round1 = styled.TouchableOpacity`
-  margin-right: 5px;
+  margin-right: 6px;
   padding: 5px 10px;
   border-width: 1px;
   border-color: #eee;
@@ -97,8 +97,8 @@ const Round1Text = styled.Text`
   color: #999;
 `;
 const Round2 = styled.TouchableOpacity`
-  margin-right: 5px;
-  margin-bottom: 6px;
+  margin-right: 6px;
+  margin-bottom: 7px;
   padding: 5px 10px;
   border-width: 1px;
   border-color: ${theme.color.point};

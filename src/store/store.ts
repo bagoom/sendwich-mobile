@@ -86,6 +86,13 @@ export class GlobalStore {
     avatar: '',
   };
 
+  coords = {
+    lat: '',
+    lng: '',
+  };
+
+  seletedFilterBtn = '인기순';
+
   jwt = '';
   username = '';
   gender = '';
@@ -138,6 +145,7 @@ export class GlobalStore {
       _coordsToAddr: observable,
       _searchAddrArr: observable,
       recent_store: observable,
+      seletedFilterBtn: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -451,7 +459,6 @@ export class GlobalStore {
       runInAction(() => {
         this._searchAddrArr = data?.documents;
       });
-      console.log(this.searchAddrArr);
     } catch (e) {
       console.log(e);
     }
@@ -459,7 +466,6 @@ export class GlobalStore {
   };
 
   selectHeaderAddr = async (addr: any, arrAddr: any) => {
-    console.log(addr);
     runInAction(() => {
       this.headerAddr = addr;
       if (arrAddr) {
@@ -469,11 +475,12 @@ export class GlobalStore {
           //@ts-ignore
           road_addr: arrAddr.road_address.address_name,
         });
+        //@ts-ignore
+        this.coords = {lat: arrAddr.y, lng: arrAddr.x};
       }
       if (this.recently_address.length > 5) {
         this._recently_address.pop();
       }
-      console.log(this.recently_address);
     });
 
     //@ts-ignore
@@ -481,6 +488,10 @@ export class GlobalStore {
     await AsyncStorage.setItem(
       `@sendwich_recent_addr`,
       JSON.stringify(this.recently_address),
+    );
+    await AsyncStorage.setItem(
+      `@sendwich_recent_coords`,
+      JSON.stringify(this.coords),
     );
   };
 
@@ -519,10 +530,20 @@ export class GlobalStore {
 
   initRecentAddress = async () => {
     const address = await AsyncStorage.getItem(`@sendwich_recent_addr`);
+    const coords = await AsyncStorage.getItem(`@sendwich_recent_coords`);
     runInAction(() => {
       if (address) {
         this._recently_address = JSON.parse(address);
       }
+      if (coords) {
+        this.coords = JSON.parse(coords);
+      }
+    });
+  };
+
+  seleteFilterBtn = (value: any) => {
+    runInAction(() => {
+      this.seletedFilterBtn = value;
     });
   };
 
@@ -546,6 +567,7 @@ export class GlobalStore {
         email: '',
         thumbnailImageUrl: '',
       };
+      //@ts-ignore
       this._sendwichProfile = {
         id: 0,
         username: '',

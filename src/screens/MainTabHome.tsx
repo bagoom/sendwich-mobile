@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {ScrollView} from 'react-native';
+import {SafeAreaView, View, FlatList} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import HomeHeaderSwiper from '../components/HomeHeaderSwiper';
@@ -10,27 +10,67 @@ import HomeStoreSwiper from '../components/HomeStoreSwiper';
 import StoreList from '../components/StoreList';
 import Footer from '../components/Footer';
 
-import {Space} from '../Theme';
+import {Space, Title} from '../Theme';
+
+import StoreListItem from '../components/StoreListItem';
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
 
 const MainTabA1Screen = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
-  return (
-    <ScrollView style={{flex: 1}}>
-      <HomeHeaderSwiper navigation={navigation} />
-      <Container>
-        <HomeSubSwiper />
-        <HomeIcons navigation={navigation} />
-      </Container>
-      <HomeStoreSwiper />
-      <Space />
-      <ContainerType2>
-        <StoreList titleVisible={true} start={0} />
-      </ContainerType2>
-      <Space />
 
-      <Footer />
-    </ScrollView>
+  const api = axios(
+    `${BASE_URL}/api/stores/distances?_start=0&_limit=8&km=12&lat=${g.coords?.lat}&lng=${g.coords?.lng}&order=distance&category=식당`,
+  );
+  const queryName = `store-list-start-distance-${g.coords?.lat}-222`;
+  const {isLoading, error, data, isFetched} = useQuery(queryName, () => api);
+  const listData = data?.data.data;
+
+  console.log(
+    `${BASE_URL}/api/stores/distances?_start=0&_limit=8&km=12&lat=${g.coords?.lat}&lng=${g.coords?.lng}&order=distance&category=식당`,
+  );
+
+  console.log(listData);
+
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      {!isLoading && (
+        <FlatList
+          style={{flex: 1}}
+          ListHeaderComponent={
+            <>
+              <HomeHeaderSwiper navigation={navigation} />
+              <Container>
+                <HomeSubSwiper />
+                <HomeIcons navigation={navigation} />
+              </Container>
+              <HomeStoreSwiper />
+              <Space />
+              <ContainerType2>
+                <Title>내 주변 매장</Title>
+              </ContainerType2>
+            </>
+          }
+          data={listData}
+          renderItem={({item, index}) => (
+            <StoreListItem item={item} index={index} />
+          )}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          columnWrapperStyle={{
+            paddingHorizontal: 16,
+          }}
+          ListFooterComponent={
+            <>
+              <Space />
+              <Footer />
+            </>
+          }
+        />
+      )}
+    </SafeAreaView>
   );
 };
 
@@ -42,5 +82,6 @@ const Container = styled.View`
 `;
 const ContainerType2 = styled.View`
   flex: 1;
+  margin-top: 30px;
   padding: 0 16px;
 `;
