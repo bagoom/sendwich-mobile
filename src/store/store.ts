@@ -91,8 +91,10 @@ export class GlobalStore {
     lng: '',
   };
 
-  seletedFilterBtn = '인기순';
+  shopList = [];
 
+  seletedFilterBtn = '인기순';
+  loading = false;
   jwt = '';
   username = '';
   gender = '';
@@ -145,7 +147,9 @@ export class GlobalStore {
       _coordsToAddr: observable,
       _searchAddrArr: observable,
       recent_store: observable,
+      shopList: observable,
       seletedFilterBtn: observable,
+      loading: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -545,6 +549,7 @@ export class GlobalStore {
     runInAction(() => {
       this.seletedFilterBtn = value;
     });
+    this.getShopList();
   };
 
   initRecentSotre = async () => {
@@ -555,6 +560,27 @@ export class GlobalStore {
       }
     });
     console.log(toJS(this.recent_store));
+  };
+
+  getShopList = async () => {
+    try {
+      runInAction(() => {
+        this.loading = true;
+      });
+      const {data} = await AuthRepository.getShopList(
+        0,
+        this.seletedFilterBtn,
+        this.currentRoute.name,
+        this.coords,
+      );
+      console.log(data);
+      runInAction(() => {
+        this.shopList = data.data;
+        this.loading = false;
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   clearStore = () => {

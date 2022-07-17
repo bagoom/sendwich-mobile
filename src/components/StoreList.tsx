@@ -1,54 +1,50 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef} from 'react';
+import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
-import {View, FlatList, Text} from 'react-native';
+import {View, FlatList, Animated, Easing} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import StoreListItem from '../components/StoreListItem';
-import axios from 'axios';
-import {useQuery} from 'react-query';
-import {BASE_URL} from '@env';
 import styled from 'styled-components/native';
-import Loader from '../components/Loader';
-
-import {Title} from '../Theme';
 import HeaderFilter from '../components/HeaderFilter';
 import Footer from '../components/Footer';
 import {Space} from '../Theme';
-let titleVisible = false;
 const StoreList = (props: any) => {
   const {start, type, category} = props;
-  titleVisible = props.titleVisible;
   const g = useGlobalStore();
-  let api: any;
-  api = axios(
-    `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
-      start + 40
-    }&km=12&lat=${g.coords?.lat}&lng=${
-      g.coords?.lng
-    }&order=popular&category=식당`,
-  );
-  const queryName = `store-list-start-${type}-${start}-${category}-${g.coords?.lat}`;
-  const {isLoading, error, data} = useQuery(queryName, () => api);
-  const listData = data?.data.data;
+  const value = useRef(new Animated.Value(0));
+
+  useEffect(() => {
+    value.current.setValue(0);
+
+    Animated.timing(value.current, {
+      toValue: 10 + 22,
+      useNativeDriver: true,
+      delay: 0,
+      duration: 10 * 100,
+      easing: Easing.linear,
+    }).start();
+  });
+
   return (
     <>
       <FlatList
-        data={listData}
+        data={g.shopList}
         ListHeaderComponent={
           <>
             <HeaderFilter />
+            {/* {g.loading && <Loader />} */}
           </>
         }
         renderItem={({item, index}) => (
           <StoreListItem item={item} index={index} />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={(item: any) => item.id}
         numColumns={2}
         columnWrapperStyle={{
           paddingHorizontal: 16,
         }}
         ListFooterComponent={
           <View style={{flex: 1}}>
-            {isLoading && <Loader />}
             <Space />
             <Footer />
           </View>
@@ -67,7 +63,7 @@ const StoreList = (props: any) => {
   );
 };
 
-export default observer(StoreList);
+export default React.memo(observer(StoreList));
 const Wrapper = styled.View`
   flex: 1;
   padding: 0 16px;

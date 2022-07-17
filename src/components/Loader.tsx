@@ -23,8 +23,12 @@ export default observer(Loader);
 
 const IndicatorWrap = styled.View`
   flex: 1;
-  min-height: 300px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
   justify-content: center;
   align-items: center;
-  background: #f9f9f9;
+  z-index: 100;
 `;

@@ -10,6 +10,7 @@ import {ThemeProvider} from 'styled-components';
 import {QueryClientProvider, QueryClient} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingModal from '../components/LoadingModal';
 
 import Theme from '../Theme';
 
@@ -44,6 +45,7 @@ class Root extends React.Component<RootProps> {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
           <SafeAreaProvider>
+            <LoadingModal visible={store.loading} />
             <NavigationContainer
               ref={store.navigationRef}
               theme={navTheme}

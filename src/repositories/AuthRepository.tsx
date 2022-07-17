@@ -43,6 +43,31 @@ class AuthRepository {
     );
   }
 
+  getShopList(start: any, typeText: any, category: any, coords: any) {
+    const type =
+      typeText === '인기순'
+        ? 'popular'
+        : typeText === '거리순'
+        ? 'distance'
+        : typeText === '할인율순'
+        ? 'discount'
+        : null;
+    console.log(
+      `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
+        start + 40
+      }&km=12&lat=${coords.lat}&lng=${
+        coords.lng
+      }&order=${type}&category=${category}`,
+    );
+    return axios.get(
+      `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
+        start + 40
+      }&km=12&lat=${coords.lat}&lng=${
+        coords.lng
+      }&order=${type}&category=${category}`,
+    );
+  }
+
   // getUsers(feedCount, filterString) {
   //   if (!filterString) {
   //     return {data: [], status: 200};

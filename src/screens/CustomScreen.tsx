@@ -1,22 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {View, SafeAreaView, Text} from 'react-native';
+import {Alert, SafeAreaView, DeviceEventEmitter} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
+import {useIsFocused} from '@react-navigation/native';
+
 import HeaderFilter from '../components/HeaderFilter';
 import StoreLargeList from '../components/StoreLargeList';
 import StoreList from '../components/StoreList';
 
 const CustomRoute = (props: any) => {
   const g = useGlobalStore();
-  const type =
-    g.seletedFilterBtn === '인기순'
-      ? 'popular'
-      : g.seletedFilterBtn === '거리순'
-      ? 'distance'
-      : g.seletedFilterBtn === '할인율순'
-      ? 'discount'
-      : null;
+  const isFocused = useIsFocused();
+  console.log(isFocused);
+  useEffect(() => {
+    if (isFocused) {
+      g.seleteFilterBtn('인기순');
+      g.getShopList();
+    }
+  }, [isFocused]);
   return (
     <SafeAreaView style={{flex: 1}}>
       <>
@@ -28,7 +30,7 @@ const CustomRoute = (props: any) => {
             />
           </Wrapper> */}
 
-        <StoreList start={0} type={type} category={g.currentRoute.name} />
+        <StoreList />
       </>
     </SafeAreaView>
   );
