@@ -478,6 +478,10 @@ export class GlobalStore {
           addr: arrAddr.address.address_name,
           //@ts-ignore
           road_addr: arrAddr.road_address.address_name,
+          //@ts-ignore
+          y: arrAddr.y,
+          //@ts-ignore
+          x: arrAddr.x,
         });
         //@ts-ignore
         this.coords = {lat: arrAddr.y, lng: arrAddr.x};
@@ -485,6 +489,8 @@ export class GlobalStore {
       if (this.recently_address.length > 5) {
         this._recently_address.pop();
       }
+
+      console.log(this.recently_address);
     });
 
     //@ts-ignore
@@ -496,6 +502,17 @@ export class GlobalStore {
     await AsyncStorage.setItem(
       `@sendwich_recent_coords`,
       JSON.stringify(this.coords),
+    );
+  };
+
+  deleteRecentAddr = async (index: number) => {
+    this._recently_address = this._recently_address.filter(
+      (addr, i: any) => i !== index,
+    );
+    console.log(this.recently_address);
+    await AsyncStorage.setItem(
+      `@sendwich_recent_addr`,
+      JSON.stringify(this.recently_address),
     );
   };
 
@@ -542,6 +559,8 @@ export class GlobalStore {
       if (coords) {
         this.coords = JSON.parse(coords);
       }
+
+      console.log(this.recently_address);
     });
   };
 
