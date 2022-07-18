@@ -44,7 +44,6 @@ class AuthRepository {
   }
 
   getShopList(start: any, typeText: any, category: any, coords: any) {
-    console.log(typeText);
     const type =
       typeText === '인기순'
         ? 'popular'
@@ -53,21 +52,20 @@ class AuthRepository {
         : typeText === '할인율순'
         ? 'discount'
         : 'popular';
-
-    console.log(type);
-    console.log(
-      `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
-        start + 40
-      }&km=12&lat=${coords.lat}&lng=${
-        coords.lng
-      }&order=${type}&category=${category}`,
-    );
     return axios.get(
       `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
         start + 40
       }&km=12&lat=${coords.lat}&lng=${
         coords.lng
       }&order=${type}&category=${category}`,
+    );
+  }
+
+  storeFiltering(start: any, coords: any, keyword: string) {
+    return axios.get(
+      `${BASE_URL}/api/stores/filter?_start=${start}&_limit=${
+        start + 40
+      }&km=12&lat=${coords.lat}&lng=${coords.lng}&keyword=${keyword}`,
     );
   }
 

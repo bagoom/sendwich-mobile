@@ -20,6 +20,7 @@ const MainTabAfterAuth = () => {
         screenOptions={{
           headerTitleAlign: 'center',
           headerShown: false,
+          tabBarHideOnKeyboard: false,
           headerStyle: {
             elevation: 0,
             borderBottomWidth: 1,

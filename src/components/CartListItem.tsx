@@ -63,7 +63,7 @@ const CartListItem = (props: any) => {
           name="close"
           style={{
             fontSize: 14,
-            color: '#ddd',
+            color: '#d5d5d5',
           }}
         />
       </TouchableOpacity>
@@ -79,8 +79,8 @@ const ListItem = styled.TouchableOpacity<{type?: number}>`
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
-  border-bottom-width: 1px;
-  border-color: #eee;
+  border-bottom-width: 0.6px;
+  border-color: #f3f3f3;
 `;
 
 const ImgBox = styled.View`

@@ -4,10 +4,9 @@ import {View, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import SearchInput from '../components/SearchInput';
-
+import {useNavigation} from '@react-navigation/native';
 import theme, {Title} from '../Theme';
 
-const dummy1 = ['과메기', '고등어', '당근잼', '과메기', '캐비어'];
 const dummy2 = [
   '과메기',
   '고등어',
@@ -22,6 +21,7 @@ const dummy3 = ['우주인피자', '도라지', '캡슐', '떡구이', '허브']
 
 const MainTabA1Screen = () => {
   const g = useGlobalStore();
+  const navigation = useNavigation<any>();
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Wrapper>
@@ -30,9 +30,17 @@ const MainTabA1Screen = () => {
         <Container>
           <Title>최근 검색어 </Title>
           <Row>
-            {dummy1.map((item, key) => (
-              <Round1 key={key}>
-                <Round1Text>{item}</Round1Text>
+            {g.recent_keyword.length === 0 && (
+              <EmptyText>최근 검색 이력이 없습니다.</EmptyText>
+            )}
+            {g.recent_keyword.slice().map((item: any, key) => (
+              <Round1
+                key={key}
+                onPress={() => {
+                  g.storeFiltering(item.keyword);
+                  navigation.navigate('StoreFilterList');
+                }}>
+                <Round1Text>{item.keyword}</Round1Text>
               </Round1>
             ))}
           </Row>
@@ -87,6 +95,7 @@ const Container = styled.View`
 `;
 const Round1 = styled.TouchableOpacity`
   margin-right: 6px;
+  margin-bottom: 7px;
   padding: 5px 10px;
   border-width: 1px;
   border-color: #eee;
@@ -128,5 +137,10 @@ const Button = styled.TouchableOpacity``;
 const Text = styled.Text`
   font-size: 16px;
   color: #000;
+  letter-spacing: -0.3px;
+`;
+const EmptyText = styled.Text`
+  font-size: 14px;
+  color: #999;
   letter-spacing: -0.3px;
 `;

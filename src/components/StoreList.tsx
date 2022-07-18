@@ -17,7 +17,7 @@ const StoreList = (props: any) => {
   return (
     <View>
       <FlatList
-        data={g.shopList}
+        data={g.shopList.slice()}
         ListHeaderComponent={
           <>
             <HeaderFilter />

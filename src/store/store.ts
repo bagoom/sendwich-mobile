@@ -92,6 +92,9 @@ export class GlobalStore {
   };
 
   shopList = [];
+  filteredShopList = [];
+
+  searchKeyword = '';
 
   seletedFilterBtn = '인기순';
   loading = false;
@@ -112,6 +115,7 @@ export class GlobalStore {
 
   _recently_address = [];
   recent_store = [];
+  recent_keyword = [];
 
   CCFilterIndex = 0;
   couponModalVisible = false;
@@ -147,10 +151,13 @@ export class GlobalStore {
       _coordsToAddr: observable,
       _searchAddrArr: observable,
       recent_store: observable,
+      recent_keyword: observable,
       shopList: observable,
       seletedFilterBtn: observable,
       loading: observable,
       coords: observable,
+      searchKeyword: observable,
+      filteredShopList: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -182,7 +189,7 @@ export class GlobalStore {
       },
     );
     this.initRecentAddress();
-    this.initRecentSotre();
+    this.initRecentInfo();
   }
 
   setCurrentRoute = (state: NavigationState) => {
@@ -216,7 +223,7 @@ export class GlobalStore {
             this.headerAddr = result;
           });
         });
-        console.log(this.headerAddr);
+        // console.log(this.headerAddr);
         // console.log(this.sendwichProfile);
       } catch (e) {
         console.log(e);
@@ -497,7 +504,7 @@ export class GlobalStore {
         this._recently_address.pop();
       }
 
-      console.log(this.recently_address);
+      // console.log(this.recently_address);
     });
 
     //@ts-ignore
@@ -567,7 +574,7 @@ export class GlobalStore {
         this.coords = JSON.parse(coords);
       }
 
-      console.log(this.recently_address);
+      // console.log(this.recently_address);
     });
   };
 
@@ -577,14 +584,18 @@ export class GlobalStore {
     });
   };
 
-  initRecentSotre = async () => {
+  initRecentInfo = async () => {
     const store = await AsyncStorage.getItem(`@sendwich_recent_store`);
+    const keyword = await AsyncStorage.getItem(`@sendwich_recent_keyword`);
     runInAction(() => {
       if (store) {
         this.recent_store = JSON.parse(store);
       }
+      if (keyword) {
+        this.recent_keyword = JSON.parse(keyword);
+      }
     });
-    console.log(toJS(this.recent_store));
+    console.log(toJS(this.recent_keyword));
   };
 
   getShopList = async () => {
@@ -606,6 +617,53 @@ export class GlobalStore {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  storeFiltering = async (clickKeyword: string) => {
+    try {
+      //  runInAction(() => {
+      //   this.loading = true;
+      // });
+      const {data} = await AuthRepository.storeFiltering(
+        0,
+        this.coords,
+        clickKeyword ? clickKeyword : this.searchKeyword,
+      );
+      console.log(data);
+      runInAction(() => {
+        this.filteredShopList = data.data;
+        if (this.searchKeyword) {
+          this.recent_keyword.unshift({
+            //@ts-ignore
+            keyword: this.searchKeyword,
+          });
+          const newArray = this.recent_keyword.reduce(function (acc, current) {
+            if (
+              //@ts-ignore
+              acc.findIndex(({keyword}) => keyword === current.keyword) === -1
+            ) {
+              acc.push(current);
+            }
+            return acc;
+          }, []);
+          this.recent_keyword = newArray;
+          if (this.recent_keyword.length > 5) {
+            this.recent_keyword.pop();
+          }
+        }
+      });
+      await AsyncStorage.setItem(
+        `@sendwich_recent_keyword`,
+        JSON.stringify(this.recent_keyword),
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  searchInput = (value: string) => {
+    this.searchKeyword = value;
+    console.log(this.searchKeyword);
   };
 
   clearStore = () => {

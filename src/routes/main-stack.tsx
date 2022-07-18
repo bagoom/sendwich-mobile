@@ -31,6 +31,7 @@ import CustomerService from '../screens/CustomerService';
 import Config from '../screens/Config';
 import Withdrawal from '../screens/Withdrawal';
 import StoreCartList from '../screens/StoreCartList';
+import StoreFilterList from '../screens/StoreFilterList';
 
 import DetailHeaderRight from '../components/DetailHeaderRight';
 
@@ -57,7 +58,6 @@ class MainStack extends React.Component<MainStackProp> {
 
   render() {
     const {store, theme} = this.props;
-    console.log(store.authChecked);
     return (
       <MainStackStackNav.Navigator
         initialRouteName="MainStack"
@@ -236,6 +236,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={StoreCartList}
           options={{
             headerTitle: '장바구니 목록',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="StoreFilterList"
+          component={StoreFilterList}
+          options={{
+            headerTitle: '검색 결과',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}
