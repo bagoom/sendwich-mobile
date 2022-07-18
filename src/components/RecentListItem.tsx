@@ -26,8 +26,8 @@ export default observer(RecentListItem);
 const ListItem = styled.TouchableOpacity<{type?: number}>`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 18px;
-  padding-bottom: 18px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
   border-bottom-width: 0.7px;
   border-color: #eee;
 `;

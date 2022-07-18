@@ -93,6 +93,8 @@ export class GlobalStore {
 
   shopList = [];
   filteredShopList = [];
+  popularKeywordList = [];
+  recommendKeywordList = [];
 
   searchKeyword = '';
 
@@ -158,6 +160,8 @@ export class GlobalStore {
       coords: observable,
       searchKeyword: observable,
       filteredShopList: observable,
+      popularKeywordList: observable,
+      recommendKeywordList: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -550,6 +554,16 @@ export class GlobalStore {
             img: store?.main_image[0]?.url,
           });
         }
+        const newArray = this.recent_store.reduce(function (acc, current) {
+          if (
+            //@ts-ignore
+            acc.findIndex(({id}) => id === current.id) === -1
+          ) {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
+        this.recent_store = newArray;
         if (this.recent_store.length > 4) {
           this.recent_store.pop();
         }
@@ -595,7 +609,7 @@ export class GlobalStore {
         this.recent_keyword = JSON.parse(keyword);
       }
     });
-    console.log(toJS(this.recent_keyword));
+    // console.log(toJS(this.recent_keyword));
   };
 
   getShopList = async () => {
@@ -621,21 +635,22 @@ export class GlobalStore {
 
   storeFiltering = async (clickKeyword: string) => {
     try {
-      //  runInAction(() => {
-      //   this.loading = true;
-      // });
       const {data} = await AuthRepository.storeFiltering(
         0,
         this.coords,
         clickKeyword ? clickKeyword : this.searchKeyword,
       );
-      console.log(data);
+
+      const createdKeywordData = await AuthRepository.createKeyword(
+        clickKeyword ? clickKeyword : this.searchKeyword,
+      );
+
       runInAction(() => {
         this.filteredShopList = data.data;
-        if (this.searchKeyword) {
+        if (this.searchKeyword || clickKeyword) {
           this.recent_keyword.unshift({
             //@ts-ignore
-            keyword: this.searchKeyword,
+            keyword: clickKeyword ? clickKeyword : this.searchKeyword,
           });
           const newArray = this.recent_keyword.reduce(function (acc, current) {
             if (
@@ -664,6 +679,36 @@ export class GlobalStore {
   searchInput = (value: string) => {
     this.searchKeyword = value;
     console.log(this.searchKeyword);
+  };
+
+  getRecommendKeywordList = async () => {
+    try {
+      const {data} = await AuthRepository.getRecommendKeywordList();
+      runInAction(() => {
+        this.recommendKeywordList = data.data;
+      });
+      console.log(toJS(this.recommendKeywordList));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getPopularKeywordList = async () => {
+    try {
+      const {data} = await AuthRepository.getPopularKeywordList();
+      runInAction(() => {
+        this.popularKeywordList = data.popularKeyword;
+      });
+      console.log(toJS(this.popularKeywordList));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  clearFilteredShopList = () => {
+    runInAction(() => {
+      this.filteredShopList = [];
+    });
   };
 
   clearStore = () => {

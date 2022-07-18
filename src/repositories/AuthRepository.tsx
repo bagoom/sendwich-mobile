@@ -69,6 +69,20 @@ class AuthRepository {
     );
   }
 
+  getPopularKeywordList() {
+    return axios.get(`${BASE_URL}/api/keywords/popular`);
+  }
+
+  getRecommendKeywordList() {
+    return axios.get(`${BASE_URL}/api/recommend-keywords`);
+  }
+
+  createKeyword(keyword: string) {
+    return axios.post(`${BASE_URL}/api/keywords`, {
+      data: {keyword: keyword},
+    });
+  }
+
   // getUsers(feedCount, filterString) {
   //   if (!filterString) {
   //     return {data: [], status: 200};

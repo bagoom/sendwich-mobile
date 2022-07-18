@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import {View, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -22,6 +22,11 @@ const dummy3 = ['우주인피자', '도라지', '캡슐', '떡구이', '허브']
 const MainTabA1Screen = () => {
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
+
+  useEffect(() => {
+    g.getPopularKeywordList();
+    g.getRecommendKeywordList();
+  }, []);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Wrapper>
@@ -49,9 +54,14 @@ const MainTabA1Screen = () => {
         <Container>
           <Title>추천 검색어</Title>
           <Row>
-            {dummy2.map((item, key) => (
-              <Round2 key={key}>
-                <Round2Text>{item}</Round2Text>
+            {g.recommendKeywordList.map((item: any, key) => (
+              <Round2
+                key={key}
+                onPress={() => {
+                  g.storeFiltering(item.keyword);
+                  navigation.navigate('StoreFilterList');
+                }}>
+                <Round2Text>{item.keyword}</Round2Text>
               </Round2>
             ))}
           </Row>
@@ -60,12 +70,16 @@ const MainTabA1Screen = () => {
         <Container>
           <Title style={{marginBottom: 5}}>급상승 검색어</Title>
           <SubTitle>최근 1시간 동안 검색 횟수가 급상승했어요.</SubTitle>
-          {dummy3.map((item, key) => (
-            <ListItem key={key}>
+          {g.popularKeywordList.map((item: any, key) => (
+            <ListItem
+              style={{borderBottomWidth: key === 4 ? 0 : 1}}
+              key={key}
+              onPress={() => {
+                g.storeFiltering(item.keyword);
+                navigation.navigate('StoreFilterList');
+              }}>
               <Num>{key + 1}</Num>
-              <Button>
-                <Text>{item}</Text>
-              </Button>
+              <Text>{item.keyword}</Text>
             </ListItem>
           ))}
         </Container>
@@ -118,7 +132,7 @@ const Round2Text = styled.Text`
   color: #000;
 `;
 
-const ListItem = styled.View`
+const ListItem = styled.TouchableOpacity`
   width: 100%;
   padding: 14px 0;
   flex-direction: row;
