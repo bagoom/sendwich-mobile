@@ -150,6 +150,7 @@ export class GlobalStore {
       shopList: observable,
       seletedFilterBtn: observable,
       loading: observable,
+      coords: observable,
 
       authenticationed: observable,
       _categories: observable,

@@ -12,7 +12,6 @@ import StoreList from '../components/StoreList';
 const CustomRoute = (props: any) => {
   const g = useGlobalStore();
   const isFocused = useIsFocused();
-  console.log(props.navigation);
   useEffect(() => {
     if (isFocused) {
       g.getShopList();
