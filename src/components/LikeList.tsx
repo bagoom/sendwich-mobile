@@ -15,7 +15,7 @@ const LikeList = (props: any) => {
   const g = useGlobalStore();
 
   const {isLoading, error, data} = useQuery('like-list', () =>
-    axios(`${BASE_URL}/api/likes/with-store`),
+    axios(`${BASE_URL}/api/likes/with-store?user_id=${g.sendwichProfile.id}`),
   );
   const likeData = data?.data.storeInfo;
   return (

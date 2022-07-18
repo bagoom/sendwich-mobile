@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {observer} from 'mobx-react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, Animated, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '@env';
@@ -16,9 +16,20 @@ const StoreListItem = (props: any) => {
   const {item, index} = props;
   const FIRST_ITEM = (index + 1) % 2;
   const g = useGlobalStore();
+  const fadeAnim = useRef(new Animated.Value(0.01)).current;
   const navigation = useNavigation<any>();
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
+    // console.log('ddd');
+  });
+
   return (
-    <View style={{flex: 1}}>
+    <Animated.View style={{flex: 1, opacity: fadeAnim}}>
       {item && (
         <StoreItem
           activeOpacity={1}
@@ -43,7 +54,7 @@ const StoreListItem = (props: any) => {
           <Text1>{converMeter(item?.distance)}</Text1>
         </StoreItem>
       )}
-    </View>
+    </Animated.View>
   );
 };
 

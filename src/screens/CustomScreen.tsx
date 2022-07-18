@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {observer} from 'mobx-react';
 import {Alert, SafeAreaView, DeviceEventEmitter} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useFocusEffect} from '@react-navigation/native';
 
 import HeaderFilter from '../components/HeaderFilter';
 import StoreLargeList from '../components/StoreLargeList';
@@ -12,10 +12,9 @@ import StoreList from '../components/StoreList';
 const CustomRoute = (props: any) => {
   const g = useGlobalStore();
   const isFocused = useIsFocused();
-  console.log(isFocused);
+  console.log(props.navigation);
   useEffect(() => {
     if (isFocused) {
-      g.seleteFilterBtn('인기순');
       g.getShopList();
     }
   }, [isFocused]);

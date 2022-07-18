@@ -174,6 +174,12 @@ export class GlobalStore {
         console.log('this.loggedIn: ', value);
       },
     );
+    reaction(
+      () => this.seletedFilterBtn,
+      () => {
+        this.getShopList();
+      },
+    );
     this.initRecentAddress();
     this.initRecentSotre();
   }
@@ -568,7 +574,6 @@ export class GlobalStore {
     runInAction(() => {
       this.seletedFilterBtn = value;
     });
-    this.getShopList();
   };
 
   initRecentSotre = async () => {
@@ -583,9 +588,9 @@ export class GlobalStore {
 
   getShopList = async () => {
     try {
-      runInAction(() => {
-        this.loading = true;
-      });
+      // runInAction(() => {
+      //   this.loading = true;
+      // });
       const {data} = await AuthRepository.getShopList(
         0,
         this.seletedFilterBtn,
@@ -595,7 +600,7 @@ export class GlobalStore {
       console.log(data);
       runInAction(() => {
         this.shopList = data.data;
-        this.loading = false;
+        // this.loading = false;
       });
     } catch (e) {
       console.log(e);

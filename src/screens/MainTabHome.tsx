@@ -24,15 +24,11 @@ const MainTabA1Screen = (props: any) => {
   const api = axios(
     `${BASE_URL}/api/stores/distances?_start=0&_limit=8&km=12&lat=${g.coords?.lat}&lng=${g.coords?.lng}&order=distance&category=식당`,
   );
-  const queryName = `store-list-start-distance-${g.coords?.lat}-222`;
-  const {isLoading, error, data, isFetched} = useQuery(queryName, () => api);
+  const queryName = `store-list-start-distance-${g.coords?.lat}-home`;
+  const {isLoading, error, data, isFetched} = useQuery(queryName, () => api, {
+    staleTime: 0,
+  });
   const listData = data?.data.data;
-
-  console.log(
-    `${BASE_URL}/api/stores/distances?_start=0&_limit=8&km=12&lat=${g.coords?.lat}&lng=${g.coords?.lng}&order=distance&category=식당`,
-  );
-
-  console.log(listData);
 
   return (
     <SafeAreaView style={{flex: 1}}>

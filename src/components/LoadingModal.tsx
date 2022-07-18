@@ -38,8 +38,8 @@ const LoadingModal = ({visible, confirm, cancel, param}: any) => {
       deviceHeight={deviceHeight}
       animationIn="fadeIn"
       animationOut="fadeOut"
-      backdropColor={'white'}
-      backdropOpacity={0.3}
+      backdropColor={'transparent'}
+      backdropOpacity={0.1}
       hasBackdrop={Platform.OS === 'android' ? true : false}
       useNativeDriver={true}
       style={styles.drawerMenuStyle}>

@@ -42,5 +42,5 @@ const Input = styled.TextInput`
   background: #f6f6f6;
   border-radius: 3px;
   color: #000;
-  font-size: 16px;
+  font-size: 15px;
 `;

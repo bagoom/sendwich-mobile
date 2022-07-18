@@ -1,6 +1,8 @@
 package com.sendwich_mobile;
 
 import android.app.Application;
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -31,6 +33,10 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected String getJSBundleFile() {
             return CodePush.getJSBundleFile();
+        }
+        @Override
+        protected JSIModulePackage getJSIModulePackage() {
+          return new ReanimatedJSIModulePackage();
         }
         @Override
         protected List<ReactPackage> getPackages() {

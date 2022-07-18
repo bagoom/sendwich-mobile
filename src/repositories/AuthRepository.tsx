@@ -44,6 +44,7 @@ class AuthRepository {
   }
 
   getShopList(start: any, typeText: any, category: any, coords: any) {
+    console.log(typeText);
     const type =
       typeText === '인기순'
         ? 'popular'
@@ -51,7 +52,9 @@ class AuthRepository {
         ? 'distance'
         : typeText === '할인율순'
         ? 'discount'
-        : null;
+        : 'popular';
+
+    console.log(type);
     console.log(
       `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
         start + 40
