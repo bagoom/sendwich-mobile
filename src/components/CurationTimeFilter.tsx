@@ -112,7 +112,7 @@ const LabelArea = styled.View`
 
 const ItemName = styled.Text`
   color: #000;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
 `;
 
