@@ -49,8 +49,12 @@ const StoreListItem = (props: any) => {
           </View>
 
           <Subject>{item?.shop_name}</Subject>
-          <Description>{item?.coupon?.name}</Description>
-          <Text1>{item?.location_information}</Text1>
+          {item?.menu_list && (
+            <Description>{item?.menu_list[0]?.menus[0]?.menuname}</Description>
+          )}
+          {item?.location_information ? (
+            <Text1>{item?.location_information}</Text1>
+          ) : null}
           <Text1>{converMeter(item?.distance)}</Text1>
         </StoreItem>
       )}

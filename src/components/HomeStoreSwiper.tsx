@@ -77,7 +77,11 @@ const HomeStoreSwiper = (props: any) => {
                   <Category>{item?.coupon?.discount_rate}% 지원</Category>
                   <Subject>{item?.shop_name}</Subject>
                 </View>
-                <Description>{item?.coupon?.name}</Description>
+                {item?.menu_list && (
+                  <Description>
+                    {item?.menu_list[0]?.menus[0]?.menuname}
+                  </Description>
+                )}
               </TouchableOpacity>
             )}
           />
