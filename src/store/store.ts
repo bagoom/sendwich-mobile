@@ -124,6 +124,7 @@ export class GlobalStore {
   alertStatus = false;
 
   headerAddr = '';
+  refreshing = false;
 
   _coordsToAddr: any = {};
   _searchAddrArr: any = [];
@@ -162,6 +163,7 @@ export class GlobalStore {
       filteredShopList: observable,
       popularKeywordList: observable,
       recommendKeywordList: observable,
+      refreshing: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -612,11 +614,16 @@ export class GlobalStore {
     // console.log(toJS(this.recent_keyword));
   };
 
+  setRefreshing = (status: boolean) => {
+    this.refreshing = status;
+  };
+
   getShopList = async () => {
     try {
-      // runInAction(() => {
-      //   this.loading = true;
-      // });
+      runInAction(() => {
+        // this.loading = true;
+        this.setRefreshing(true);
+      });
       const {data} = await AuthRepository.getShopList(
         0,
         this.seletedFilterBtn,
@@ -626,6 +633,7 @@ export class GlobalStore {
       console.log(data);
       runInAction(() => {
         this.shopList = data.data;
+        this.setRefreshing(false);
         // this.loading = false;
       });
     } catch (e) {

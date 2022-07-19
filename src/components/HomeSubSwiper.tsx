@@ -55,14 +55,20 @@ const HomeSubSwiper = (props: any) => {
             </TouchableOpacity>
           </View>
           <View>
-            <SliderImg
-              source={require('../assets/images/main_sub_banner.jpeg')}
-            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MainSubBannerFilter')}>
+              <SliderImg
+                source={require('../assets/images/main_sub_banner.jpeg')}
+              />
+            </TouchableOpacity>
           </View>
           <View>
-            <SliderImg
-              source={require('../assets/images/main_sub_banner.jpeg')}
-            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MainSubBannerFilter')}>
+              <SliderImg
+                source={require('../assets/images/main_sub_banner.jpeg')}
+              />
+            </TouchableOpacity>
           </View>
         </Swiper>
       </View>

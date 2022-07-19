@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import {Alert, SafeAreaView, DeviceEventEmitter} from 'react-native';
 import {useGlobalStore} from '../store/util';

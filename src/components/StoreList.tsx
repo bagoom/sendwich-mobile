@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import {View, FlatList} from 'react-native';
@@ -12,8 +12,14 @@ import EmptyList from './EmptyList';
 
 import LoadingModal from '../components/LoadingModal';
 const StoreList = (props: any) => {
-  const {start, type, category} = props;
+  const {type, category} = props;
   const g = useGlobalStore();
+
+  const onRefresh = () => {
+    if (!g.refreshing) {
+      g.getShopList();
+    }
+  };
 
   return (
     <View>
@@ -29,6 +35,8 @@ const StoreList = (props: any) => {
         )}
         keyExtractor={(item: any) => item.id}
         numColumns={2}
+        onRefresh={onRefresh}
+        refreshing={g.refreshing}
         columnWrapperStyle={{
           paddingHorizontal: 16,
         }}
