@@ -26,7 +26,7 @@ const CheckBox = (props: any) => {
       }}
       onPress={(isChecked: boolean) => {
         setToggleCheckBox(isChecked);
-        onChange();
+        onChange ? onChange() : null;
       }}
     />
   );

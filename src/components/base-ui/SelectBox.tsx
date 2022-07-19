@@ -8,7 +8,7 @@ import theme from '../../Theme';
 
 import styled from 'styled-components/native';
 
-const countries = ['1', '2', '3', '4'];
+const countries = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 const SelectBox = (props: any) => {
   const {data, radius, label, color} = props;
@@ -34,7 +34,8 @@ const SelectBox = (props: any) => {
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
           }}
-          buttonTextAfterSelection={(selectedItem: number, index) => {
+          //@ts-ignore
+          buttonTextAfterSelection={(selectedItem: any, index: number) => {
             return (
               <>
                 <View style={{flexDirection: 'row'}}>

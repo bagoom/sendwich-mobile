@@ -11,13 +11,15 @@ import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 
 import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
+import CurationCalendarFilter from '../components/CurationCalendarFilter';
+import CurationTimeFilter from '../components/CurationTimeFilter';
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
 
 const MainSubBannerFilter = (props: any) => {
   const g = useGlobalStore();
   return (
     <>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Wrapper>
             <Header>
@@ -25,14 +27,16 @@ const MainSubBannerFilter = (props: any) => {
             </Header>
 
             <FilterList>
-              <MainSubBannerFilterItem name="날짜" />
-              <MainSubBannerFilterItem name="시간" />
+              <CurationCalendarFilter name="날짜" />
+              <CurationTimeFilter name="시간" />
               <MainSubBannerFilterItem name="예산" />
               <MainSubBannerFilterItem name="인원" />
               <MainSubBannerFilterItem name="장소" />
               <MainSubBannerFilterItem name="모임성격" />
-              <MainSubBannerFilterItem name="모임성격" />
-              <MainSubBannerFilterItem name="모임성격" isBordered={false} />
+              <MainSubBannerFilterItem name="메뉴" />
+              <MainSubBannerFilterItem name="분위기" />
+              <MainSubBannerFilterItem name="주차" />
+              <MainSubBannerFilterItem name="키즈" isBordered={false} />
             </FilterList>
             <BottomFixedButton />
           </Wrapper>

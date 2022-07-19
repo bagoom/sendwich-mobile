@@ -1,0 +1,77 @@
+diff --git a/node_modules/react-native-calendars/src/calendar/header/style.js b/node_modules/react-native-calendars/src/calendar/header/style.js
+index 9d5a139..75c8622 100644
+--- a/node_modules/react-native-calendars/src/calendar/header/style.js
++++ b/node_modules/react-native-calendars/src/calendar/header/style.js
+@@ -14,17 +14,17 @@ export default function (theme = {}) {
+             alignItems: 'center',
+         },
+         partialHeader: {
+-            paddingHorizontal: 15
++            paddingHorizontal: 15,
+         },
+         headerContainer: {
+-            flexDirection: 'row'
++            flexDirection: 'row',
+         },
+         monthText: {
+             fontSize: appStyle.textMonthFontSize,
+             fontFamily: appStyle.textMonthFontFamily,
+             fontWeight: appStyle.textMonthFontWeight,
+             color: appStyle.monthTextColor,
+-            margin: 10
++            margin: 10,
+         },
+         arrow: {
+             padding: 10,
+@@ -45,13 +45,14 @@ export default function (theme = {}) {
+             tintColor: appStyle.disabledArrowColor
+         },
+         week: {
+-            marginTop: 7,
++            marginTop: 15,
+             flexDirection: 'row',
+             justifyContent: 'space-around',
+-            paddingHorizontal: 15
++            // paddingHorizontal: 15,
++            textAlign: 'center'
+         },
+         partialWeek: {
+-            paddingRight: 0
++            paddingRight: 0,
+         },
+         dayHeader: {
+             marginTop: 2,
+diff --git a/node_modules/react-native-calendars/src/calendar/style.js b/node_modules/react-native-calendars/src/calendar/style.js
+index c9af755..bd89d7d 100644
+--- a/node_modules/react-native-calendars/src/calendar/style.js
++++ b/node_modules/react-native-calendars/src/calendar/style.js
+@@ -4,24 +4,23 @@ export default function getStyle(theme = {}) {
+     const appStyle = { ...defaultStyle, ...theme };
+     return StyleSheet.create({
+         container: {
+-            paddingLeft: 5,
+-            paddingRight: 5,
++            paddingHorizontal: 20,
+             backgroundColor: appStyle.calendarBackground
+         },
+         dayContainer: {
+             flex: 1,
+-            alignItems: 'center'
++            alignItems: 'center',
+         },
+         emptyDayContainer: {
+-            flex: 1
++            flex: 1,
+         },
+         monthView: {
+-            backgroundColor: appStyle.calendarBackground
++            // backgroundColor: appStyle.calendarBackground
+         },
+         week: {
+             marginVertical: appStyle.weekVerticalMargin,
+             flexDirection: 'row',
+-            justifyContent: 'space-around'
++            justifyContent: 'space-around',
+         },
+         // @ts-expect-error
+         ...(theme['stylesheet.calendar.main'] || {})

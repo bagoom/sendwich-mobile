@@ -32,7 +32,7 @@ const NoticeList = (props: any) => {
         />
       ))}
 
-      {NoticeData.length === 0 && (
+      {NoticeData?.length === 0 && (
         <EmptyList
           text1="등록된 공지사항이 없습니다."
           // text2={`다른 카테고리를 선택 해주세요..`}
