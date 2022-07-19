@@ -187,7 +187,7 @@ const LabelArea = styled.View`
 const ItemName = styled.Text`
   color: #000;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const FilterArea = styled.View`

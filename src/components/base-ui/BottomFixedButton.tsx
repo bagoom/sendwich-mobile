@@ -12,7 +12,11 @@ const BottomFixedButton = (props: any) => {
   return (
     <>
       <FixedBtnContainer>
-        <FixedBtn activation={activeState} onPress={onPress}>
+        <FixedBtn
+          activeOpacity={1}
+          activation={activeState}
+          onPress={onPress}
+          disabled={!activeState}>
           <FixedBtnText>확인</FixedBtnText>
         </FixedBtn>
       </FixedBtnContainer>

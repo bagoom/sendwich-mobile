@@ -13,6 +13,8 @@ import styled from 'styled-components/native';
 import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
 import CurationCalendarFilter from '../components/CurationCalendarFilter';
 import CurationTimeFilter from '../components/CurationTimeFilter';
+import CurationPlaceFilter from '../components/CurationPlaceFilter';
+
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
 
 const MainSubBannerFilter = (props: any) => {
@@ -29,16 +31,40 @@ const MainSubBannerFilter = (props: any) => {
             <FilterList>
               <CurationCalendarFilter name="날짜" />
               <CurationTimeFilter name="시간" />
-              <MainSubBannerFilterItem name="예산" />
-              <MainSubBannerFilterItem name="인원" />
-              <MainSubBannerFilterItem name="장소" />
-              <MainSubBannerFilterItem name="모임성격" />
-              <MainSubBannerFilterItem name="메뉴" />
-              <MainSubBannerFilterItem name="분위기" />
-              <MainSubBannerFilterItem name="주차" />
-              <MainSubBannerFilterItem name="키즈" isBordered={false} />
+              <MainSubBannerFilterItem
+                name="예산"
+                type="number"
+                fixLabel="원 이하"
+              />
+              <MainSubBannerFilterItem
+                name="인원"
+                type="number"
+                fixLabel="명 이하"
+              />
+              <CurationPlaceFilter
+                name="장소 항목을 선택 해주세요"
+                label="장소"
+              />
+              <CurationPlaceFilter
+                name="모임성격 항목을 선택 해주세요"
+                label="모임성격"
+              />
+              <MainSubBannerFilterItem name="메뉴명 입력" />
+              <CurationPlaceFilter
+                name="분위기 항목을 선택 해주세요"
+                label="분위기"
+              />
+              <CurationPlaceFilter
+                name="주차 가능 여부를 선택 해주세요"
+                label="주차"
+              />
+              <CurationPlaceFilter
+                name="키즈 항목을 선택 해주세요"
+                label="키즈"
+                isBordered={false}
+              />
             </FilterList>
-            <BottomFixedButton />
+            <BottomFixedButton disabled={true} />
           </Wrapper>
         </TouchableWithoutFeedback>
       </ScrollView>

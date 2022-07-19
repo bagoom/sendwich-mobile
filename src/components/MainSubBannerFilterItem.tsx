@@ -7,7 +7,12 @@ import SelectBox from '../components/base-ui/SelectBox';
 import theme from '../Theme';
 import styled from 'styled-components/native';
 
-const MainSubBannerFilterItem = ({name, isBordered = true}: any) => {
+const MainSubBannerFilterItem = ({
+  name,
+  type,
+  fixLabel,
+  isBordered = true,
+}: any) => {
   const g = useGlobalStore();
   return (
     <ListItem border={isBordered}>
@@ -25,7 +30,15 @@ const MainSubBannerFilterItem = ({name, isBordered = true}: any) => {
         <Priority>
           <SelectBox />
         </Priority>
-        <TextInput placeholder={`${name}입력`} placeholderTextColor="#c5c5c5" />
+        <Row>
+          <Text1>{fixLabel}</Text1>
+          <TextInput
+            fixLabel={fixLabel}
+            placeholder={`${name}`}
+            keyboardType={type === 'number' ? 'numeric' : 'default'}
+            placeholderTextColor="#c5c5c5"
+          />
+        </Row>
       </FilterArea>
     </ListItem>
   );
@@ -49,7 +62,7 @@ const LabelArea = styled.View`
 const ItemName = styled.Text`
   color: #000;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const FilterArea = styled.View`
@@ -59,7 +72,23 @@ const FilterArea = styled.View`
 `;
 const Priority = styled.View``;
 
-const TextInput = styled.TextInput`
+const TextInput = styled.TextInput<{fixLabel?: string}>`
+  text-align: right;
+  color: #000;
+  padding-right: ${props => (!props.fixLabel ? '0px' : '45px')};
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+const Text1 = styled.Text`
+  position: absolute;
+  top: 14px;
+  right: 0;
   text-align: right;
   color: #000;
   font-size: 14px;
