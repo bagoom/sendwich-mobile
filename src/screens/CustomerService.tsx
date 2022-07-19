@@ -10,7 +10,7 @@ import CustomerServiceList from '../components/CustomerServiceList';
 const CustomerService = () => {
   const g = useGlobalStore();
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps="handled">
       <Wrpper>
         <CustomerServiceList />
       </Wrpper>
