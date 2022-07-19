@@ -43,8 +43,9 @@ const Info = styled.View`
 `;
 
 const Subject = styled.Text`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
+  letter-spacing: -0.3px;
   color: #000;
 `;
 const Description = styled.Text`

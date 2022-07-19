@@ -8,6 +8,7 @@ import styled from 'styled-components/native';
 import HeaderFilter from '../components/HeaderFilter';
 import Footer from '../components/Footer';
 import {Space} from '../Theme';
+import EmptyList from './EmptyList';
 
 import LoadingModal from '../components/LoadingModal';
 const StoreList = (props: any) => {
@@ -33,6 +34,12 @@ const StoreList = (props: any) => {
         }}
         ListFooterComponent={
           <View style={{flex: 1}}>
+            {g.shopList.slice().length === 0 && (
+              <EmptyList
+                text1="해당 카테고리에 등록된 매장이 없습니다."
+                text2={`다른 카테고리를 선택 해주세요..`}
+              />
+            )}
             <Space />
             <Footer />
           </View>
@@ -47,8 +54,8 @@ const Wrapper = styled.View`
   flex: 1;
   padding: 0 16px;
 `;
-const EmptyList = styled.View<{ph0?: boolean}>`
-  padding: 40px 16px;
-  justify-self: center;
-  align-items: center;
-`;
+// const EmptyList = styled.View<{ph0?: boolean}>`
+//   padding: 40px 16px;
+//   justify-self: center;
+//   align-items: center;
+// `;

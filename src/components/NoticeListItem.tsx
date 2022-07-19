@@ -54,7 +54,7 @@ const ListItem = styled.TouchableOpacity<{open?: boolean}>`
 `;
 
 const Subject = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #000;
   letter-spacing: -0.3px;

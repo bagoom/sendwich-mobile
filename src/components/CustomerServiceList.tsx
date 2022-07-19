@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import CustomerServiceListItem from '../components/CustomerServiceListItem';
 import CCFilterButton from './base-ui/CCFilterButton';
 import CustomerService2 from '../screens/CustomerService2';
+import EmptyList from './EmptyList';
 
 import {Title} from '../Theme';
 
@@ -26,7 +27,12 @@ const CustomerServiceList = (props: any) => {
       <ButtonWrap>
         <CCFilterButton titles={['문의 리스트', '1:1문의']} />
       </ButtonWrap>
-
+      {csData.length === 0 && g.CCFilterIndex == 0 && (
+        <EmptyList
+          text1="등록된 문의 내역이 없습니다."
+          text2={`문의사항이 있으신 경우 1:1문의를 이용해 주세요.`}
+        />
+      )}
       {g.CCFilterIndex == 0 ? (
         csData?.map((item: any, index: any) => (
           <CustomerServiceListItem

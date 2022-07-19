@@ -98,13 +98,13 @@ const Corver = styled.Image`
 
 const Subject = styled.Text`
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #000;
   letter-spacing: -0.3px;
 `;
 const MenuName = styled.Text`
   font-size: 14px;
-  line-height: 22px;
+  line-height: 16px;
   color: #999;
 `;
 const Count = styled.Text`
@@ -113,7 +113,7 @@ const Count = styled.Text`
   color: #444;
 `;
 const Price = styled.Text`
-  margin-top: 2px;
+  margin-top: 0px;
   font-size: 16px;
   font-weight: bold;
   line-height: 22px;
