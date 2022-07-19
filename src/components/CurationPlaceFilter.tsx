@@ -12,6 +12,7 @@ import {BASE_URL} from '@env';
 import axios from 'axios';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {useNavigation} from '@react-navigation/native';
+import Icon from '../../Icon-font.js';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -88,10 +89,28 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
           useNativeDriver={true}
           style={styles.drawerMenuStyle}>
           <ListWrap>
-            <Title>
-              큐레이션에 적용 될{'\n'}
-              {name}
-            </Title>
+            <Row>
+              <BackButton onPress={() => setModalVisible(false)}>
+                <Icon
+                  name="arrow-right"
+                  style={{
+                    transform: [{rotate: '-180deg'}],
+                    fontSize: 20,
+                    color: '#000',
+                  }}
+                />
+              </BackButton>
+              <Title
+                style={{
+                  paddingLeft: 35,
+                  paddingBottom: 15,
+                  //   borderBottomWidth: 1,
+                  //   borderColor: '#222',
+                }}>
+                큐레이션에 적용 될{'\n'}
+                {name}
+              </Title>
+            </Row>
             {data?.map((item: any, index: number) => (
               <Item key={index}>
                 <RoundCheckBox
@@ -133,6 +152,13 @@ const ListItem = styled.View<{border?: boolean}>`
 const Button = styled.TouchableOpacity`
   /* background: red; */
 `;
+const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  padding: 5px;
+  z-index: 1;
+`;
 const Text1 = styled.Text`
   color: #c5c5c5;
 `;
@@ -141,7 +167,10 @@ const LabelArea = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-
+const Row = styled.View`
+  /* flex-direction: row; */
+  /* align-items: flex-start; */
+`;
 const ItemName = styled.Text`
   color: #000;
   font-size: 16px;

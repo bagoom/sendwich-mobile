@@ -77,7 +77,7 @@ const TextInput = styled.TextInput<{fixLabel?: string}>`
   color: #000;
   padding-right: ${props => (!props.fixLabel ? '0px' : '45px')};
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 const Row = styled.View`
@@ -87,10 +87,10 @@ const Row = styled.View`
 `;
 const Text1 = styled.Text`
   position: absolute;
-  top: 14px;
+  top: 13.5px;
   right: 0;
   text-align: right;
   color: #000;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
 `;

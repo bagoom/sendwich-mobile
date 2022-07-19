@@ -41,6 +41,7 @@ const MainSubBannerFilter = (props: any) => {
                 type="number"
                 fixLabel="명 이하"
               />
+              <MainSubBannerFilterItem name="메뉴명 입력" />
               <CurationPlaceFilter
                 name="장소 항목을 선택 해주세요"
                 label="장소"
@@ -49,7 +50,6 @@ const MainSubBannerFilter = (props: any) => {
                 name="모임성격 항목을 선택 해주세요"
                 label="모임성격"
               />
-              <MainSubBannerFilterItem name="메뉴명 입력" />
               <CurationPlaceFilter
                 name="분위기 항목을 선택 해주세요"
                 label="분위기"

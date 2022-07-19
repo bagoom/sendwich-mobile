@@ -503,6 +503,17 @@ export class GlobalStore {
           //@ts-ignore
           x: arrAddr.x,
         });
+        const newArray = this.recently_address.reduce(function (acc, current) {
+          if (
+            //@ts-ignore
+            acc.findIndex(({addr}) => addr === current.addr) === -1
+          ) {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
+        this._recently_address = newArray;
+
         //@ts-ignore
         this.coords = {lat: arrAddr.y, lng: arrAddr.x};
       }
@@ -638,6 +649,9 @@ export class GlobalStore {
       });
     } catch (e) {
       console.log(e);
+      runInAction(() => {
+        this.setRefreshing(false);
+      });
     }
   };
 

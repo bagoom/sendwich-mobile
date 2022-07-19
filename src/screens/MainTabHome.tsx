@@ -9,6 +9,7 @@ import HomeIcons from '../components/HomeIcons';
 import HomeStoreSwiper from '../components/HomeStoreSwiper';
 import StoreList from '../components/StoreList';
 import Footer from '../components/Footer';
+import EmptyList from '../components/EmptyList';
 
 import {Space, Title} from '../Theme';
 
@@ -27,6 +28,7 @@ const MainTabA1Screen = (props: any) => {
   const queryName = `store-list-start-distance-${g.coords?.lat}-home`;
   const {isLoading, error, data, isFetched} = useQuery(queryName, () => api, {
     staleTime: 0,
+    retry: false,
   });
   const listData = data?.data.data;
 
@@ -60,6 +62,12 @@ const MainTabA1Screen = (props: any) => {
           }}
           ListFooterComponent={
             <>
+              {(listData?.length === 0 || !data) && (
+                <EmptyList
+                  text1="근처에 등록된 매장이 없습니다."
+                  text2="현재 위치를 변경 해보세요."
+                />
+              )}
               <Space />
               <Footer />
             </>

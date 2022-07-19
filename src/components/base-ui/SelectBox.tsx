@@ -62,7 +62,7 @@ const SelectWrap = styled.View`
   align-items: center;
 `;
 const Label = styled.Text<{show?: boolean}>`
-  color: #000;
+  color: #999;
   font-size: 14px;
   font-weight: 500;
 `;

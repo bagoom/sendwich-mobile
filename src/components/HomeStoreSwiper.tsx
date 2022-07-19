@@ -29,7 +29,9 @@ const HomeStoreSwiper = (props: any) => {
   const navigation = useNavigation<any>();
 
   const fetchStoreList = () => {
-    return axios.get(`${BASE_URL}/api/stores/with-coupon?populate=*`);
+    return axios.get(
+      `${BASE_URL}/api/stores/with-coupon?populate=*&pagination[start]=0&pagination[limit]=8`,
+    );
   };
   const {isLoading, isError, data, error} = useQuery(
     'home-store-swiper',
