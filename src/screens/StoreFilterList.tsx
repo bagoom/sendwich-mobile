@@ -26,7 +26,7 @@ const StoreFilterList = () => {
             style={{fontSize: 42, color: '#999', marginBottom: 13}}
           />
           <Text1>찾으시는 검색어에 대한 결과가 없습니다. </Text1>
-          <Text1>다른 검색어로 검색 해보세요. </Text1>
+          <Text1>다른 검색어로 검색 하거나 위치를 변경 해보세요. </Text1>
         </EmptyList>
       )}
       <FlatList

@@ -19,8 +19,8 @@ const SetCurrentMapLocation = (props: any) => {
   const g = useGlobalStore();
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState({
-    latitude: 37.53815725,
-    longitude: 126.9307627,
+    latitude: 35.0970287465743,
+    longitude: 128.962625731291,
   });
 
   useEffect(() => {
@@ -85,7 +85,12 @@ const SetCurrentMapLocation = (props: any) => {
 
             <Btn
               onPress={() => {
-                g.selectHeaderAddr(g.coordsToAddr.roadArr2);
+                g.selectHeaderAddr(g.coordsToAddr.roadArr2, {
+                  address: {address_name: g.coordsToAddr.addr},
+                  road_address: {address_name: g.coordsToAddr.roadArr},
+                  y: currentLocation.latitude,
+                  x: currentLocation.longitude,
+                });
                 navigation.navigate('MainStack');
               }}>
               <BtnText>선택한 위치로 설정</BtnText>

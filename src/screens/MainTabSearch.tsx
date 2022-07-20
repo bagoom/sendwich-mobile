@@ -35,7 +35,7 @@ const MainTabA1Screen = () => {
         <Container>
           <Title>최근 검색어 </Title>
           <Row>
-            {g.recent_keyword.length === 0 && (
+            {g.recent_keyword.slice().length === 0 && (
               <EmptyText>최근 검색 이력이 없습니다.</EmptyText>
             )}
             {g.recent_keyword.slice().map((item: any, key) => (

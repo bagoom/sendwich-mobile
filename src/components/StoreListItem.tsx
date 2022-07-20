@@ -109,7 +109,7 @@ const Subject = styled.Text`
 `;
 const Description = styled.Text`
   font-size: 14px;
-  font-weight: 500;
+  /* font-weight: 500; */
   color: #7e745c;
 `;
 const Text1 = styled.Text`

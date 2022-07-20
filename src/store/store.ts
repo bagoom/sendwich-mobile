@@ -503,6 +503,7 @@ export class GlobalStore {
           //@ts-ignore
           x: arrAddr.x,
         });
+
         const newArray = this.recently_address.reduce(function (acc, current) {
           if (
             //@ts-ignore
@@ -513,6 +514,7 @@ export class GlobalStore {
           return acc;
         }, []);
         this._recently_address = newArray;
+        console.log(this.recently_address);
 
         //@ts-ignore
         this.coords = {lat: arrAddr.y, lng: arrAddr.x};

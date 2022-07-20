@@ -11,6 +11,9 @@ const RecentList = (props: any) => {
   const recentSotre = g.recent_store;
   return (
     <Wrapper>
+      {recentSotre?.length === 0 && (
+        <EmptyText>최근 구경한 이력이 없습니다.</EmptyText>
+      )}
       {recentSotre?.map((item: any, key: any) => (
         <RecentListItem item={item} key={key} />
       ))}
@@ -22,4 +25,9 @@ export default observer(RecentList);
 
 const Wrapper = styled.View`
   margin-top: 10px;
+`;
+const EmptyText = styled.Text`
+  font-size: 14px;
+  color: #999;
+  letter-spacing: -0.3px;
 `;

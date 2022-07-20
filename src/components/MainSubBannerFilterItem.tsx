@@ -87,7 +87,7 @@ const Row = styled.View`
 `;
 const Text1 = styled.Text`
   position: absolute;
-  top: 13.5px;
+  top: 13.6px;
   right: 0;
   text-align: right;
   color: #000;

@@ -29,33 +29,33 @@ const styles = StyleSheet.create({
   },
 });
 
-const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
+const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
-  const [places, setPlaces] = useState([]);
+  const [moods, setMoods] = useState([]);
   const [disable, setDisable] = useState(false);
   const navigation = useNavigation<any>();
-  const PlaceListFetch = useQuery('fetch-curation-place', () =>
-    axios(`${BASE_URL}/api/home-icons?sort[0]=order`),
+  const MoodListFetch = useQuery('fetch-curation-mood', () =>
+    axios(`${BASE_URL}/api/mood-categories?sort[0]=order`),
   );
-  const data = PlaceListFetch?.data?.data.data;
+  const data = MoodListFetch?.data?.data.data;
 
-  const checkPlace = (place: never) => {
-    if (places.includes(place)) {
-      const newPlaces = places.filter(item => item !== place);
-      setPlaces([...newPlaces]);
+  const checkPlace = (mood: never) => {
+    if (moods.includes(mood)) {
+      const newPlaces = moods.filter(item => item !== mood);
+      setMoods([...newPlaces]);
     } else {
-      setPlaces([...places, place]);
+      setMoods([...moods, mood]);
     }
   };
 
   useLayoutEffect(() => {
-    if (places.length !== 0) {
+    if (moods.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [places]);
+  }, [moods]);
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -141,7 +141,7 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
   );
 };
 
-export default observer(CurationPlaceFilter);
+export default observer(CurationMoodFilter);
 
 const ListItem = styled.View<{border?: boolean}>`
   margin-bottom: 20px;

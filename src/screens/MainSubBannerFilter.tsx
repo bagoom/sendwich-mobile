@@ -14,6 +14,7 @@ import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
 import CurationCalendarFilter from '../components/CurationCalendarFilter';
 import CurationTimeFilter from '../components/CurationTimeFilter';
 import CurationPlaceFilter from '../components/CurationPlaceFilter';
+import CurationMoodFilter from '../components/CurationMoodFilter';
 
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
 
@@ -50,7 +51,7 @@ const MainSubBannerFilter = (props: any) => {
                 name="모임성격 항목을 선택 해주세요"
                 label="모임성격"
               />
-              <CurationPlaceFilter
+              <CurationMoodFilter
                 name="분위기 항목을 선택 해주세요"
                 label="분위기"
               />
@@ -83,7 +84,7 @@ const Header = styled.View`
 `;
 const HeaderTitle = styled.Text`
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 24px;
   letter-spacing: -0.1px;
   color: #000;
