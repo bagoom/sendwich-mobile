@@ -11,12 +11,6 @@ const RoundSingleCheckBox = (props: any) => {
   const {data, onChange} = props;
   const g = useGlobalStore();
   const [isChecked, setToggleCheckBox] = useState(false);
-  //   const toggleTextColor = isChecked ? '#000' : '#aaa';
-  //   const toggleBorderColor = isChecked ? color : '#ddd';
-
-  //   const onCheckHandler = (isChecked: boolean) => {
-  //     setToggleCheckBox(label);
-  //   };
   return (
     <BouncyCheckboxGroup
       data={data}

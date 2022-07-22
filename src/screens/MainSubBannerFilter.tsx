@@ -17,6 +17,7 @@ import CurationPlaceFilter from '../components/CurationPlaceFilter';
 import CurationMeetingFilter from '../components/CurationMeetingFilter';
 import CurationMoodFilter from '../components/CurationMoodFilter';
 import CurationParkingFilter from '../components/CurationParkingFilter';
+import CurationKidsFilter from '../components/CurationKidsFilter';
 
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
 
@@ -61,7 +62,7 @@ const MainSubBannerFilter = (props: any) => {
                 name="주차 가능 여부를 선택 해주세요"
                 label="주차"
               />
-              <CurationPlaceFilter
+              <CurationKidsFilter
                 name="키즈 항목을 선택 해주세요"
                 label="키즈"
                 isBordered={false}
