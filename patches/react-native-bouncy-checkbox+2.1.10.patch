@@ -1,0 +1,37 @@
+diff --git a/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.js b/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.js
+index 0fd47a0..d8d97eb 100644
+--- a/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.js
++++ b/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.js
+@@ -54,14 +54,14 @@ class BouncyCheckbox extends React.Component {
+         const { text, textComponent, isChecked, textStyle, textContainerStyle, disableBuiltInState, disableText = false, } = this.props;
+         const { checked } = this.state;
+         return (!disableText &&
+-            (textComponent || (<View style={[styles.textContainer, textContainerStyle]}>
+-          <Text style={[
++            (textComponent || (<Animated.View style={[styles.textContainer, textContainerStyle]}>
++          <Animated.Text style={[
+                     _textStyle(disableBuiltInState ? isChecked : checked),
+                     textStyle,
+                 ]}>
+             {text}
+-          </Text>
+-        </View>)));
++          </Animated.Text>
++        </Animated.View>)));
+     };
+     render() {
+         const { style, TouchableComponent = TouchableOpacity } = this.props;
+diff --git a/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.style.js b/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.style.js
+index 00019f0..48d62e4 100644
+--- a/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.style.js
++++ b/node_modules/react-native-bouncy-checkbox/build/dist/BouncyCheckbox.style.js
+@@ -28,7 +28,7 @@ export default StyleSheet.create({
+         height: 10,
+     },
+     textContainer: {
+-        marginLeft: 16,
++        marginLeft: 6,
+     },
+ });
+ //# sourceMappingURL=BouncyCheckbox.style.js.map
+\ No newline at end of file

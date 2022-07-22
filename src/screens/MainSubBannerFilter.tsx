@@ -14,7 +14,9 @@ import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
 import CurationCalendarFilter from '../components/CurationCalendarFilter';
 import CurationTimeFilter from '../components/CurationTimeFilter';
 import CurationPlaceFilter from '../components/CurationPlaceFilter';
+import CurationMeetingFilter from '../components/CurationMeetingFilter';
 import CurationMoodFilter from '../components/CurationMoodFilter';
+import CurationParkingFilter from '../components/CurationParkingFilter';
 
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
 
@@ -47,7 +49,7 @@ const MainSubBannerFilter = (props: any) => {
                 name="장소 항목을 선택 해주세요"
                 label="장소"
               />
-              <CurationPlaceFilter
+              <CurationMeetingFilter
                 name="모임성격 항목을 선택 해주세요"
                 label="모임성격"
               />
@@ -55,7 +57,7 @@ const MainSubBannerFilter = (props: any) => {
                 name="분위기 항목을 선택 해주세요"
                 label="분위기"
               />
-              <CurationPlaceFilter
+              <CurationParkingFilter
                 name="주차 가능 여부를 선택 해주세요"
                 label="주차"
               />

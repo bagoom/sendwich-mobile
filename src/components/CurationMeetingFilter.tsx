@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
-import {StyleSheet, Platform, Dimensions, View} from 'react-native';
+import {StyleSheet, Platform, Dimensions, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import CheckBox from '../components/base-ui/CheckBox';
 import RoundCheckBox from '../components/base-ui/RoundCheckBox';
@@ -29,33 +29,32 @@ const styles = StyleSheet.create({
   },
 });
 
-const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
+const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
-  const [moods, setMoods] = useState([]);
+  const [meetings, setMeetings] = useState([]);
   const [disable, setDisable] = useState(false);
   const navigation = useNavigation<any>();
-  const MoodListFetch = useQuery('fetch-curation-mood', () =>
-    axios(`${BASE_URL}/api/mood-categories?sort[0]=order`),
+  const MeetingListFetch = useQuery('fetch-curation-meeting', () =>
+    axios(`${BASE_URL}/api/meeting-types?sort[0]=order`),
   );
-  const data = MoodListFetch?.data?.data.data;
-
-  const checkPlace = (mood: never) => {
-    if (moods.includes(mood)) {
-      const newPlaces = moods.filter(item => item !== mood);
-      setMoods([...newPlaces]);
+  const data = MeetingListFetch?.data?.data.data;
+  const checkMeeting = (meeting: never) => {
+    if (meetings.includes(meeting)) {
+      const newMeeting = meetings.filter(item => item !== meeting);
+      setMeetings([...newMeeting]);
     } else {
-      setMoods([...moods, mood]);
+      setMeetings([...meetings, meeting]);
     }
   };
 
   useLayoutEffect(() => {
-    if (moods.length !== 0) {
+    if (meetings.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [moods]);
+  }, [meetings]);
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -120,11 +119,10 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
                   label={item.title}
                   padding={14}
                   //@ts-ignore
-                  onChange={() => checkPlace(item.title)}
+                  onChange={() => checkMeeting(item.title)}
                 />
               </Item>
             ))}
-            <EmptySpace></EmptySpace>
           </ListWrap>
 
           <FixedBtnWrap>
@@ -142,7 +140,7 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
   );
 };
 
-export default observer(CurationMoodFilter);
+export default observer(CurationMeetingFilter);
 
 const ListItem = styled.View<{border?: boolean}>`
   margin-bottom: 20px;
@@ -168,9 +166,6 @@ const LabelArea = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-const EmptySpace = styled.View`
-  padding-bottom: 50px;
-`;
 const Row = styled.View`
   /* flex-direction: row; */
   /* align-items: flex-start; */
@@ -190,7 +185,7 @@ const Priority = styled.View``;
 
 const ListWrap = styled.ScrollView`
   background: #fff;
-  padding: 20px 16px;
+  padding: 20px 16px 50px;
 `;
 
 const FixedBtnWrap = styled.View`

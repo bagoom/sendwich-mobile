@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {StyleSheet, Platform, Dimensions, View} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import CheckBox from '../components/base-ui/CheckBox';
-import RoundCheckBox from '../components/base-ui/RoundCheckBox';
+import RoundSingleCheckBox from '../components/base-ui/RoundSingleCheckBox';
 import SelectBox from '../components/base-ui/SelectBox';
 import theme, {Title} from '../Theme';
 import styled from 'styled-components/native';
@@ -13,7 +13,7 @@ import axios from 'axios';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {useNavigation} from '@react-navigation/native';
 import Icon from '../../Icon-font.js';
-
+import {ICheckboxButton} from 'react-native-bouncy-checkbox-group';
 const deviceWidth = Dimensions.get('window').width;
 
 const deviceHeight =
@@ -23,39 +23,118 @@ const deviceHeight =
         'REAL_WINDOW_HEIGHT',
       );
 
-const styles = StyleSheet.create({
-  drawerMenuStyle: {
-    margin: 0,
-  },
-});
-
-const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
+const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
-  const [moods, setMoods] = useState([]);
+  const [parking, setParking] = useState('');
   const [disable, setDisable] = useState(false);
   const navigation = useNavigation<any>();
-  const MoodListFetch = useQuery('fetch-curation-mood', () =>
-    axios(`${BASE_URL}/api/mood-categories?sort[0]=order`),
-  );
-  const data = MoodListFetch?.data?.data.data;
 
-  const checkPlace = (mood: never) => {
-    if (moods.includes(mood)) {
-      const newPlaces = moods.filter(item => item !== mood);
-      setMoods([...newPlaces]);
+  const checkParking = (park: never) => {
+    if (parking === park) {
+      //   const newParkings = parking.filter(item => item !== park);
+      //   setParking([...newParkings]);
     } else {
-      setMoods([...moods, mood]);
+      setParking(park);
     }
   };
+  console.log(parking);
+
+  const toggleTextColor = parking ? '#000' : '#aaa';
+  const toggleBorderColor = parking ? theme.color.point : '#ddd';
+
+  const _iconStyle = (borderColor: string) => ({
+    height: 18,
+    width: 18,
+    margin: 0,
+    borderRadius: 25,
+    borderColor: toggleBorderColor,
+  });
+
+  const styles = StyleSheet.create({
+    drawerMenuStyle: {
+      margin: 0,
+    },
+    verticalStyle: {paddingVertical: 14},
+    textStyle: {
+      paddingLeft: 5,
+      fontSize: 14,
+      textDecorationLine: 'none',
+      color: toggleTextColor,
+    },
+    iconImageStyle: {height: 10, width: 10},
+  });
+
+  const data: ICheckboxButton[] = [
+    {
+      id: 0,
+      text: '주차가능',
+      fillColor: theme.color.point,
+      unfillColor: '#fff',
+      useNativeDriver: true,
+      iconStyle: {
+        height: 18,
+        width: 18,
+        borderRadius: 25,
+        borderColor: parking === '주차가능' ? theme.color.point : '#ddd',
+      },
+      textStyle: {
+        fontSize: 14,
+        textDecorationLine: 'none',
+        color: parking === '주차가능' ? '#000' : '#aaa',
+      },
+      style: styles.verticalStyle,
+      bounceFriction: 7,
+    },
+    {
+      id: 1,
+      text: '주차불가',
+      fillColor: theme.color.point,
+      unfillColor: '#fff',
+      useNativeDriver: true,
+      iconStyle: {
+        height: 18,
+        width: 18,
+        borderRadius: 25,
+        borderColor: parking === '주차불가' ? theme.color.point : '#ddd',
+      },
+      textStyle: {
+        fontSize: 14,
+        textDecorationLine: 'none',
+        color: parking === '주차불가' ? '#000' : '#aaa',
+      },
+      style: styles.verticalStyle,
+      bounceFriction: 7,
+    },
+    {
+      id: 2,
+      text: '주차편리',
+      fillColor: theme.color.point,
+      unfillColor: '#fff',
+      useNativeDriver: true,
+      iconStyle: {
+        height: 18,
+        width: 18,
+        borderRadius: 25,
+        borderColor: parking === '주차편리' ? theme.color.point : '#ddd',
+      },
+      textStyle: {
+        fontSize: 14,
+        textDecorationLine: 'none',
+        color: parking === '주차편리' ? '#000' : '#aaa',
+      },
+      style: styles.verticalStyle,
+      bounceFriction: 7,
+    },
+  ];
 
   useLayoutEffect(() => {
-    if (moods.length !== 0) {
+    if (parking.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [moods]);
+  }, [parking]);
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -111,19 +190,9 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
                 {name}
               </Title>
             </Row>
-            {data?.map((item: any, index: number) => (
-              <Item key={index}>
-                <RoundCheckBox
-                  size={18}
-                  radius={20}
-                  color={theme.color.point}
-                  label={item.title}
-                  padding={14}
-                  //@ts-ignore
-                  onChange={() => checkPlace(item.title)}
-                />
-              </Item>
-            ))}
+            <Item>
+              <RoundSingleCheckBox data={data} onChange={checkParking} />
+            </Item>
             <EmptySpace></EmptySpace>
           </ListWrap>
 
@@ -142,7 +211,7 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
   );
 };
 
-export default observer(CurationMoodFilter);
+export default observer(CurationParkingFilter);
 
 const ListItem = styled.View<{border?: boolean}>`
   margin-bottom: 20px;
