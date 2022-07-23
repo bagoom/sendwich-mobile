@@ -13,6 +13,7 @@ import styled from 'styled-components/native';
 import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
 import CurationCalendarFilter from '../components/CurationCalendarFilter';
 import CurationTimeFilter from '../components/CurationTimeFilter';
+import CurationSupportFilter from '../components/CurationSupportFilter';
 import CurationPlaceFilter from '../components/CurationPlaceFilter';
 import CurationMeetingFilter from '../components/CurationMeetingFilter';
 import CurationMoodFilter from '../components/CurationMoodFilter';
@@ -20,9 +21,11 @@ import CurationParkingFilter from '../components/CurationParkingFilter';
 import CurationKidsFilter from '../components/CurationKidsFilter';
 
 import BottomFixedButton from '../components/base-ui/BottomFixedButton';
+import SelectBox from '../components/base-ui/SelectBox';
 
 const MainSubBannerFilter = (props: any) => {
   const g = useGlobalStore();
+  console.log(g.sortingCurationFilter);
   return (
     <>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -33,19 +36,30 @@ const MainSubBannerFilter = (props: any) => {
             </Header>
 
             <FilterList>
-              <CurationCalendarFilter name="날짜" />
-              <CurationTimeFilter name="시간" />
+              <CurationCalendarFilter name="날짜 선택" label="날짜" />
+              <CurationTimeFilter name="시간 선택" label="시간" />
               <MainSubBannerFilterItem
                 name="예산"
                 type="number"
                 fixLabel="원 이하"
+                target="budget"
               />
               <MainSubBannerFilterItem
                 name="인원"
                 type="number"
                 fixLabel="명 이하"
+                target="personnel"
               />
-              <MainSubBannerFilterItem name="메뉴명 입력" />
+              <MainSubBannerFilterItem
+                name="메뉴명 입력"
+                label="메뉴명"
+                target="menuname"
+              />
+
+              <CurationSupportFilter
+                name="모임비 지원 여부를 선택 해주세요"
+                label="모임비지원"
+              />
               <CurationPlaceFilter
                 name="장소 항목을 선택 해주세요"
                 label="장소"
@@ -72,6 +86,8 @@ const MainSubBannerFilter = (props: any) => {
           </Wrapper>
         </TouchableWithoutFeedback>
       </ScrollView>
+
+      <SelectBox />
     </>
   );
 };

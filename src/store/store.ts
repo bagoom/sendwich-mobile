@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import {Alert} from 'react-native';
 import sorter from 'sort-nested-json';
-
+import moment from 'moment';
 import prepareNavigationService from '../lib/navigation-service';
 import {mobilevalidate} from '../lib/validation-service';
 import prepareStorageService, {MobileStorage} from '../lib/storage-service';
@@ -109,12 +109,21 @@ export class GlobalStore {
   // };
 
   _curationFilter = [
+    {type: 'date', list: '', order: 0},
+    {type: 'time', list: '', order: 0},
+    {type: 'budget', list: '', order: 0},
+    {type: 'personnel', list: '', order: 0},
+    {type: 'menuname', list: '', order: 0},
+    {type: 'support', list: '', order: 0},
     {type: 'place', list: '', order: 0},
     {type: 'meeting', list: [], order: 0},
     {type: 'mood', list: [], order: 0},
     {type: 'parking', list: '', order: 0},
     {type: 'kids', list: [], order: 0},
   ];
+
+  targetCuration = '';
+  prioritysModalVisible = false;
 
   seletedFilterBtn = '인기순';
   loading = false;
@@ -182,9 +191,11 @@ export class GlobalStore {
       popularKeywordList: observable,
       recommendKeywordList: observable,
       refreshing: observable,
-      _curationFilter: observable,
+      targetCuration: observable,
+      prioritysModalVisible: observable,
 
       authenticationed: observable,
+      _curationFilter: observable,
       _categories: observable,
       _selectedCategories: observable,
       _kakaoData: observable,
@@ -200,6 +211,7 @@ export class GlobalStore {
       searchAddrArr: computed,
       recently_address: computed,
       curationFilter: computed,
+      sortingCurationFilter: computed,
     });
 
     reaction(
@@ -757,11 +769,38 @@ export class GlobalStore {
 
   setCurationModalFilter = (name: any, list: any, order: any) => {
     runInAction(() => {
-      const target = this.curationFilter.findIndex(
+      const target = this._curationFilter.findIndex(
         filter => filter.type === name,
       );
-      this.curationFilter[target] = {type: name, list: list, order: order};
-      console.log(toJS(this.sortingCurationFilter));
+      if (name === 'time' && list !== '') {
+        list = moment(list).format('HH:mm');
+      }
+      this._curationFilter[target] = {type: name, list: list, order: order};
+      // console.log(toJS(this.sortingCurationFilter));
+    });
+  };
+
+  setTargetFilterOrder = (name: string, order: number) => {
+    if (name) {
+      runInAction(() => {
+        const target = this._curationFilter.findIndex(
+          filter => filter.type === name,
+        );
+        this._curationFilter[target].order = order;
+      });
+    }
+  };
+
+  setTargetFilter = (name: string) => {
+    runInAction(() => {
+      this.targetCuration = name;
+    });
+    this.togglePrioritysModal(true);
+  };
+
+  togglePrioritysModal = (status: boolean) => {
+    runInAction(() => {
+      this.prioritysModalVisible = status;
     });
   };
 
@@ -830,8 +869,7 @@ export class GlobalStore {
     return toJS(this._curationFilter);
   }
   get sortingCurationFilter() {
-    const sorted = sorter.sort(this.curationFilter).asc('order');
-    return sorted;
+    return sorter.sort(this.curationFilter).asc('order');
   }
   get coordsToAddr() {
     const arr = toJS(this._coordsToAddr);

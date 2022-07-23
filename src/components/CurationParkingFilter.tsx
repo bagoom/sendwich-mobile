@@ -48,7 +48,7 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
     } else {
       setDisable(false);
     }
-    g.setCurationModalFilter('parking', parking, 4);
+    g.setCurationModalFilter('parking', parking, 0);
   }, [parking]);
 
   const styles = StyleSheet.create({
@@ -74,8 +74,9 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
       </LabelArea>
 
       <FilterArea>
-        <Priority>
-          <SelectBox />
+        <Priority onPress={() => g.setTargetFilter('parking')}>
+          <Label>우선순위</Label>
+          <Num>{filterArr.order !== 0 ? filterArr.order : null}</Num>
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
           {filterArr.list ? (
@@ -189,11 +190,14 @@ const ItemName = styled.Text`
 `;
 
 const FilterArea = styled.View`
+  padding: 12px 0 14px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
-const Priority = styled.View``;
+const Priority = styled.TouchableOpacity`
+  flex-direction: row;
+`;
 
 const ListWrap = styled.ScrollView`
   background: #fff;
@@ -218,4 +222,15 @@ const FixedBtnText = styled.Text`
 const Item = styled.View`
   /* border-bottom-width: 1px; */
   border-color: #f5f5f5;
+`;
+const Label = styled.Text<{show?: boolean}>`
+  color: #999;
+  font-size: 14px;
+  font-weight: 500;
+`;
+const Num = styled.Text<{show?: boolean}>`
+  padding-left: 5px;
+  color: ${theme.color.point};
+  font-size: 14px;
+  font-weight: 500;
 `;

@@ -1,9 +1,9 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
-import {StyleSheet, Platform, Dimensions, Text, View} from 'react-native';
+import {StyleSheet, Platform, Dimensions, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import CheckBox from '../components/base-ui/CheckBox';
-import RoundCheckBox from '../components/base-ui/RoundCheckBox';
+import RoundSingleCheckBox from '../components/base-ui/RoundSingleCheckBox';
 import SelectBox from '../components/base-ui/SelectBox';
 import theme, {Title} from '../Theme';
 import styled from 'styled-components/native';
@@ -16,54 +16,44 @@ import Icon from '../../Icon-font.js';
 
 const deviceWidth = Dimensions.get('window').width;
 
-const deviceHeight =
-  Platform.OS === 'ios'
-    ? Dimensions.get('window').height
-    : require('react-native-extra-dimensions-android').get(
-        'REAL_WINDOW_HEIGHT',
-      );
-
 const styles = StyleSheet.create({
   drawerMenuStyle: {
     margin: 0,
   },
 });
 
-const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
+const CurationSupportFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
-  const [meetings, setMeetings] = useState([]);
+  const [support, setSupport] = useState('');
   const [disable, setDisable] = useState(false);
   const navigation = useNavigation<any>();
-  const MeetingListFetch = useQuery('fetch-curation-meeting', () =>
-    axios(`${BASE_URL}/api/meeting-types?sort[0]=order`),
-  );
-  const data = MeetingListFetch?.data?.data.data;
-  const checkMeeting = (meeting: never) => {
-    if (meetings.includes(meeting)) {
-      const newMeeting = meetings.filter(item => item !== meeting);
-      setMeetings([...newMeeting]);
-    } else {
-      setMeetings([...meetings, meeting]);
-    }
+
+  const data = [
+    {id: 1, title: '지원가능'},
+    {id: 2, title: '지원불가'},
+  ];
+
+  const checkSupport = (support: never) => {
+    setSupport(support);
   };
 
   const filterArr: any = g.sortingCurationFilter.find(
-    (d: any) => d.type === 'meeting',
+    (d: any) => d.type === 'support',
   );
 
   const clear = () => {
-    setMeetings([]);
+    setSupport('');
   };
 
   useLayoutEffect(() => {
-    if (meetings.length !== 0) {
+    if (support !== '') {
       setDisable(true);
     } else {
       setDisable(false);
     }
-    g.setCurationModalFilter('meeting', meetings, 0);
-  }, [meetings]);
+    g.setCurationModalFilter('support', support, 0);
+  }, [support]);
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -77,22 +67,16 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
       </LabelArea>
 
       <FilterArea>
-        <Priority onPress={() => g.setTargetFilter('meeting')}>
+        <Priority onPress={() => g.setTargetFilter('support')}>
           <Label>우선순위</Label>
           <Num>{filterArr.order !== 0 ? filterArr.order : null}</Num>
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <View
-            style={{
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-            }}>
-            {filterArr.list.length !== 0 ? (
-              <Text2>{filterArr.list.join(', ')}</Text2>
-            ) : (
-              <Text1>{name}</Text1>
-            )}
-          </View>
+          {filterArr.list !== '' ? (
+            <Text2>{filterArr.list}</Text2>
+          ) : (
+            <Text1>{name}</Text1>
+          )}
         </Button>
 
         <Modal
@@ -126,28 +110,18 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
               <Title
                 style={{
                   paddingLeft: 35,
-                  //   paddingBottom: 15,
-                  //   borderBottomWidth: 1,
-                  //   borderColor: '#222',
                 }}>
                 큐레이션에 적용 될{'\n'}
                 {name}
               </Title>
             </Row>
-            {data?.map((item: any, index: number) => (
-              <Item key={index}>
-                <RoundCheckBox
-                  size={18}
-                  radius={20}
-                  color={theme.color.point}
-                  label={item.title}
-                  padding={14}
-                  checkedList={meetings}
-                  //@ts-ignore
-                  onChange={() => checkMeeting(item.title)}
-                />
-              </Item>
-            ))}
+            <Item>
+              <RoundSingleCheckBox
+                data={data}
+                checkedText={support}
+                onChange={checkSupport}
+              />
+            </Item>
           </ListWrap>
 
           <FixedBtnWrap>
@@ -165,7 +139,7 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
   );
 };
 
-export default observer(CurationMeetingFilter);
+export default observer(CurationSupportFilter);
 
 const ListItem = styled.View<{border?: boolean}>`
   margin-bottom: 20px;
@@ -216,7 +190,7 @@ const Priority = styled.TouchableOpacity`
 
 const ListWrap = styled.ScrollView`
   background: #fff;
-  padding: 20px 16px 50px;
+  padding: 20px 16px;
 `;
 
 const FixedBtnWrap = styled.View`

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
 import {StyleSheet, Platform, Dimensions} from 'react-native';
 import {useGlobalStore} from '../store/util';
@@ -72,15 +72,24 @@ LocaleConfig.defaultLocale = 'kr';
 
 const today = moment().format('yy-MM-DD');
 const nextMonth = moment().add(2, 'M').format('yy-MM-DD');
-console.log(nextMonth);
-const CurationCalendarFilter = ({name, isBordered = true}: any) => {
+const CurationCalendarFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
+  const [date, setDate] = useState('');
+
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'date',
+  );
+
+  useLayoutEffect(() => {
+    g.setCurationModalFilter('date', date, 0);
+  }, [date]);
+
   return (
     <>
       <ListItem border={isBordered}>
         <LabelArea>
-          <ItemName>{name}</ItemName>
+          <ItemName>{label}</ItemName>
           <CheckBox
             size={18}
             radius={7}
@@ -90,11 +99,16 @@ const CurationCalendarFilter = ({name, isBordered = true}: any) => {
         </LabelArea>
 
         <FilterArea>
-          <Priority>
-            <SelectBox />
+          <Priority onPress={() => g.setTargetFilter('date')}>
+            <Label>우선순위</Label>
+            <Num>{filterArr.order !== 0 ? filterArr.order : null}</Num>
           </Priority>
           <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-            <Text1>{name}입력</Text1>
+            {filterArr.list !== '' ? (
+              <Text2>{filterArr.list}</Text2>
+            ) : (
+              <Text1>{name}</Text1>
+            )}
           </Button>
         </FilterArea>
       </ListItem>
@@ -116,8 +130,9 @@ const CurationCalendarFilter = ({name, isBordered = true}: any) => {
           current={today}
           minDate={today}
           maxDate={nextMonth}
-          onDayPress={day => {
-            console.log('selected day', day);
+          onDayPress={(day: any) => {
+            setDate(day.dateString);
+            setModalVisible(false);
           }}
           monthFormat={'yyyy MM'}
           // 달력에서 보이는 월이 바뀔때 실행되는 함수, Default = undefined
@@ -178,6 +193,9 @@ const Button = styled.TouchableOpacity`
 const Text1 = styled.Text`
   color: #c5c5c5;
 `;
+const Text2 = styled.Text`
+  color: #000;
+`;
 const LabelArea = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -191,15 +209,29 @@ const ItemName = styled.Text`
 `;
 
 const FilterArea = styled.View`
+  padding: 12px 0 14px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
-const Priority = styled.View``;
+const Priority = styled.TouchableOpacity`
+  flex-direction: row;
+`;
 
 const TextInput = styled.TextInput`
   text-align: right;
   color: #000;
+  font-size: 14px;
+  font-weight: 500;
+`;
+const Label = styled.Text<{show?: boolean}>`
+  color: #999;
+  font-size: 14px;
+  font-weight: 500;
+`;
+const Num = styled.Text<{show?: boolean}>`
+  padding-left: 5px;
+  color: ${theme.color.point};
   font-size: 14px;
   font-weight: 500;
 `;
