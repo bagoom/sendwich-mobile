@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
-import {StyleSheet, Platform, Dimensions, Text} from 'react-native';
+import {StyleSheet, Platform, Dimensions, Text, View} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import CheckBox from '../components/base-ui/CheckBox';
 import RoundCheckBox from '../components/base-ui/RoundCheckBox';
@@ -48,12 +48,21 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
     }
   };
 
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'meeting',
+  );
+
+  const clear = () => {
+    setMeetings([]);
+  };
+
   useLayoutEffect(() => {
     if (meetings.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
+    g.setCurationModalFilter('meeting', meetings, 2);
   }, [meetings]);
   return (
     <ListItem border={isBordered}>
@@ -72,7 +81,17 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
           <SelectBox />
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <Text1>{name}</Text1>
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+            }}>
+            {filterArr.list.length !== 0 ? (
+              <Text2>{filterArr.list.join(', ')}</Text2>
+            ) : (
+              <Text1>{name}</Text1>
+            )}
+          </View>
         </Button>
 
         <Modal
@@ -89,7 +108,11 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
           style={styles.drawerMenuStyle}>
           <ListWrap keyboardShouldPersistTaps="handled">
             <Row>
-              <BackButton onPress={() => setModalVisible(false)}>
+              <BackButton
+                onPress={() => {
+                  setModalVisible(false);
+                  clear();
+                }}>
                 <Icon
                   name="arrow-right"
                   style={{
@@ -118,6 +141,7 @@ const CurationMeetingFilter = ({name, isBordered = true, label}: any) => {
                   color={theme.color.point}
                   label={item.title}
                   padding={14}
+                  checkedList={meetings}
                   //@ts-ignore
                   onChange={() => checkMeeting(item.title)}
                 />
@@ -160,6 +184,9 @@ const BackButton = styled.TouchableOpacity`
 `;
 const Text1 = styled.Text`
   color: #c5c5c5;
+`;
+const Text2 = styled.Text`
+  color: #000;
 `;
 const LabelArea = styled.View`
   flex-direction: row;

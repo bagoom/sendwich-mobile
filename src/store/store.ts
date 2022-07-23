@@ -4,6 +4,7 @@ import {
   NavigationState,
 } from '@react-navigation/native';
 import {Alert} from 'react-native';
+import sorter from 'sort-nested-json';
 
 import prepareNavigationService from '../lib/navigation-service';
 import {mobilevalidate} from '../lib/validation-service';
@@ -27,6 +28,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthRepository from '../repositories/AuthRepository';
 import MapRepository from '../repositories/MapRepository';
+import {sortNestedArrays} from '../lib/transfer';
 type Route = {
   key: string;
   name: string;
@@ -98,6 +100,22 @@ export class GlobalStore {
 
   searchKeyword = '';
 
+  // curationFilter = {
+  //   place: {list: [], order: 0},
+  //   meeting: {list: [], order: 0},
+  //   mood: {list: [], order: 0},
+  //   parking: {list: '', order: 0},
+  //   kids: {list: [], order: 0},
+  // };
+
+  _curationFilter = [
+    {type: 'place', list: '', order: 0},
+    {type: 'meeting', list: [], order: 0},
+    {type: 'mood', list: [], order: 0},
+    {type: 'parking', list: '', order: 0},
+    {type: 'kids', list: [], order: 0},
+  ];
+
   seletedFilterBtn = '인기순';
   loading = false;
   jwt = '';
@@ -164,6 +182,7 @@ export class GlobalStore {
       popularKeywordList: observable,
       recommendKeywordList: observable,
       refreshing: observable,
+      _curationFilter: observable,
 
       authenticationed: observable,
       _categories: observable,
@@ -180,6 +199,7 @@ export class GlobalStore {
       coordsToAddr: computed,
       searchAddrArr: computed,
       recently_address: computed,
+      curationFilter: computed,
     });
 
     reaction(
@@ -735,6 +755,16 @@ export class GlobalStore {
     });
   };
 
+  setCurationModalFilter = (name: any, list: any, order: any) => {
+    runInAction(() => {
+      const target = this.curationFilter.findIndex(
+        filter => filter.type === name,
+      );
+      this.curationFilter[target] = {type: name, list: list, order: order};
+      console.log(toJS(this.sortingCurationFilter));
+    });
+  };
+
   clearStore = () => {
     runInAction(() => {
       this.loggedIn = false;
@@ -795,6 +825,13 @@ export class GlobalStore {
   }
   get searchAddrArr() {
     return toJS(this._searchAddrArr);
+  }
+  get curationFilter() {
+    return toJS(this._curationFilter);
+  }
+  get sortingCurationFilter() {
+    const sorted = sorter.sort(this.curationFilter).asc('order');
+    return sorted;
   }
   get coordsToAddr() {
     const arr = toJS(this._coordsToAddr);

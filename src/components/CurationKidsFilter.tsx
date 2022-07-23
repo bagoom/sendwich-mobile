@@ -46,12 +46,21 @@ const CurationKidsFilter = ({name, isBordered = true, label}: any) => {
     }
   };
 
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'kids',
+  );
+
+  const clear = () => {
+    setKids([]);
+  };
+
   useLayoutEffect(() => {
     if (kids.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
+    g.setCurationModalFilter('kids', kids, 5);
   }, [kids]);
   return (
     <ListItem border={isBordered}>
@@ -70,7 +79,11 @@ const CurationKidsFilter = ({name, isBordered = true, label}: any) => {
           <SelectBox />
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <Text1>{name}</Text1>
+          {filterArr.list.length !== 0 ? (
+            <Text2>{filterArr.list.join(', ')}</Text2>
+          ) : (
+            <Text1>{name}</Text1>
+          )}
         </Button>
 
         <Modal
@@ -87,7 +100,11 @@ const CurationKidsFilter = ({name, isBordered = true, label}: any) => {
           style={styles.drawerMenuStyle}>
           <ListWrap keyboardShouldPersistTaps="handled">
             <Row>
-              <BackButton onPress={() => setModalVisible(false)}>
+              <BackButton
+                onPress={() => {
+                  setModalVisible(false);
+                  clear();
+                }}>
                 <Icon
                   name="arrow-right"
                   style={{
@@ -116,6 +133,7 @@ const CurationKidsFilter = ({name, isBordered = true, label}: any) => {
                   color={theme.color.point}
                   label={item}
                   padding={14}
+                  checkedList={kids}
                   //@ts-ignore
                   onChange={() => checkKids(item)}
                 />
@@ -158,6 +176,9 @@ const BackButton = styled.TouchableOpacity`
 `;
 const Text1 = styled.Text`
   color: #c5c5c5;
+`;
+const Text2 = styled.Text`
+  color: #000;
 `;
 const LabelArea = styled.View`
   flex-direction: row;

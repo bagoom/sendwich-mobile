@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {StyleSheet, Platform, Dimensions, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import CheckBox from '../components/base-ui/CheckBox';
-import RoundCheckBox from '../components/base-ui/RoundCheckBox';
+import RoundSingleCheckBox from '../components/base-ui/RoundSingleCheckBox';
 import SelectBox from '../components/base-ui/SelectBox';
 import theme, {Title} from '../Theme';
 import styled from 'styled-components/native';
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
   const g = useGlobalStore();
   const [modalVisible, setModalVisible] = useState(false);
-  const [places, setPlaces] = useState([]);
+  const [place, setPlace] = useState('');
   const [disable, setDisable] = useState(false);
   const navigation = useNavigation<any>();
   const PlaceListFetch = useQuery('fetch-curation-place', () =>
@@ -41,21 +41,25 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
   const data = PlaceListFetch?.data?.data.data;
 
   const checkPlace = (place: never) => {
-    if (places.includes(place)) {
-      const newPlaces = places.filter(item => item !== place);
-      setPlaces([...newPlaces]);
-    } else {
-      setPlaces([...places, place]);
-    }
+    setPlace(place);
+  };
+
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'place',
+  );
+
+  const clear = () => {
+    setPlace('');
   };
 
   useLayoutEffect(() => {
-    if (places.length !== 0) {
+    if (place !== '') {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [places]);
+    g.setCurationModalFilter('place', place, 1);
+  }, [place]);
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -73,7 +77,11 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
           <SelectBox />
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <Text1>{name}</Text1>
+          {filterArr.list !== '' ? (
+            <Text2>{filterArr.list}</Text2>
+          ) : (
+            <Text1>{name}</Text1>
+          )}
         </Button>
 
         <Modal
@@ -90,7 +98,11 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
           style={styles.drawerMenuStyle}>
           <ListWrap keyboardShouldPersistTaps="handled">
             <Row>
-              <BackButton onPress={() => setModalVisible(false)}>
+              <BackButton
+                onPress={() => {
+                  setModalVisible(false);
+                  clear();
+                }}>
                 <Icon
                   name="arrow-right"
                   style={{
@@ -103,27 +115,18 @@ const CurationPlaceFilter = ({name, isBordered = true, label}: any) => {
               <Title
                 style={{
                   paddingLeft: 35,
-                  //   paddingBottom: 15,
-                  //   borderBottomWidth: 1,
-                  //   borderColor: '#222',
                 }}>
                 큐레이션에 적용 될{'\n'}
                 {name}
               </Title>
             </Row>
-            {data?.map((item: any, index: number) => (
-              <Item key={index}>
-                <RoundCheckBox
-                  size={18}
-                  radius={20}
-                  color={theme.color.point}
-                  label={item.title}
-                  padding={14}
-                  //@ts-ignore
-                  onChange={() => checkPlace(item.title)}
-                />
-              </Item>
-            ))}
+            <Item>
+              <RoundSingleCheckBox
+                data={data}
+                checkedText={place}
+                onChange={checkPlace}
+              />
+            </Item>
           </ListWrap>
 
           <FixedBtnWrap>
@@ -161,6 +164,9 @@ const BackButton = styled.TouchableOpacity`
 `;
 const Text1 = styled.Text`
   color: #c5c5c5;
+`;
+const Text2 = styled.Text`
+  color: #000;
 `;
 const LabelArea = styled.View`
   flex-direction: row;

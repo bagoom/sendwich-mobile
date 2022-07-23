@@ -5,17 +5,18 @@ import {TouchableOpacity} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const RoundCheckBox = (props: any) => {
-  const {size, radius, label, color, onChange, padding} = props;
+  const {size, radius, label, color, onChange, padding, checkedList} = props;
   const g = useGlobalStore();
-  const [isChecked, setToggleCheckBox] = useState(false);
-  const toggleTextColor = isChecked ? '#000' : '#aaa';
-  const toggleBorderColor = isChecked ? color : '#ddd';
+  const toggleTextColor = checkedList?.includes(label) ? '#000' : '#aaa';
+  const toggleBorderColor = checkedList?.includes(label) ? color : '#ddd';
+
   return (
     <BouncyCheckbox
       size={size}
       fillColor={color}
       unfillColor="#FFFFFF"
       text={label}
+      isChecked={checkedList?.includes(label) ? true : false}
       style={{paddingVertical: padding}}
       textContainerStyle={{marginLeft: 6}}
       bounceFriction={7}
@@ -29,7 +30,6 @@ const RoundCheckBox = (props: any) => {
         color: toggleTextColor,
       }}
       onPress={(isChecked: boolean) => {
-        setToggleCheckBox(isChecked);
         onChange ? onChange() : null;
       }}
     />

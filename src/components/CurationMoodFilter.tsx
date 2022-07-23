@@ -49,12 +49,21 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
     }
   };
 
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'mood',
+  );
+
+  const clear = () => {
+    setMoods([]);
+  };
+
   useLayoutEffect(() => {
     if (moods.length !== 0) {
       setDisable(true);
     } else {
       setDisable(false);
     }
+    g.setCurationModalFilter('mood', moods, 3);
   }, [moods]);
   return (
     <ListItem border={isBordered}>
@@ -73,7 +82,17 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
           <SelectBox />
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <Text1>{name}</Text1>
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+            }}>
+            {filterArr.list.length !== 0 ? (
+              <Text2>{filterArr.list.join(', ')}</Text2>
+            ) : (
+              <Text1>{name}</Text1>
+            )}
+          </View>
         </Button>
 
         <Modal
@@ -90,7 +109,11 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
           style={styles.drawerMenuStyle}>
           <ListWrap keyboardShouldPersistTaps="handled">
             <Row>
-              <BackButton onPress={() => setModalVisible(false)}>
+              <BackButton
+                onPress={() => {
+                  setModalVisible(false);
+                  clear();
+                }}>
                 <Icon
                   name="arrow-right"
                   style={{
@@ -119,6 +142,7 @@ const CurationMoodFilter = ({name, isBordered = true, label}: any) => {
                   color={theme.color.point}
                   label={item.title}
                   padding={14}
+                  checkedList={moods}
                   //@ts-ignore
                   onChange={() => checkPlace(item.title)}
                 />
@@ -162,6 +186,9 @@ const BackButton = styled.TouchableOpacity`
 `;
 const Text1 = styled.Text`
   color: #c5c5c5;
+`;
+const Text2 = styled.Text`
+  color: #000;
 `;
 const LabelArea = styled.View`
   flex-direction: row;

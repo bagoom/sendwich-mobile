@@ -31,102 +31,16 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
   const navigation = useNavigation<any>();
 
   const checkParking = (park: never) => {
-    if (parking === park) {
-      //   const newParkings = parking.filter(item => item !== park);
-      //   setParking([...newParkings]);
-    } else {
-      setParking(park);
-    }
+    setParking(park);
   };
-  console.log(parking);
 
-  const toggleTextColor = parking ? '#000' : '#aaa';
-  const toggleBorderColor = parking ? theme.color.point : '#ddd';
+  const filterArr: any = g.sortingCurationFilter.find(
+    (d: any) => d.type === 'parking',
+  );
 
-  const _iconStyle = (borderColor: string) => ({
-    height: 18,
-    width: 18,
-    margin: 0,
-    borderRadius: 25,
-    borderColor: toggleBorderColor,
-  });
-
-  const styles = StyleSheet.create({
-    drawerMenuStyle: {
-      margin: 0,
-    },
-    verticalStyle: {paddingVertical: 14},
-    textStyle: {
-      paddingLeft: 5,
-      fontSize: 14,
-      textDecorationLine: 'none',
-      color: toggleTextColor,
-    },
-    iconImageStyle: {height: 10, width: 10},
-  });
-
-  const data: ICheckboxButton[] = [
-    {
-      id: 0,
-      text: '주차가능',
-      fillColor: theme.color.point,
-      unfillColor: '#fff',
-      useNativeDriver: true,
-      iconStyle: {
-        height: 18,
-        width: 18,
-        borderRadius: 25,
-        borderColor: parking === '주차가능' ? theme.color.point : '#ddd',
-      },
-      textStyle: {
-        fontSize: 14,
-        textDecorationLine: 'none',
-        color: parking === '주차가능' ? '#000' : '#aaa',
-      },
-      style: styles.verticalStyle,
-      bounceFriction: 7,
-    },
-    {
-      id: 1,
-      text: '주차불가',
-      fillColor: theme.color.point,
-      unfillColor: '#fff',
-      useNativeDriver: true,
-      iconStyle: {
-        height: 18,
-        width: 18,
-        borderRadius: 25,
-        borderColor: parking === '주차불가' ? theme.color.point : '#ddd',
-      },
-      textStyle: {
-        fontSize: 14,
-        textDecorationLine: 'none',
-        color: parking === '주차불가' ? '#000' : '#aaa',
-      },
-      style: styles.verticalStyle,
-      bounceFriction: 7,
-    },
-    {
-      id: 2,
-      text: '주차편리',
-      fillColor: theme.color.point,
-      unfillColor: '#fff',
-      useNativeDriver: true,
-      iconStyle: {
-        height: 18,
-        width: 18,
-        borderRadius: 25,
-        borderColor: parking === '주차편리' ? theme.color.point : '#ddd',
-      },
-      textStyle: {
-        fontSize: 14,
-        textDecorationLine: 'none',
-        color: parking === '주차편리' ? '#000' : '#aaa',
-      },
-      style: styles.verticalStyle,
-      bounceFriction: 7,
-    },
-  ];
+  const clear = () => {
+    setParking('');
+  };
 
   useLayoutEffect(() => {
     if (parking.length !== 0) {
@@ -134,7 +48,19 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
     } else {
       setDisable(false);
     }
+    g.setCurationModalFilter('parking', parking, 4);
   }, [parking]);
+
+  const styles = StyleSheet.create({
+    drawerMenuStyle: {
+      margin: 0,
+    },
+  });
+  const data = [
+    {id: 1, title: '주차가능'},
+    {id: 2, title: '주차불가'},
+    {id: 3, title: '주차편리'},
+  ];
   return (
     <ListItem border={isBordered}>
       <LabelArea>
@@ -152,7 +78,11 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
           <SelectBox />
         </Priority>
         <Button activeOpacity={1} onPress={() => setModalVisible(true)}>
-          <Text1>{name}</Text1>
+          {filterArr.list ? (
+            <Text2>{filterArr.list}</Text2>
+          ) : (
+            <Text1>{name}</Text1>
+          )}
         </Button>
 
         <Modal
@@ -169,7 +99,11 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
           style={styles.drawerMenuStyle}>
           <ListWrap keyboardShouldPersistTaps="handled">
             <Row>
-              <BackButton onPress={() => setModalVisible(false)}>
+              <BackButton
+                onPress={() => {
+                  setModalVisible(false);
+                  clear();
+                }}>
                 <Icon
                   name="arrow-right"
                   style={{
@@ -182,16 +116,17 @@ const CurationParkingFilter = ({name, isBordered = true, label}: any) => {
               <Title
                 style={{
                   paddingLeft: 35,
-                  //   paddingBottom: 15,
-                  //   borderBottomWidth: 1,
-                  //   borderColor: '#222',
                 }}>
                 큐레이션에 적용 될{'\n'}
                 {name}
               </Title>
             </Row>
             <Item>
-              <RoundSingleCheckBox data={data} onChange={checkParking} />
+              <RoundSingleCheckBox
+                data={data}
+                checkedText={parking}
+                onChange={checkParking}
+              />
             </Item>
             <EmptySpace></EmptySpace>
           </ListWrap>
@@ -231,6 +166,9 @@ const BackButton = styled.TouchableOpacity`
 `;
 const Text1 = styled.Text`
   color: #c5c5c5;
+`;
+const Text2 = styled.Text`
+  color: #000;
 `;
 const LabelArea = styled.View`
   flex-direction: row;

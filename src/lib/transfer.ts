@@ -23,3 +23,22 @@ export const converMeter = (number: number) => {
   }
   return value;
 };
+
+export function sortNestedArrays(obj: any, sortPropertyName: any) {
+  Object.keys(obj).forEach(key => {
+    if (Array.isArray(obj[key])) {
+      obj[key].sort(
+        (a: any, b: any) => a[sortPropertyName] - b[sortPropertyName],
+      );
+    }
+
+    if (
+      !!obj[key] &&
+      (typeof obj[key] === 'object' || Array.isArray(obj[key]))
+    ) {
+      sortNestedArrays(obj[key], sortPropertyName);
+    }
+  });
+
+  return obj;
+}
