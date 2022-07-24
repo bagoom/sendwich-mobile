@@ -32,6 +32,7 @@ import Config from '../screens/Config';
 import Withdrawal from '../screens/Withdrawal';
 import StoreCartList from '../screens/StoreCartList';
 import StoreFilterList from '../screens/StoreFilterList';
+import StoreCurationList from '../screens/StoreCurationList';
 
 import DetailHeaderRight from '../components/DetailHeaderRight';
 
@@ -236,6 +237,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={StoreCartList}
           options={{
             headerTitle: '장바구니 목록',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="StoreCurationList"
+          component={StoreCurationList}
+          options={{
+            headerTitle: '큐레이션 검색 결과',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}

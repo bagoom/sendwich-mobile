@@ -97,6 +97,7 @@ export class GlobalStore {
 
   shopList = [];
   filteredShopList = [];
+  curationShopList = [];
   popularKeywordList = [];
   recommendKeywordList = [];
 
@@ -190,6 +191,7 @@ export class GlobalStore {
       coords: observable,
       searchKeyword: observable,
       filteredShopList: observable,
+      curationShopList: observable,
       popularKeywordList: observable,
       recommendKeywordList: observable,
       refreshing: observable,
@@ -806,6 +808,29 @@ export class GlobalStore {
     });
   };
 
+  getCurationStoreList = async () => {
+    try {
+      const {data} = await AuthRepository.getCurationStoreList(
+        0,
+        this.coords,
+        this.curationFilterString,
+      );
+      runInAction(() => {
+        this.curationShopList = data.data;
+
+        console.log(toJS(this.curationShopList));
+      });
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  clearCurationShopList = () => {
+    runInAction(() => {
+      this.curationShopList = [];
+    });
+  };
+
   clearStore = () => {
     runInAction(() => {
       this.loggedIn = false;
@@ -890,7 +915,7 @@ export class GlobalStore {
 
   get curationFilterString() {
     const clear = this.sortingCurationFilter.filter((c: any) => c.list.length);
-    let queryString = '?';
+    let queryString = '';
     let order: any = [];
     clear.forEach((filter: any, index: number) => {
       if (filter.type === 'date') {
@@ -951,9 +976,7 @@ export class GlobalStore {
 
     queryString += `&order=${order}`;
 
-    return {clear, queryString};
-    // 복수 검색은 in , 시간은 between , 날자는 해당 날짜의 요일 구하기 -> 요일 제외
-    // return sorter.sort(this.curationFilter).asc('order');
+    return queryString;
   }
 }
 

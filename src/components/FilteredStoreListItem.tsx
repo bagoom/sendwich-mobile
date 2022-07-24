@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useRef, useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
-import {View, TouchableOpacity, Alert} from 'react-native';
+import {View, Animated, Alert} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
@@ -13,28 +13,41 @@ const FilteredStoreListItem = (props: any) => {
   const {item} = props;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
+  const fadeAnim = useRef(new Animated.Value(0.01)).current;
 
+  useLayoutEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
+    // console.log('ddd');
+  });
   return (
-    <ListItem
-      activeOpacity={1}
-      onPress={() => navigation.navigate('SotreDetail', item.id)}>
-      <View style={{flexDirection: 'row', alignContent: 'center'}}>
-        <ImgBox>
-          {item?.main_image ? (
-            <Corver source={{uri: `${BASE_URL}${item?.main_image[0]?.url}`}} />
-          ) : (
-            <NoImg />
-          )}
-        </ImgBox>
-        <View style={{paddingVertical: 5, paddingRight: 0}}>
-          <Subject>{item.shop_name}</Subject>
-          {item?.menu_list && (
-            <Desc>{item?.menu_list[0]?.menus[0]?.menuname}</Desc>
-          )}
-          <Text1>{converMeter(item?.distance)}</Text1>
+    <Animated.View style={{flex: 1, opacity: fadeAnim}}>
+      <ListItem
+        activeOpacity={1}
+        onPress={() => navigation.navigate('SotreDetail', item.id)}>
+        <View style={{flexDirection: 'row', alignContent: 'center'}}>
+          <ImgBox>
+            {item?.main_image ? (
+              <Corver
+                source={{uri: `${BASE_URL}${item?.main_image[0]?.url}`}}
+              />
+            ) : (
+              <NoImg />
+            )}
+          </ImgBox>
+          <View style={{paddingVertical: 5, paddingRight: 0}}>
+            <Subject>{item.shop_name}</Subject>
+            {item?.menu_list && (
+              <Desc>{item?.menu_list[0]?.menus[0]?.menuname}</Desc>
+            )}
+            <Text1>{converMeter(item?.distance)}</Text1>
+          </View>
         </View>
-      </View>
-    </ListItem>
+      </ListItem>
+    </Animated.View>
   );
 };
 

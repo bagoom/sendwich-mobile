@@ -84,6 +84,14 @@ class AuthRepository {
     });
   }
 
+  getCurationStoreList(start: any, coords: any, query: any) {
+    return axios.get(
+      `${BASE_URL}/api/stores/curation?${query}&_start=${start}&_limit=${
+        start + 40
+      }&km=12&lat=${coords.lat}&lng=${coords.lng}`,
+    );
+  }
+
   // getUsers(feedCount, filterString) {
   //   if (!filterString) {
   //     return {data: [], status: 200};

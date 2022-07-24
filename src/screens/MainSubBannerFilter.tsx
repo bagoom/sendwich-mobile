@@ -9,7 +9,7 @@ import {
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
-
+import {useNavigation} from '@react-navigation/native';
 import MainSubBannerFilterItem from '../components/MainSubBannerFilterItem';
 import CurationCalendarFilter from '../components/CurationCalendarFilter';
 import CurationTimeFilter from '../components/CurationTimeFilter';
@@ -25,8 +25,7 @@ import SelectBox from '../components/base-ui/SelectBox';
 
 const MainSubBannerFilter = (props: any) => {
   const g = useGlobalStore();
-  // console.log(g.sortingCurationFilter);
-  console.log(g.curationFilterString);
+  const navigation = useNavigation<any>();
   return (
     <>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -83,7 +82,14 @@ const MainSubBannerFilter = (props: any) => {
                 isBordered={false}
               />
             </FilterList>
-            <BottomFixedButton disabled={true} />
+            <BottomFixedButton
+              onPress={() => {
+                g.getCurationStoreList();
+                navigation.navigate('StoreCurationList');
+              }}
+              activeState={true}
+            />
+            {/* <BottomFixedButton disabled={true} /> */}
           </Wrapper>
         </TouchableWithoutFeedback>
       </ScrollView>
