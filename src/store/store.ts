@@ -6,6 +6,8 @@ import {
 import {Alert} from 'react-native';
 import sorter from 'sort-nested-json';
 import moment from 'moment';
+import 'moment/locale/ko';
+
 import prepareNavigationService from '../lib/navigation-service';
 import {mobilevalidate} from '../lib/validation-service';
 import prepareStorageService, {MobileStorage} from '../lib/storage-service';
@@ -884,6 +886,74 @@ export class GlobalStore {
       : arr?.address?.address_name;
 
     return {addr: addr, roadArr: roadArr, roadArr2: roadArr2};
+  }
+
+  get curationFilterString() {
+    const clear = this.sortingCurationFilter.filter((c: any) => c.list.length);
+    let queryString = '?';
+    let order: any = [];
+    clear.forEach((filter: any, index: number) => {
+      if (filter.type === 'date') {
+        queryString += `&holiday=${moment(filter.list).format('ddd')}`;
+        order.push('holiday');
+      }
+
+      if (filter.type === 'time') {
+        queryString += `&time=${filter.list}`;
+        order.push('time');
+      }
+
+      if (filter.type === 'budget') {
+        queryString += `&budget=${filter.list}`;
+        order.push('budget');
+      }
+
+      if (filter.type === 'personnel') {
+        queryString += `&personnel=${filter.list}`;
+        order.push('personnel');
+      }
+
+      if (filter.type === 'menuname') {
+        queryString += `&menuname=${filter.list}`;
+        order.push('menuname');
+      }
+
+      if (filter.type === 'support') {
+        queryString += `&support=${filter.list}`;
+        order.push('support');
+      }
+
+      if (filter.type === 'place') {
+        queryString += `&place=${filter.list}`;
+        order.push('place');
+      }
+
+      if (filter.type === 'meeting') {
+        queryString += `&meeting=${filter.list.join(',')}`;
+        order.push('meeting');
+      }
+
+      if (filter.type === 'mood') {
+        queryString += `&mood=${filter.list.join(',')}`;
+        order.push('mood');
+      }
+
+      if (filter.type === 'parking') {
+        queryString += `&parking=${filter.list}`;
+        order.push('parking');
+      }
+
+      if (filter.type === 'kids') {
+        queryString += `&kids=${filter.list.join(',')}`;
+        order.push('kids');
+      }
+    });
+
+    queryString += `&order=${order}`;
+
+    return {clear, queryString};
+    // 복수 검색은 in , 시간은 between , 날자는 해당 날짜의 요일 구하기 -> 요일 제외
+    // return sorter.sort(this.curationFilter).asc('order');
   }
 }
 

@@ -233,7 +233,7 @@ const Item = styled.View`
 const Label = styled.Text<{show?: boolean}>`
   color: #999;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
 `;
 const Num = styled.Text<{show?: boolean}>`
   padding-left: 5px;

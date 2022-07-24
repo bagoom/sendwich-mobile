@@ -52,6 +52,7 @@ class AuthRepository {
         : typeText === '할인율순'
         ? 'discount'
         : 'popular';
+    console.log(`&km=12&lat=${coords.lat}&lng=${coords.lng}`);
     return axios.get(
       `${BASE_URL}/api/stores/distances?_start=${start}&_limit=${
         start + 40
