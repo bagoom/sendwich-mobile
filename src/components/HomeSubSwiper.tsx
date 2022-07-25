@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {observer} from 'mobx-react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Swiper from 'react-native-web-swiper';
 
@@ -10,6 +10,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
+import moment from 'moment';
 
 const width = wp('100%');
 
@@ -31,47 +36,55 @@ const HomeSubSwiper = (props: any) => {
   const {} = props;
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
+  const fetchBannerList = () => {
+    return axios.get(
+      `${BASE_URL}/api/banners?populate=*&filters[position][$eq][0]=큐레이션배너&filters[end_date][$gte][1]=${moment(
+        new Date(),
+      ).format('yy-MM-DD')}`,
+    );
+  };
 
+  const {isLoading, isError, data, error} = useQuery(
+    'main-curation-banner',
+    fetchBannerList,
+  );
+  const banner = data?.data.data;
+
+  useLayoutEffect(() => {}, [data]);
+  console.log(data);
   return (
     <>
-      <View style={styles.container}>
-        <Swiper
-          minDistanceToCapture={5}
-          springConfig={{bounciness: 0}}
-          minDistanceForAction={0.05}
-          controlsProps={{
-            dotsPos: 'bottom-left',
-            prevPos: false,
-            nextPos: false,
-            dotActiveStyle: styles.dotActiveStyle,
-            dotsWrapperStyle: styles.paginationWrapper,
-          }}>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('MainSubBannerFilter')}>
-              <SliderImg
-                source={require('../assets/images/main_sub_banner.jpeg')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('MainSubBannerFilter')}>
-              <SliderImg
-                source={require('../assets/images/main_sub_banner.jpeg')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('MainSubBannerFilter')}>
-              <SliderImg
-                source={require('../assets/images/main_sub_banner.jpeg')}
-              />
-            </TouchableOpacity>
-          </View>
-        </Swiper>
-      </View>
+      {!isLoading && (
+        <View style={styles.container}>
+          <Swiper
+            minDistanceToCapture={5}
+            springConfig={{bounciness: 0}}
+            minDistanceForAction={0.05}
+            loop={true}
+            timeout={3.5}
+            controlsProps={{
+              dotsPos: 'bottom-left',
+              prevPos: false,
+              nextPos: false,
+              dotActiveStyle: styles.dotActiveStyle,
+              dotsWrapperStyle: styles.paginationWrapper,
+            }}>
+            {banner?.map((item: any, index: any) => {
+              console.log(item.name);
+              return (
+                <View key={index}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('MainSubBannerFilter')}>
+                    <SliderImg
+                      source={{uri: `${BASE_URL}${item?.image.url}`}}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </Swiper>
+        </View>
+      )}
     </>
   );
 };

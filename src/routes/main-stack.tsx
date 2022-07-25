@@ -33,6 +33,7 @@ import Withdrawal from '../screens/Withdrawal';
 import StoreCartList from '../screens/StoreCartList';
 import StoreFilterList from '../screens/StoreFilterList';
 import StoreCurationList from '../screens/StoreCurationList';
+import BannerDetail from '../screens/BannerDetail';
 
 import DetailHeaderRight from '../components/DetailHeaderRight';
 
@@ -255,6 +256,15 @@ class MainStack extends React.Component<MainStackProp> {
           component={StoreFilterList}
           options={{
             headerTitle: '검색 결과',
+            headerStyle: {...defaultHeaderStyle},
+            headerTitleStyle: {...defaultHeaderTextStyle},
+          }}
+        />
+        <MainStackStackNav.Screen
+          name="BannerDetail"
+          component={BannerDetail}
+          options={{
+            headerTitle: '이벤트 상세 내용',
             headerStyle: {...defaultHeaderStyle},
             headerTitleStyle: {...defaultHeaderTextStyle},
           }}

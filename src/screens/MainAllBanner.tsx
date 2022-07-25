@@ -6,13 +6,32 @@ import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import EventItem from '../components/EventItem';
 
-const dummy = [1, 2, 3, 4, 5, 6, 7];
+import axios from 'axios';
+import {useQuery} from 'react-query';
+import {BASE_URL} from '@env';
+import moment from 'moment';
+
 const MainAllBanner = (props: any) => {
   const g = useGlobalStore();
+
+  const fetchBannerList = () => {
+    return axios.get(
+      `${BASE_URL}/api/banners?populate=*&filters[position][$eq][0]=이벤트배너&filters[end_date][$gte][1]=${moment(
+        new Date(),
+      ).format('yy-MM-DD')}`,
+    );
+  };
+
+  const {isLoading, isError, data, error} = useQuery(
+    'main-event-banner',
+    fetchBannerList,
+  );
+  const banner = data?.data.data;
+  console.log(banner);
   return (
-    <ScrollView>
+    <ScrollView style={{flex: 1, backgroundColor: '#f9f9f9'}}>
       <Wrapper>
-        {dummy.map((item: any, index: number) => (
+        {banner?.map((item: any, index: number) => (
           <EventItem data={item} key={index} index={index} />
         ))}
       </Wrapper>
@@ -25,5 +44,4 @@ export default observer(MainAllBanner);
 const Wrapper = styled.View`
   flex: 1;
   padding: 16px 16px;
-  background: #f9f9f9;
 `;

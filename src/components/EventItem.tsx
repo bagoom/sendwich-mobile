@@ -4,22 +4,24 @@ import {Platform, Dimensions, View, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import theme from '../Theme';
 import styled from 'styled-components/native';
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 const EventItem = (props: any) => {
-  const {navigation} = props;
+  const {data} = props;
   const g = useGlobalStore();
-
+  const navigation = useNavigation<any>();
   return (
-    <ListItem>
-      <Badge>
+    <ListItem onPress={() => navigation.navigate('BannerDetail', data.id)}>
+      {/* <Badge>
         <BadgeText>선착순</BadgeText>
-      </Badge>
+      </Badge> */}
 
       <CouponImg source={require('../assets/images/coupon.png')} />
 
-      <Catrory>쿠폰이벤트</Catrory>
-      <Title>3,000원 결제 할인</Title>
-      <Date>2022.04.30까지</Date>
+      <Catrory>{data.name}</Catrory>
+      <Title>{data.etc}</Title>
+      <Date>{moment(data.end_date).format('yy.MM.DD')}까지</Date>
     </ListItem>
   );
 };

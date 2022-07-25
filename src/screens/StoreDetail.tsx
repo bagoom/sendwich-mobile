@@ -33,6 +33,8 @@ const StoreDetail = ({route, navigation}: any) => {
     console.log('ddd');
   }, [detailData]);
 
+  const tag_arr = detailData?.mood ? detailData?.mood.split(' ') : [];
+  const tag_item = tag_arr?.filter((e: any) => e);
   return (
     <>
       {isLoading && <Loader />}
@@ -48,7 +50,7 @@ const StoreDetail = ({route, navigation}: any) => {
             />
 
             <Container ph0={false}>
-              <TagList data={detailData?.theme_item} />
+              <TagList data={tag_item} />
               <CouponListItem coupon={detailData?.coupon} />
             </Container>
 

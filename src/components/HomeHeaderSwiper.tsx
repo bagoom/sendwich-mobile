@@ -3,7 +3,6 @@ import axios from 'axios';
 import {observer} from 'mobx-react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useGlobalStore} from '../store/util';
-import Swiper from 'react-native-web-swiper';
 import {useQuery} from 'react-query';
 import {BASE_URL} from '@env';
 import styled from 'styled-components/native';
@@ -12,6 +11,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useSharedValue} from 'react-native-reanimated';
+import moment from 'moment';
 
 const PAGE_WIDTH = wp('100%');
 const IMG_HEIGHT = PAGE_WIDTH / 1.8;
@@ -23,14 +24,16 @@ const baseOptions = {
 } as const;
 
 const fetchBannerList = () => {
-  return axios.get(`${BASE_URL}/api/banners?populate=*`);
+  return axios.get(
+    `${BASE_URL}/api/banners?populate=*&filters[position][$eq][0]=메인슬라이드배너&filters[end_date][$gte][1]=${moment(
+      new Date(),
+    ).format('yy-MM-DD')}`,
+  );
 };
-
 const HomeHeaderSwiper = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
   const [slideIdx, setIdx] = useState(0);
-
   const {isLoading, isError, data, error} = useQuery(
     'mian-header-banner',
     fetchBannerList,
@@ -53,6 +56,8 @@ const HomeHeaderSwiper = (props: any) => {
     <>
       <View style={{height: PAGE_WIDTH}}>
         <Carousel
+          //@ts-ignore
+          // ref={ref}
           {...baseOptions}
           style={{width: '100%'}}
           autoPlay={true}
