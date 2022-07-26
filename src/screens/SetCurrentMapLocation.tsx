@@ -87,7 +87,7 @@ const SetCurrentMapLocation = (props: any) => {
               onPress={() => {
                 g.selectHeaderAddr(g.coordsToAddr.roadArr2, {
                   address: {address_name: g.coordsToAddr.addr},
-                  road_address: {address_name: g.coordsToAddr.roadArr},
+                  road_address: {address_name: g.coordsToAddr.roadArr2},
                   y: currentLocation.latitude,
                   x: currentLocation.longitude,
                 });

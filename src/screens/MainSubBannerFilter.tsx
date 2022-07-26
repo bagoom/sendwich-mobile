@@ -26,6 +26,7 @@ import SelectBox from '../components/base-ui/SelectBox';
 const MainSubBannerFilter = (props: any) => {
   const g = useGlobalStore();
   const navigation = useNavigation<any>();
+  console.log(g.curationFilterString);
   return (
     <>
       <ScrollView keyboardShouldPersistTaps="handled">

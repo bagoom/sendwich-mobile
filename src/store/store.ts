@@ -974,6 +974,8 @@ export class GlobalStore {
       }
     });
 
+    order = order.join(',');
+
     queryString += `&order=${order}`;
 
     return queryString;
