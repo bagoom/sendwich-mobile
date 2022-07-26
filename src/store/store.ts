@@ -3,7 +3,7 @@ import {
   NavigationContainerRef,
   NavigationState,
 } from '@react-navigation/native';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import sorter from 'sort-nested-json';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -31,6 +31,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthRepository from '../repositories/AuthRepository';
 import MapRepository from '../repositories/MapRepository';
 import {sortNestedArrays} from '../lib/transfer';
+import {getFCMToken} from '../lib/pushnotification';
+
 type Route = {
   key: string;
   name: string;
@@ -265,6 +267,8 @@ export class GlobalStore {
             this.headerAddr = result;
           });
         });
+
+        getFCMToken();
         // console.log(this.headerAddr);
         // console.log(this.sendwichProfile);
       } catch (e) {
@@ -300,6 +304,15 @@ export class GlobalStore {
       };
       const {data} = await AuthRepository.signUpWithKakao(signUpData);
       this.hydrateAuthState(data.user, data.jwt);
+      getFCMToken();
+
+      const fcmToken = await AsyncStorage.getItem('@sendwich_fcmtoken');
+
+      const fcmTokenData = await AuthRepository.updateFcmToken(
+        data.user.id,
+        Platform.OS,
+        fcmToken,
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -334,6 +347,7 @@ export class GlobalStore {
   };
 
   signInWithKakao = async (): Promise<void> => {
+    getFCMToken();
     try {
       const {accessToken} = await login();
       //@ts-ignore
@@ -357,6 +371,16 @@ export class GlobalStore {
           this.kakaoToken = accessToken;
         });
       }
+
+      const fcmToken = await AsyncStorage.getItem('@sendwich_fcmtoken');
+
+      const fcmTokenData = await AuthRepository.updateFcmToken(
+        data.user.id,
+        Platform.OS,
+        fcmToken,
+      );
+
+      console.log(fcmTokenData);
     } catch (error: any) {
       console.log(error);
     } finally {

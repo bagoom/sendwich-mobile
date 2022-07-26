@@ -4,6 +4,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {useGlobalStore} from '../store/util';
 import Icon from '../../Icon-font.js';
 import styled from 'styled-components/native';
+import moment from 'moment';
 
 const NotificationItem = (props: any) => {
   const {navigation, item} = props;
@@ -11,9 +12,9 @@ const NotificationItem = (props: any) => {
 
   return (
     <ListItem>
-      <Date>{item.date}</Date>
+      <Date>{moment(item.createdAt).format('yy.MM.DD')}</Date>
       <Title>{item.title}</Title>
-      <Desc>{item.description}</Desc>
+      <Desc>{item.body}</Desc>
 
       <ExpandButton>
         <Icon name="arrow-down" style={{fontSize: 16, color: '#bbb'}} />

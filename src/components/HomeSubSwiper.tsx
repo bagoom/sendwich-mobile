@@ -51,7 +51,6 @@ const HomeSubSwiper = (props: any) => {
   const banner = data?.data.data;
 
   useLayoutEffect(() => {}, [data]);
-  console.log(data);
   return (
     <>
       {!isLoading && (
@@ -70,7 +69,6 @@ const HomeSubSwiper = (props: any) => {
               dotsWrapperStyle: styles.paginationWrapper,
             }}>
             {banner?.map((item: any, index: any) => {
-              console.log(item.name);
               return (
                 <View key={index}>
                   <TouchableOpacity

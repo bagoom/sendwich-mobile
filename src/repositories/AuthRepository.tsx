@@ -12,6 +12,13 @@ class AuthRepository {
     return axios.post(`${BASE_URL}/api/users-permissions/login`, accessToken);
   }
 
+  updateFcmToken(userId: any, OS: any, fcmToken: any) {
+    return axios.put(`${BASE_URL}/api/users/${userId}`, {
+      os: OS,
+      fcm_token: fcmToken,
+    });
+  }
+
   checkAuthState(token: string) {
     // if (!token) return null;
     return axios.get(`${BASE_URL}/api/users/me`, {
