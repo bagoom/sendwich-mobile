@@ -92,6 +92,9 @@ class AuthRepository {
   }
 
   getCurationStoreList(start: any, coords: any, query: any) {
+    console.log(`${BASE_URL}/api/stores/curation?${query}&_start=${start}&_limit=${
+      start + 40
+    }&km=12&lat=${coords.lat}&lng=${coords.lng}`)
     return axios.get(
       `${BASE_URL}/api/stores/curation?${query}&_start=${start}&_limit=${
         start + 40
