@@ -143,12 +143,13 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        missingDimensionStrategy 'react-native-camera', 'general'
         applicationId "com.sendwich_mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 6
         versionName "1.0"
+        missingDimensionStrategy 'react-native-camera', 'general'
+        missingDimensionStrategy 'store', 'play'
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
         if (isNewArchitectureEnabled()) {
@@ -308,6 +309,8 @@ dependencies {
     implementation project(':react-native-gesture-handler')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    implementation project(':react-native-iap')
 
     // For animated GIF support
     implementation 'com.facebook.fresco:animated-gif:2.5.0'

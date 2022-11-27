@@ -100,6 +100,7 @@ const LoginScreen = () => {
           ))}
         </Swiper>
         <Continer>
+          <Text style={{color: '#fff'}}>{g.ddd}</Text>
           <TouchableOpacity
             onPress={g.signInWithKakao}
             activeOpacity={0.8}

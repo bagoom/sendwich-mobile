@@ -1,3 +1,4 @@
+#import <Firebase.h>
 #import "AppDelegate.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -36,6 +37,8 @@
   [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
   [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   RCTAppSetupPrepareApp(application);
+  [FIRApp configure];
+
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 

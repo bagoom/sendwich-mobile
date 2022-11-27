@@ -8,6 +8,7 @@ import {
   LayoutAnimation,
   StyleSheet,
   View,
+  Text,
   Button,
 } from 'react-native';
 import {BASE_URL} from '@env';
@@ -63,7 +64,6 @@ const RegisterSecond = (props: any) => {
     if (item.empty === true) {
       return <EmptyItem clear={clearItem} />;
     }
-
     return (
       <ListItem
         clear={clearItem}
@@ -84,11 +84,12 @@ const RegisterSecond = (props: any) => {
           </Badge>
         )}
         <ListItemCover selected={isSelected}>
-          {item.image[0] && (
+          
+          {item.image && (
             <ListItemImg
               selected={isSelected}
               source={{
-                uri: `${BASE_URL}${item?.image[0].url}`,
+                uri: `${BASE_URL}${item?.image.url}`,
               }}
               imageStyle={isSelected && {opacity: 0.55}}
               resizeMode="cover"

@@ -553,14 +553,11 @@ export class GlobalStore {
     runInAction(() => {
       this.headerAddr = addr;
       if (arrAddr) {
+        //@ts-ignore
         this._recently_address.unshift({
-          //@ts-ignore
           addr: arrAddr.address.address_name,
-          //@ts-ignore
           road_addr: arrAddr.road_address.address_name,
-          //@ts-ignore
           y: arrAddr.y,
-          //@ts-ignore
           x: arrAddr.x,
         });
 
@@ -618,14 +615,11 @@ export class GlobalStore {
               index === callback.findIndex((t: any) => t.id === arr.id),
           );
 
+          //@ts-ignore
           this.recent_store.unshift({
-            //@ts-ignore
             id: store?.id,
-            //@ts-ignore
             shop_name: store?.shop_name,
-            //@ts-ignore
             coupon_name: store?.coupon?.name,
-            //@ts-ignore
             img: store?.main_image[0]?.url,
           });
         }
@@ -732,8 +726,8 @@ export class GlobalStore {
       runInAction(() => {
         this.filteredShopList = data.data;
         if (this.searchKeyword || clickKeyword) {
+          //@ts-ignore
           this.recent_keyword.unshift({
-            //@ts-ignore
             keyword: clickKeyword ? clickKeyword : this.searchKeyword,
           });
           const newArray = this.recent_keyword.reduce(function (acc, current) {
@@ -792,6 +786,24 @@ export class GlobalStore {
   clearFilteredShopList = () => {
     runInAction(() => {
       this.filteredShopList = [];
+    });
+  };
+
+  clearCurationFilter = () => {
+    runInAction(() => {
+      this._curationFilter = [
+        {type: 'date', list: '', order: 0},
+        {type: 'time', list: '', order: 0},
+        {type: 'budget', list: '', order: 0},
+        {type: 'personnel', list: '', order: 0},
+        {type: 'menuname', list: '', order: 0},
+        {type: 'support', list: '', order: 0},
+        {type: 'place', list: '', order: 0},
+        {type: 'meeting', list: [], order: 0},
+        {type: 'mood', list: [], order: 0},
+        {type: 'parking', list: '', order: 0},
+        {type: 'kids', list: [], order: 0},
+      ];
     });
   };
 

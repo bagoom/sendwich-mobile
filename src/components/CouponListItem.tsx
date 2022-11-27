@@ -7,10 +7,24 @@ import styled from 'styled-components/native';
 import theme, {Title} from '../Theme';
 
 import {commaTheNumbers2} from '../lib/transfer';
+import {useShoppingState} from '../hooks/useIap';
 
 const CouponListItem = (props: any) => {
   const {navigation, item, coupon} = props;
   const g = useGlobalStore();
+  const Iap = useShoppingState();
+
+  
+
+  // 구매
+  const onPurchase = (item: any) => {
+    if (item.type === 'subs') {
+      Iap.requestSubscriptionPurchase(item.productId);
+    } else {
+      Iap.requestItemPurchase(item.productId);
+    }
+  }
+
   return (
     <>
       {coupon?.name !== '' && (
@@ -40,7 +54,10 @@ const CouponListItem = (props: any) => {
               </Price>
             </View>
 
-            <Button>
+            <Button onPress={()=> onPurchase({ 
+              type : 'skus',
+              productId : 'com.meeting01'
+            })}>
               <ButtonText>구매하기</ButtonText>
             </Button>
           </CouponItem>

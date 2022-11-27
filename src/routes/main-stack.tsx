@@ -121,8 +121,9 @@ class MainStack extends React.Component<MainStackProp> {
     return (
       <>
         <MainStackStackNav.Screen
-          name="RegisterFirst"
-          component={RegisterFirstScreen}
+          name="RegisterSecond"
+          // name="RegisterFirst"
+          component={RegisterSecondScreen}
           options={{headerShown: false}}
         />
         <MainStackStackNav.Screen

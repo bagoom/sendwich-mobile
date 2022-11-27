@@ -5,11 +5,25 @@ import {useGlobalStore} from '../store/util';
 import styled from 'styled-components/native';
 import theme, {SubTitle} from '../Theme';
 import {convertNumberToMobile} from '../lib/transfer';
+import {useShoppingState} from '../hooks/useIap';
 
 const Profile = (props: any) => {
   const {navigation} = props;
   const g = useGlobalStore();
   const profile = g.sendwichProfile;
+  const Iap = useShoppingState();
+
+  console.log(Iap);
+
+  // 구매
+  const onPurchase = (item: any) => {
+    if (item.type === 'subs') {
+      Iap.requestSubscriptionPurchase(item.productId);
+    } else {
+      Iap.requestItemPurchase(item.productId);
+    }
+  }
+
   return (
     <Wrapper>
       <Row>
@@ -26,6 +40,10 @@ const Profile = (props: any) => {
           <Date>(2021.12.08~2022~01.07)</Date>
         </View>
 
+        {/* <Button onPress={()=> onPurchase({ 
+            type : 'subs',
+            productId : 'com.subscription01'
+          })}> */}
         <Button>
           <ButtonText>회원권연장</ButtonText>
         </Button>
