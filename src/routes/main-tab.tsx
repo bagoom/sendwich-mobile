@@ -33,19 +33,19 @@ const MainTabAfterAuth = () => {
           tabBarInactiveTintColor: '#999',
           tabBarActiveTintColor: '#FFBD2E',
           tabBarStyle: {
-            height: 60,
             paddingTop: 8,
             borderTopWidth: 1,
             borderTopColor: '#eee',
             elevation: 0,
           },
           tabBarIconStyle: {
-            marginBottom: 0,
+            marginBottom: 5,
           },
           tabBarLabelStyle: {
-            paddingBottom: 10,
+            paddingBottom: 5,
           },
         }}>
+        
         {mainTabRoutes.map(route => (
           <MainTab.Screen
             key={`screen--${route.name}`}
