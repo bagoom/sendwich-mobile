@@ -4,7 +4,7 @@ import { Platform, Alert } from 'react-native';
 
 const itemSkus: any = Platform.select({
   ios: [
-    'com.meeting01',
+    'com.sendwich.meeting01',
   ],
   android: [
     'com.meeting01',
@@ -69,7 +69,8 @@ export const useShoppingState = () => {
           if (error && error.code === USER_CANCEL) {
             Alert.alert('구매 취소', '구매를 취소하셨습니다.');
           } else {
-            Alert.alert('구매 실패', '구매 중 오류가 발생하였습니다.');
+            Alert.alert(error.code, error.message);
+            // Alert.alert('구매 실패', '구매 중 오류가 발생하였습니다.');
           }
         });
         

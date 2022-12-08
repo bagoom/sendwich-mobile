@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {View, Text} from 'react-native';
+import {View, Text, Platform} from 'react-native';
 import {useGlobalStore} from '../store/util';
 
 import styled from 'styled-components/native';
@@ -56,7 +56,7 @@ const CouponListItem = (props: any) => {
 
             <Button onPress={()=> onPurchase({ 
               type : 'skus',
-              productId : 'com.meeting01'
+              productId : Platform.OS === 'android' ? 'com.meeting01' : 'com.sendwich.meeting01'
             })}>
               <ButtonText>구매하기</ButtonText>
             </Button>
